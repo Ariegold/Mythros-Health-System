@@ -1428,23 +1428,14 @@
     if (pass.length < 8) { showAuthErr('signup-error', 'Password must be at least 8 characters.'); return; }
     if (!/[A-Z]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 uppercase letter.'); return; }
     if (!/[0-9]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 number.'); return; }
-    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 symbol (e.g. !@#$%).'); return; }
+    if (!/[!@#$%^&*()+\-=@]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 symbol (e.g. !@#$%)'); return; }
     if (!email.includes('@')) { showAuthErr('signup-error', 'Please enter a valid email address.'); return; }
     const users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
     if (users[email]) { showAuthErr('signup-error', 'An account with this email already exists.'); return; }
-    // Get IP location data for analytics (non-blocking)
-    getLocationForLogging().then(loc => {
-      users[email] = { name, lab, dob, country, password: btoa(pass),
-        registeredAt: new Date().toISOString(),
-        registrationCountry: country,
-        ipCountry: loc.ip_country || country,
-        city: loc.city || '',
-        region: loc.region || '',
-        timezone: loc.timezone || ''
-      };
-      localStorage.setItem('mythros_users', JSON.stringify(users));
-    });
-    users[email] = { name, lab, dob, country, password: btoa(pass) };
+    users[email] = { name, lab, dob, country, password: btoa(pass),
+      registeredAt: new Date().toISOString(),
+      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || ''
+    };
     localStorage.setItem('mythros_users', JSON.stringify(users));
     currentUser = { name, email, lab, country };
     localStorage.setItem('mythros_user', JSON.stringify(currentUser));
