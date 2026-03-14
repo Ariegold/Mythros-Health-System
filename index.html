@@ -1403,45 +1403,53 @@
 
   // ── AUTH ──────────────────────────────────────────────────────────────────
   function handleLogin() {
-    const email = document.getElementById('login-email').value.trim();
-    const pass  = document.getElementById('login-password').value;
+    var email = document.getElementById('login-email').value.trim();
+    var pass  = document.getElementById('login-password').value;
     if (!email || !pass) { showAuthErr('login-error', 'Please enter your email and password.'); return; }
-    const users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
-    const user  = users[email];
+    var users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
+    var user  = users[email];
     if (!user || user.password !== btoa(pass)) { showAuthErr('login-error', 'Incorrect email or password.'); return; }
     document.getElementById('login-error').style.display = 'none';
-    currentUser = { name: user.name, email, lab: user.lab, country: user.country };
+    currentUser = { name: user.name, email: email, lab: user.lab, country: user.country };
     localStorage.setItem('mythros_user', JSON.stringify(currentUser));
-    const termsAccepted = localStorage.getItem('mythros_terms_accepted');
-    if (!termsAccepted) showTermsModal();
-    else bootApp();
+    var termsAccepted = localStorage.getItem('mythros_terms_accepted');
+    if (!termsAccepted) { showTermsModal(); } else { bootApp(); }
   }
 
   function handleSignup() {
-    const name    = document.getElementById('signup-name').value.trim();
-    const lab     = document.getElementById('signup-lab').value.trim();
-    const email   = document.getElementById('signup-email').value.trim();
-    const dob     = document.getElementById('signup-dob').value;
-    const country = document.getElementById('signup-country').value;
-    const pass    = document.getElementById('signup-password').value;
-    if (!name || !lab || !email || !dob || !country || !pass) { showAuthErr('signup-error', 'Please fill in all fields.'); return; }
-    if (pass.length < 8) { showAuthErr('signup-error', 'Password must be at least 8 characters.'); return; }
-    if (!/[A-Z]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 uppercase letter.'); return; }
-    if (!/[0-9]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 number.'); return; }
-    if (!/[!@#$%^&*()+\-=@]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 symbol (e.g. !@#$%)'); return; }
+    var name    = document.getElementById('signup-name').value.trim();
+    var lab     = document.getElementById('signup-lab').value.trim();
+    var email   = document.getElementById('signup-email').value.trim();
+    var dob     = document.getElementById('signup-dob').value;
+    var country = document.getElementById('signup-country').value;
+    var pass    = document.getElementById('signup-password').value;
+
+    if (!name)    { showAuthErr('signup-error', 'Please enter your full name.'); return; }
+    if (!lab)     { showAuthErr('signup-error', 'Please enter your hospital or lab.'); return; }
+    if (!email)   { showAuthErr('signup-error', 'Please enter your email address.'); return; }
     if (!email.includes('@')) { showAuthErr('signup-error', 'Please enter a valid email address.'); return; }
-    const users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
+    if (!dob)     { showAuthErr('signup-error', 'Please enter your date of birth.'); return; }
+    if (!country) { showAuthErr('signup-error', 'Please select your country.'); return; }
+    if (!pass)    { showAuthErr('signup-error', 'Please create a password.'); return; }
+    if (pass.length < 8) { showAuthErr('signup-error', 'Password must be at least 8 characters.'); return; }
+    if (!/[A-Z]/.test(pass))  { showAuthErr('signup-error', 'Password must include at least 1 uppercase letter.'); return; }
+    if (!/[0-9]/.test(pass))  { showAuthErr('signup-error', 'Password must include at least 1 number.'); return; }
+    if (!/[^A-Za-z0-9]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 symbol (e.g. !@#$%)'); return; }
+
+    var users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
     if (users[email]) { showAuthErr('signup-error', 'An account with this email already exists.'); return; }
-    users[email] = { name, lab, dob, country, password: btoa(pass),
-      registeredAt: new Date().toISOString(),
-      timezone: Intl.DateTimeFormat().resolvedOptions().timeZone || ''
+
+    users[email] = {
+      name: name, lab: lab, dob: dob, country: country,
+      password: btoa(pass),
+      registeredAt: new Date().toISOString()
     };
     localStorage.setItem('mythros_users', JSON.stringify(users));
-    currentUser = { name, email, lab, country };
+    currentUser = { name: name, email: email, lab: lab, country: country };
     localStorage.setItem('mythros_user', JSON.stringify(currentUser));
-    const termsAccepted = localStorage.getItem('mythros_terms_accepted');
-    if (!termsAccepted) showTermsModal();
-    else bootApp();
+
+    var termsAccepted = localStorage.getItem('mythros_terms_accepted');
+    if (!termsAccepted) { showTermsModal(); } else { bootApp(); }
   }
 
   function handleLogout() {
@@ -1585,7 +1593,7 @@
           userId:   currentUser.email    || 'anonymous',
           fasting:  fasting,
           city:     currentUser.city     || '',
-          timezone: currentUser.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 
+          timezone: currentUser.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || ''
         })
       });
 
