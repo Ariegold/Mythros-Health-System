@@ -1,0 +1,1520 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mythros Health System</title>
+<meta name="description" content="Understand your lab results in plain language — Mythros Health System">
+<meta name="theme-color" content="#0f2247">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f2247'/><text y='75' x='50' text-anchor='middle' font-size='60' font-family='Arial' font-weight='bold' fill='white'>M</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy:        #0f2247;
+    --navy-mid:    #1a3a6b;
+    --blue:        #1d56d4;
+    --blue-hover:  #1644b8;
+    --blue-light:  #eef3fd;
+    --teal:        #0d9e8a;
+    --teal-light:  #e6f7f5;
+    --body-bg:     #f4f6fb;
+    --card-bg:     #ffffff;
+    --card-border: #e4e9f2;
+    --text-dark:   #0d1f3c;
+    --text-mid:    #2e4370;
+    --text-muted:  #6878a0;
+    --amber:       #e8940a;
+    --amber-bg:    #fff8ec;
+    --amber-text:  #7a4a00;
+    --red:         #c0392b;
+    --red-bg:      #fdf0ee;
+    --red-text:    #8b1a0f;
+    --green:       #0d9e6a;
+    --green-bg:    #eaf7f2;
+    --green-text:  #065c3a;
+    --radius:      16px;
+    --radius-sm:   12px;
+    --radius-xs:   8px;
+    --shadow:      0 2px 16px rgba(13,31,60,0.07);
+    --shadow-md:   0 6px 28px rgba(13,31,60,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    font-family: 'Sora', sans-serif;
+    background: var(--body-bg);
+    color: var(--text-dark);
+    font-size: 14px;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* ══ TERMS MODAL ══════════════════════════════════════════════ */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(13,31,60,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-box {
+    background: white;
+    border-radius: 20px;
+    max-width: 560px;
+    width: 100%;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 24px 80px rgba(13,31,60,0.3);
+    overflow: hidden;
+  }
+
+  .modal-header {
+    background: var(--navy);
+    padding: 24px 28px 20px;
+    flex-shrink: 0;
+  }
+
+  .modal-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .modal-logo-mark {
+    width: 32px; height: 32px;
+    background: white;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 15px; color: var(--blue);
+  }
+
+  .modal-logo-name {
+    font-size: 15px; font-weight: 700; color: white; letter-spacing: -0.3px;
+  }
+
+  .modal-logo-name span { color: #7eb8f7; }
+
+  .modal-title { font-size: 18px; font-weight: 700; color: white; letter-spacing: -0.3px; }
+  .modal-subtitle { font-size: 12px; color: #93b8e8; margin-top: 3px; }
+
+  .modal-body {
+    padding: 24px 28px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .modal-section {
+    margin-bottom: 18px;
+    padding: 16px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+  }
+
+  .modal-section-title {
+    font-size: 12px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; margin-bottom: 8px;
+  }
+
+  .modal-section-title.red   { color: var(--red); }
+  .modal-section-title.blue  { color: var(--blue); }
+  .modal-section-title.green { color: var(--green); }
+
+  .modal-section p {
+    font-size: 12px; color: var(--text-mid); line-height: 1.7;
+  }
+
+  .modal-section ul {
+    list-style: none; padding: 0;
+  }
+
+  .modal-section li {
+    font-size: 12px; color: var(--text-mid);
+    padding: 4px 0 4px 14px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .modal-section li::before {
+    content: '·';
+    position: absolute; left: 0;
+    color: var(--blue); font-size: 16px; top: 1px;
+  }
+
+  .modal-footer {
+    padding: 20px 28px;
+    border-top: 1px solid var(--card-border);
+    flex-shrink: 0;
+    background: var(--body-bg);
+  }
+
+  .modal-checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .modal-checkbox-row input[type="checkbox"] {
+    width: 18px; height: 18px; min-width: 18px;
+    margin-top: 1px; cursor: pointer;
+    accent-color: var(--blue);
+  }
+
+  .modal-checkbox-row label {
+    font-size: 12px; color: var(--text-mid); line-height: 1.6; cursor: pointer;
+  }
+
+  .btn-accept {
+    width: 100%;
+    padding: 13px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 14px; font-weight: 600;
+    cursor: pointer;
+    opacity: 0.4;
+    pointer-events: none;
+    transition: opacity 0.2s, background 0.2s;
+  }
+
+  .btn-accept.enabled {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .btn-accept.enabled:hover { background: var(--blue-hover); }
+
+  /* ══ AUTH ═════════════════════════════════════════════════════ */
+  .auth-wrap { display: flex; min-height: 100vh; }
+
+  .auth-left {
+    width: 440px; min-width: 440px;
+    background: var(--navy);
+    padding: 60px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    position: relative; overflow: hidden;
+  }
+
+  .auth-left::before {
+    content: '';
+    position: absolute; top: -120px; right: -80px;
+    width: 320px; height: 320px;
+    background: radial-gradient(circle, rgba(29,86,212,0.25) 0%, transparent 65%);
+  }
+
+  .auth-left::after {
+    content: '';
+    position: absolute; bottom: -60px; left: -60px;
+    width: 240px; height: 240px;
+    background: radial-gradient(circle, rgba(13,158,138,0.2) 0%, transparent 65%);
+  }
+
+  .auth-logo {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 44px; position: relative; z-index: 1;
+  }
+
+  .logo-mark {
+    width: 48px; height: 48px;
+    background: white;
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 22px; color: var(--blue);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+  }
+
+  .logo-name {
+    font-size: 18px; font-weight: 700; color: white; letter-spacing: -0.3px; line-height: 1.2;
+  }
+
+  .logo-name small {
+    display: block; font-size: 11px; font-weight: 400;
+    color: #7eb8f7; letter-spacing: 0.5px; text-transform: uppercase; margin-top: 1px;
+  }
+
+  .auth-heading {
+    font-size: 34px; font-weight: 800; color: white;
+    letter-spacing: -1px; line-height: 1.15; margin-bottom: 12px;
+    position: relative; z-index: 1;
+  }
+
+  .auth-sub {
+    font-size: 14px; color: #93b8e8; font-weight: 300;
+    line-height: 1.7; position: relative; z-index: 1;
+  }
+
+  .auth-features {
+    margin-top: 40px; display: flex; flex-direction: column;
+    gap: 12px; position: relative; z-index: 1;
+  }
+
+  .auth-feature {
+    display: flex; align-items: center; gap: 12px;
+    color: #cfe0ff; font-size: 13px;
+  }
+
+  .feature-dot {
+    width: 6px; height: 6px;
+    background: var(--teal);
+    border-radius: 50%; flex-shrink: 0;
+  }
+
+  .auth-badge {
+    margin-top: 36px;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(13,158,138,0.15);
+    border: 1px solid rgba(13,158,138,0.3);
+    border-radius: 20px; padding: 7px 14px;
+    font-size: 11px; color: #5dd9c9; font-weight: 600;
+    position: relative; z-index: 1;
+  }
+
+  .auth-right {
+    flex: 1; background: var(--body-bg);
+    display: flex; align-items: center; justify-content: center;
+    padding: 48px; min-height: 100vh; overflow-y: auto;
+  }
+
+  .auth-form-box { width: 100%; max-width: 460px; }
+
+  .auth-form-title {
+    font-size: 22px; font-weight: 700; color: var(--text-dark);
+    letter-spacing: -0.4px; margin-bottom: 4px;
+  }
+
+  .auth-form-sub {
+    font-size: 13px; color: var(--text-muted);
+    margin-bottom: 24px; font-weight: 300;
+  }
+
+  .auth-card {
+    background: var(--card-bg);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--card-border);
+  }
+
+  .form-group { margin-bottom: 14px; }
+
+  .form-label {
+    font-size: 11px; font-weight: 700; color: var(--text-mid);
+    margin-bottom: 6px; display: block;
+    letter-spacing: 0.5px; text-transform: uppercase;
+  }
+
+  .form-input {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid var(--card-border);
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 14px; color: var(--text-dark);
+    background: var(--body-bg); outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+    appearance: none; -webkit-appearance: none;
+  }
+
+  .form-input:focus {
+    border-color: var(--blue); background: white;
+    box-shadow: 0 0 0 3px rgba(29,86,212,0.1);
+  }
+
+  .form-input::placeholder { color: #b8c4d8; }
+
+  select.form-input {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236878a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 38px;
+  }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+  .btn-auth {
+    width: 100%; padding: 13px;
+    background: var(--blue); color: white; border: none;
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    box-shadow: 0 4px 16px rgba(29,86,212,0.3);
+    margin-top: 6px;
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-auth:hover { background: var(--blue-hover); }
+  .btn-auth:active { transform: scale(0.99); }
+
+  .auth-switch {
+    text-align: center; margin-top: 18px;
+    font-size: 13px; color: var(--text-muted);
+  }
+
+  .auth-switch a { color: var(--blue); font-weight: 600; cursor: pointer; text-decoration: none; }
+  .auth-switch a:hover { text-decoration: underline; }
+
+  .auth-divider {
+    display: flex; align-items: center; gap: 12px; margin: 18px 0 4px;
+  }
+
+  .auth-divider::before, .auth-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--card-border);
+  }
+
+  .auth-divider span { font-size: 11px; color: var(--text-muted); font-weight: 500; }
+
+  .auth-error {
+    background: var(--red-bg); border: 1px solid rgba(192,57,43,0.2);
+    color: var(--red-text); padding: 10px 14px;
+    border-radius: var(--radius-xs); font-size: 12px;
+    margin-bottom: 14px; display: none;
+  }
+
+  @media (max-width: 767px) {
+    .auth-wrap { flex-direction: column; }
+    .auth-left { width: 100%; min-width: 0; padding: 36px 24px 28px; min-height: auto; }
+    .auth-features { display: none; }
+    .auth-heading { font-size: 26px; }
+    .auth-right { padding: 24px 20px 40px; align-items: flex-start; min-height: auto; }
+    .auth-card { padding: 22px 18px; }
+    .two-col { grid-template-columns: 1fr; }
+  }
+
+  /* ══ APP LAYOUT ═══════════════════════════════════════════════ */
+  .app-wrap { display: flex; min-height: 100vh; }
+
+  .sidebar {
+    width: 256px; min-width: 256px;
+    background: var(--navy);
+    display: flex; flex-direction: column;
+    padding: 26px 16px 22px;
+    min-height: 100vh;
+    position: sticky; top: 0; align-self: flex-start;
+  }
+
+  .sidebar-logo {
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 8px;
+  }
+
+  .sidebar-logo-mark {
+    width: 34px; height: 34px; background: white;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 800; font-size: 16px; color: var(--blue);
+  }
+
+  .sidebar-logo-name {
+    font-size: 15px; font-weight: 700; color: white; letter-spacing: -0.3px; line-height: 1.2;
+  }
+
+  .sidebar-logo-name small {
+    display: block; font-size: 9px; color: #7eb8f7;
+    text-transform: uppercase; letter-spacing: 0.5px; font-weight: 400;
+  }
+
+  .sidebar-divider {
+    height: 1px; background: rgba(255,255,255,0.08);
+    margin: 18px 0;
+  }
+
+  .sidebar-user {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+
+  .sidebar-avatar {
+    width: 34px; height: 34px; background: white;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: var(--blue); flex-shrink: 0;
+  }
+
+  .sidebar-user-name { font-size: 13px; font-weight: 600; color: white; line-height: 1.3; }
+  .sidebar-user-lab  { font-size: 11px; color: #7eb8f7; font-weight: 300; margin-top: 1px; }
+
+  .sidebar-nav { display: flex; flex-direction: column; gap: 3px; flex: 1; }
+
+  .sidebar-nav-item {
+    display: flex; align-items: center; gap: 11px;
+    padding: 10px 13px; border-radius: var(--radius-xs);
+    font-size: 13px; font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .sidebar-nav-item:hover { background: rgba(255,255,255,0.07); color: white; }
+  .sidebar-nav-item.active { background: rgba(255,255,255,0.14); color: white; font-weight: 600; }
+  .sidebar-nav-item .nav-icon { font-size: 16px; }
+
+  .sidebar-logout {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 13px; border-radius: var(--radius-xs);
+    font-size: 13px; color: rgba(255,255,255,0.35);
+    cursor: pointer; transition: color 0.2s; margin-top: 6px;
+  }
+
+  .sidebar-logout:hover { color: rgba(255,255,255,0.65); }
+
+  /* MAIN */
+  .app-content { flex: 1; display: flex; flex-direction: column; min-height: 100vh; min-width: 0; }
+
+  .topbar {
+    background: white; border-bottom: 1px solid var(--card-border);
+    padding: 14px 28px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; z-index: 50;
+    box-shadow: 0 1px 8px rgba(13,31,60,0.05);
+  }
+
+  .topbar-left h1 { font-size: 19px; font-weight: 700; color: var(--text-dark); letter-spacing: -0.3px; }
+  .topbar-left p  { font-size: 12px; color: var(--text-muted); font-weight: 300; margin-top: 1px; }
+  .topbar-right   { display: flex; align-items: center; gap: 10px; }
+
+  .topbar-stat {
+    padding: 5px 12px; border-radius: 20px;
+    font-size: 11px; font-weight: 600;
+  }
+
+  .tabs-bar {
+    background: white; border-bottom: 1px solid var(--card-border);
+    padding: 0 28px; display: flex; gap: 2px;
+  }
+
+  .tab {
+    padding: 11px 16px; font-size: 13px; font-weight: 500;
+    color: var(--text-muted); cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: color 0.2s, border-color 0.2s; white-space: nowrap;
+  }
+
+  .tab:hover { color: var(--text-dark); }
+  .tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
+
+  .app-body { padding: 28px; flex: 1; }
+
+  /* STATS */
+  .stats-row {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 14px; margin-bottom: 24px;
+  }
+
+  .stat-card {
+    background: white; border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm); padding: 16px 18px; box-shadow: var(--shadow);
+  }
+
+  .stat-card-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.6px; color: var(--text-muted); margin-bottom: 8px;
+  }
+
+  .stat-card-value {
+    font-size: 30px; font-weight: 800; color: var(--text-dark);
+    letter-spacing: -1px; line-height: 1; margin-bottom: 8px;
+  }
+
+  .stat-tag {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 3px 9px; border-radius: 20px;
+    font-size: 10px; font-weight: 600;
+  }
+
+  /* INPUT */
+  .section-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.8px; color: var(--text-muted);
+    margin-bottom: 10px; margin-top: 22px;
+  }
+
+  .section-label:first-child { margin-top: 0; }
+
+  .card {
+    background: white; border: 1px solid var(--card-border);
+    border-radius: var(--radius); box-shadow: var(--shadow);
+    overflow: hidden; margin-bottom: 14px;
+  }
+
+  .card-inner { padding: 18px 22px; }
+
+  .input-toolbar {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .input-label { font-size: 13px; font-weight: 600; color: var(--text-mid); }
+
+  .btn-upload {
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 7px 14px;
+    background: var(--teal-light);
+    border: 1.5px solid rgba(13,158,138,0.25);
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 12px; font-weight: 600; color: var(--teal);
+    cursor: pointer; transition: background 0.2s;
+    white-space: nowrap;
+  }
+
+  .btn-upload:hover { background: rgba(13,158,138,0.12); }
+  .btn-upload svg { width: 14px; height: 14px; stroke: var(--teal); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+  #image-file-input { display: none; }
+
+  .image-preview-bar {
+    display: none;
+    align-items: center; gap: 10px;
+    padding: 10px 14px;
+    background: var(--teal-light);
+    border: 1.5px solid rgba(13,158,138,0.2);
+    border-radius: var(--radius-xs);
+    margin-bottom: 10px;
+    font-size: 12px;
+  }
+
+  .image-preview-bar img {
+    width: 40px; height: 40px; object-fit: cover;
+    border-radius: 6px; border: 1px solid rgba(13,158,138,0.2);
+  }
+
+  .image-preview-info { flex: 1; }
+  .image-preview-name { font-weight: 600; color: var(--text-dark); margin-bottom: 1px; }
+  .image-preview-meta { font-size: 11px; color: var(--text-muted); }
+
+  .btn-extract {
+    padding: 7px 14px;
+    background: var(--teal);
+    color: white; border: none;
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 12px; font-weight: 600; cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+  }
+
+  .btn-extract:hover { background: #0b8a78; }
+
+  .btn-remove-img {
+    background: none; border: none; cursor: pointer;
+    color: var(--text-muted); font-size: 16px; padding: 4px; line-height: 1;
+  }
+
+  textarea {
+    width: 100%; min-height: 140px;
+    background: var(--body-bg); border: 1.5px solid var(--card-border);
+    border-radius: var(--radius-xs); padding: 13px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px; color: var(--text-dark);
+    resize: vertical; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s; line-height: 1.9;
+  }
+
+  textarea::placeholder { color: #b8c4d8; }
+
+  textarea:focus {
+    border-color: var(--blue); background: white;
+    box-shadow: 0 0 0 3px rgba(29,86,212,0.08);
+  }
+
+  .input-hint { font-size: 11px; color: var(--text-muted); margin-top: 7px; }
+
+  .btn-interpret {
+    margin-top: 14px; padding: 13px 28px;
+    background: var(--blue); color: white; border: none;
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 14px; font-weight: 600; cursor: pointer;
+    display: inline-flex; align-items: center; gap: 8px;
+    box-shadow: 0 4px 16px rgba(29,86,212,0.28);
+    transition: background 0.2s, transform 0.1s;
+  }
+
+  .btn-interpret:hover { background: var(--blue-hover); }
+  .btn-interpret:active { transform: scale(0.99); }
+  .btn-interpret:disabled { background: #b0bcc9; box-shadow: none; cursor: not-allowed; }
+
+  .spinner {
+    width: 15px; height: 15px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top-color: white; border-radius: 50%;
+    animation: spin 0.7s linear infinite; display: none;
+  }
+
+  .error-msg {
+    background: var(--red-bg); border: 1px solid rgba(192,57,43,0.2);
+    color: var(--red-text); padding: 10px 13px;
+    border-radius: var(--radius-xs); font-size: 12px;
+    margin-top: 10px; display: none;
+  }
+
+  .disclaimer {
+    background: var(--amber-bg); border: 1px solid rgba(232,148,10,0.2);
+    border-radius: var(--radius-xs); padding: 11px 14px;
+    font-size: 12px; color: var(--amber-text); line-height: 1.6; margin-bottom: 18px;
+  }
+
+  /* RESULTS */
+  #results-section { display: none; }
+
+  .summary-card-result {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+    border-radius: var(--radius); padding: 20px 22px;
+    margin-bottom: 18px; position: relative; overflow: hidden;
+    box-shadow: var(--shadow-md);
+  }
+
+  .summary-card-result::before {
+    content: '';
+    position: absolute; top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    background: radial-gradient(circle, rgba(29,86,212,0.3) 0%, transparent 70%);
+  }
+
+  .summary-card-result::after {
+    content: '';
+    position: absolute; bottom: -30px; left: 20px;
+    width: 100px; height: 100px;
+    background: radial-gradient(circle, rgba(13,158,138,0.2) 0%, transparent 70%);
+  }
+
+  .summary-eyebrow {
+    font-size: 10px; font-weight: 700; letter-spacing: 1px;
+    text-transform: uppercase; color: #7eb8f7; margin-bottom: 8px;
+  }
+
+  .summary-text {
+    font-size: 14px; color: #d0e4ff; line-height: 1.75;
+    font-weight: 300; position: relative; z-index: 1;
+  }
+
+  .results-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+    gap: 10px;
+  }
+
+  .result-item {
+    background: white; border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm); padding: 13px 15px;
+    box-shadow: var(--shadow); border-left: 3px solid transparent;
+    display: flex; align-items: flex-start; justify-content: space-between;
+    gap: 10px; animation: fadeUp 0.3s ease both;
+  }
+
+  .result-item.status-normal { border-left-color: var(--green); }
+  .result-item.status-watch  { border-left-color: var(--amber); }
+  .result-item.status-urgent { border-left-color: var(--red); background: #fffbfb; }
+
+  .result-name  { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
+  .result-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-mid); margin-bottom: 2px; }
+  .result-ref   { font-size: 10px; color: var(--text-muted); margin-bottom: 5px; }
+  .result-explanation { font-size: 12px; color: var(--text-mid); line-height: 1.6; font-weight: 300; }
+
+  .status-pill {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 4px 9px; border-radius: 20px;
+    font-size: 10px; font-weight: 700; white-space: nowrap; flex-shrink: 0;
+  }
+
+  .pill-normal { background: var(--green-bg); color: var(--green-text); }
+  .pill-watch  { background: var(--amber-bg); color: var(--amber-text); }
+  .pill-urgent { background: var(--red-bg);   color: var(--red-text); }
+  .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+  /* APP FOOTER DISCLAIMER */
+  .app-disclaimer {
+    margin-top: 32px; padding: 14px 18px;
+    background: white; border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    font-size: 11px; color: var(--text-muted); line-height: 1.7;
+    text-align: center;
+  }
+
+  .app-disclaimer strong { color: var(--text-mid); }
+
+  /* MOBILE */
+  @media (max-width: 767px) {
+    .sidebar { display: none; }
+    .topbar  { display: none; }
+    .tabs-bar { padding: 0 14px; overflow-x: auto; scrollbar-width: none; }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+    .tab { padding: 9px 12px; font-size: 12px; }
+    .app-body { padding: 14px 14px 80px; }
+    .stats-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .results-grid { grid-template-columns: 1fr; }
+    .btn-interpret { width: 100%; justify-content: center; }
+    .input-toolbar { flex-direction: column; align-items: flex-start; gap: 10px; }
+
+    .mobile-header {
+      background: var(--navy);
+      padding: 18px 18px 20px;
+      display: block !important;
+    }
+
+    .mobile-nav {
+      position: fixed; bottom: 0; left: 0; right: 0;
+      background: white; border-top: 1px solid var(--card-border);
+      display: grid !important; grid-template-columns: repeat(3, 1fr);
+      padding: 8px 0 16px; z-index: 100;
+      box-shadow: 0 -3px 16px rgba(13,31,60,0.07);
+    }
+  }
+
+  .mobile-header { display: none; }
+  .mobile-nav { display: none; }
+
+  .mobile-nav-item {
+    display: flex; flex-direction: column; align-items: center;
+    gap: 3px; cursor: pointer; padding: 4px 0;
+  }
+
+  .mobile-nav-item span:first-child { font-size: 20px; line-height: 1; }
+  .mobile-nav-item span:last-child  { font-size: 10px; font-weight: 500; color: var(--text-muted); }
+  .mobile-nav-item.active span:last-child { color: var(--blue); font-weight: 700; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  @keyframes modalIn {
+    from { opacity: 0; transform: scale(0.96) translateY(10px); }
+    to   { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .modal-box { animation: modalIn 0.25s ease; }
+</style>
+</head>
+<body>
+
+<!-- ══ TERMS OF USE MODAL ═════════════════════════════════════════ -->
+<div class="modal-overlay" id="terms-modal" style="display:none;">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div class="modal-logo">
+        <div class="modal-logo-mark">M</div>
+        <div class="modal-logo-name">Mythros<span> Health System</span></div>
+      </div>
+      <div class="modal-title">Terms of Use & Medical Disclaimer</div>
+      <div class="modal-subtitle">Please read carefully before using this service</div>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-section" style="background:#fdf0ee;border-color:rgba(192,57,43,0.15);">
+        <div class="modal-section-title red">⚠ Medical Disclaimer — Important</div>
+        <ul>
+          <li>Mythros Health System is <strong>not a medical device</strong> and does not provide medical advice, diagnosis, or treatment.</li>
+          <li>All interpretations are for <strong>informational and educational purposes only</strong> to help you understand your results.</li>
+          <li>Always consult a <strong>qualified healthcare professional</strong> before making any decisions about your health.</li>
+          <li>In an emergency, call your local emergency services immediately — do not rely on this app.</li>
+          <li>This service is not a substitute for professional medical care, advice, or clinical judgement.</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title blue">What this service does</div>
+        <ul>
+          <li>Explains lab test results in plain, simple language you can understand.</li>
+          <li>Flags values that are normal, borderline (Watch), or significantly abnormal (Urgent).</li>
+          <li>Uses country-specific reference ranges (Nigeria, UK, USA and more).</li>
+          <li>Supports 15+ languages to help non-English speakers access their results.</li>
+        </ul>
+      </div>
+
+      <div class="modal-section">
+        <div class="modal-section-title green">Your data & privacy</div>
+        <ul>
+          <li>Your lab results are processed to generate your interpretation and are not stored long-term.</li>
+          <li>Anonymous usage data (no personal details) is collected for service improvement.</li>
+          <li>We do not sell your data to any third party.</li>
+          <li>This service is operated by Mythros Support Services Ltd (Company No. 16384279, UK). Full privacy policy available at mythrosltd.co.uk.</li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <div class="modal-checkbox-row">
+        <input type="checkbox" id="terms-check" onchange="toggleAccept()">
+        <label for="terms-check">I have read and understand the medical disclaimer. I agree that this service does not replace professional medical advice and I will consult a healthcare professional for any medical concerns.</label>
+      </div>
+      <button class="btn-accept" id="btn-accept" onclick="acceptTerms()">I Understand — Continue to Mythros Health System →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOGIN PAGE ════════════════════════════════════════════════ -->
+<div class="page active" id="page-login">
+  <div class="auth-wrap">
+    <div class="auth-left">
+      <div class="auth-logo">
+        <div class="logo-mark">M</div>
+        <div class="logo-name">Mythros<small>Health System</small></div>
+      </div>
+      <div class="auth-heading">Understand your lab results.</div>
+      <div class="auth-sub">Instant plain language explanations for every value in your medical report — so you understand your health, in your language, for your country.</div>
+      <div class="auth-features">
+        <div class="auth-feature"><div class="feature-dot"></div> Instant result interpretation in 15+ languages</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Normal, Watch & Urgent flags</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Country-specific reference ranges</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Upload lab report photos</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Your data stays private</div>
+      </div>
+      <div class="auth-badge">
+        <span style="width:7px;height:7px;background:#5dd9c9;border-radius:50%;display:inline-block;"></span>
+        A service by Mythros Support Services Ltd · UK Registered
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <div class="auth-form-title">Welcome back</div>
+        <div class="auth-form-sub">Sign in to your Mythros Health System account</div>
+        <div class="auth-card">
+          <div class="auth-error" id="login-error"></div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" id="login-email" type="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input class="form-input" id="login-password" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') handleLogin()">
+          </div>
+          <button class="btn-auth" onclick="handleLogin()">Sign in →</button>
+          <div class="auth-divider"><span>New user?</span></div>
+          <div class="auth-switch"><a onclick="showPage('page-signup')">Create a free account →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ SIGNUP PAGE ════════════════════════════════════════════════ -->
+<div class="page" id="page-signup">
+  <div class="auth-wrap">
+    <div class="auth-left">
+      <div class="auth-logo">
+        <div class="logo-mark">M</div>
+        <div class="logo-name">Mythros<small>Health System</small></div>
+      </div>
+      <div class="auth-heading">Take control of your health.</div>
+      <div class="auth-sub">Join patients across Nigeria and the world who use Mythros to read and understand their lab results — clearly, instantly, in their own language.</div>
+      <div class="auth-features">
+        <div class="auth-feature"><div class="feature-dot"></div> Free to use</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Works with any lab report format</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Nigeria, UK, USA & global reference ranges</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Upload photos of printed reports</div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <div class="auth-form-title">Create your account</div>
+        <div class="auth-form-sub">Fill in your details to get started — it's free</div>
+        <div class="auth-card">
+          <div class="auth-error" id="signup-error"></div>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input class="form-input" id="signup-name" type="text" placeholder="e.g. Amara Okonkwo">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Hospital or Lab (where your report is from)</label>
+            <input class="form-input" id="signup-lab" type="text" placeholder="e.g. Lagos University Teaching Hospital">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" id="signup-email" type="email" placeholder="you@example.com">
+          </div>
+          <div class="two-col">
+            <div class="form-group">
+              <label class="form-label">Date of Birth</label>
+              <input class="form-input" id="signup-dob" type="date">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Country</label>
+              <select class="form-input" id="signup-country">
+                <option value="">Select country...</option>
+                <optgroup label="Africa">
+                  <option value="Nigeria" selected>Nigeria</option>
+                  <option value="Ghana">Ghana</option>
+                  <option value="Kenya">Kenya</option>
+                  <option value="South Africa">South Africa</option>
+                  <option value="Tanzania">Tanzania</option>
+                  <option value="Uganda">Uganda</option>
+                  <option value="Cameroon">Cameroon</option>
+                  <option value="Zambia">Zambia</option>
+                  <option value="Zimbabwe">Zimbabwe</option>
+                </optgroup>
+                <optgroup label="Europe">
+                  <option value="United Kingdom">United Kingdom</option>
+                  <option value="Germany">Germany</option>
+                  <option value="France">France</option>
+                  <option value="Netherlands">Netherlands</option>
+                  <option value="Ireland">Ireland</option>
+                </optgroup>
+                <optgroup label="Americas">
+                  <option value="United States">United States</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Brazil">Brazil</option>
+                </optgroup>
+                <optgroup label="Asia & Middle East">
+                  <option value="India">India</option>
+                  <option value="UAE">UAE</option>
+                  <option value="Saudi Arabia">Saudi Arabia</option>
+                </optgroup>
+                <optgroup label="Other">
+                  <option value="Australia">Australia</option>
+                  <option value="Other">Other</option>
+                </optgroup>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password</label>
+            <input class="form-input" id="signup-password" type="password" placeholder="At least 8 characters">
+          </div>
+          <button class="btn-auth" onclick="handleSignup()">Create account →</button>
+          <div class="auth-divider"><span>Already registered?</span></div>
+          <div class="auth-switch"><a onclick="showPage('page-login')">Sign in instead →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ MAIN APP PAGE ══════════════════════════════════════════════ -->
+<div class="page" id="page-app">
+
+  <!-- MOBILE HEADER -->
+  <div class="mobile-header" style="display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+      <div style="display:flex;align-items:center;gap:9px;">
+        <div style="width:28px;height:28px;background:white;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;color:var(--blue);">M</div>
+        <div>
+          <div style="font-size:14px;font-weight:700;color:white;line-height:1.1;">Mythros</div>
+          <div style="font-size:9px;color:#7eb8f7;text-transform:uppercase;letter-spacing:0.5px;">Health System</div>
+        </div>
+      </div>
+      <div id="mob-avatar" onclick="handleLogout()" style="width:32px;height:32px;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.22);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;cursor:pointer;">?</div>
+    </div>
+    <div style="font-size:12px;color:#7eb8f7;font-weight:300;margin-bottom:2px;">Good to see you,</div>
+    <div style="font-size:20px;font-weight:800;color:white;letter-spacing:-0.5px;" id="mob-name">—</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+      <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:10px;color:#7eb8f7;margin-bottom:3px;">Results Flagged</div>
+        <div style="font-size:26px;font-weight:800;color:white;letter-spacing:-1px;" id="mob-flagged">—</div>
+        <span id="mob-flagged-tag" style="display:none;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--amber-bg);color:var(--amber-text);">Needs attention</span>
+      </div>
+      <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:10px;color:#7eb8f7;margin-bottom:3px;">Total Results</div>
+        <div style="font-size:26px;font-weight:800;color:white;letter-spacing:-1px;" id="mob-total">—</div>
+        <span id="mob-total-tag" style="display:none;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--green-bg);color:var(--green-text);">Analysed</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-wrap">
+
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark">M</div>
+        <div class="sidebar-logo-name">Mythros<small>Health System</small></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="sb-avatar">?</div>
+        <div>
+          <div class="sidebar-user-name" id="sb-name">—</div>
+          <div class="sidebar-user-lab"  id="sb-lab">—</div>
+        </div>
+      </div>
+      <div class="sidebar-nav">
+        <div class="sidebar-nav-item active"><span class="nav-icon">🏠</span> Home</div>
+        <div class="sidebar-nav-item"><span class="nav-icon">📋</span> My Results</div>
+        <div class="sidebar-nav-item"><span class="nav-icon">👤</span> Profile</div>
+      </div>
+      <div class="sidebar-logout" onclick="handleLogout()"><span class="nav-icon">🚪</span> Sign out</div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="app-content">
+
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <h1 id="topbar-greeting">My Results</h1>
+          <p id="topbar-lab">—</p>
+        </div>
+        <div class="topbar-right">
+          <span class="topbar-stat" id="topbar-flagged-stat" style="display:none;background:var(--amber-bg);color:var(--amber-text);">— Flagged</span>
+          <span class="topbar-stat" id="topbar-total-stat"   style="display:none;background:var(--green-bg);color:var(--green-text);">— Total</span>
+        </div>
+      </div>
+
+      <!-- TABS -->
+      <div class="tabs-bar">
+        <div class="tab active" onclick="setTab(this,'all')">All Results</div>
+        <div class="tab" onclick="setTab(this,'watch')">⚠ Watch</div>
+        <div class="tab" onclick="setTab(this,'urgent')">! Urgent</div>
+        <div class="tab" onclick="setTab(this,'normal')">✓ Normal</div>
+      </div>
+
+      <!-- BODY -->
+      <div class="app-body">
+
+        <!-- STAT CARDS -->
+        <div class="stats-row" id="desktop-stats" style="display:none;">
+          <div class="stat-card">
+            <div class="stat-card-label">Results Flagged</div>
+            <div class="stat-card-value" id="stat-flagged">—</div>
+            <span class="stat-tag" id="stat-flagged-tag" style="display:none;background:var(--amber-bg);color:var(--amber-text);">Needs attention</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Total Results</div>
+            <div class="stat-card-value" id="stat-total">—</div>
+            <span class="stat-tag" id="stat-total-tag" style="display:none;background:var(--green-bg);color:var(--green-text);">Analysed</span>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">Report Source</div>
+            <div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-top:4px;line-height:1.3;" id="stat-lab">—</div>
+          </div>
+        </div>
+
+        <!-- INPUT -->
+        <div class="section-label">Paste or Upload Your Lab Results</div>
+        <div class="card">
+          <div class="card-inner">
+
+            <div class="input-toolbar">
+              <div class="input-label">📋 Copy from your report, or upload a photo</div>
+              <label class="btn-upload" for="image-file-input">
+                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Upload Photo
+              </label>
+              <input type="file" id="image-file-input" accept="image/*" capture="environment" onchange="handleImageSelect(event)">
+            </div>
+
+            <!-- Image preview bar -->
+            <div class="image-preview-bar" id="image-preview-bar">
+              <img id="image-thumb" src="" alt="Preview">
+              <div class="image-preview-info">
+                <div class="image-preview-name" id="image-preview-name">image.jpg</div>
+                <div class="image-preview-meta" id="image-preview-meta">Ready to extract</div>
+              </div>
+              <button class="btn-extract" onclick="extractImage()">
+                <span id="extract-btn-text">Extract Text →</span>
+              </button>
+              <button class="btn-remove-img" onclick="removeImage()" title="Remove image">✕</button>
+            </div>
+
+            <textarea id="lab-input" placeholder="Glucose: 5.4 mmol/L&#10;HbA1c: 42 mmol/mol&#10;Creatinine: 78 µmol/L&#10;Total Cholesterol: 4.8 mmol/L&#10;TSH: 2.1 mIU/L&#10;Haemoglobin: 13.5 g/dL&#10;&#10;Or upload a photo of your printed report above ↑"></textarea>
+            <div class="input-hint">Accepts any format — paste directly from your patient portal, PDF, or printed report.</div>
+
+            <!-- Fasting context toggle -->
+            <div style="margin-top:14px;padding:12px 16px;background:var(--blue-light);border:1.5px solid rgba(29,86,212,0.15);border-radius:var(--radius-xs);">
+              <div style="font-size:12px;font-weight:700;color:var(--text-mid);margin-bottom:10px;">🩸 Was this a fasting blood test?</div>
+              <div style="display:flex;gap:14px;flex-wrap:wrap;">
+                <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:var(--text-mid);">
+                  <input type="radio" name="fasting" id="fasting-yes" value="true" style="accent-color:var(--blue);width:15px;height:15px;">
+                  <span><strong>Yes</strong> — no food or drink for 8+ hours</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:var(--text-mid);">
+                  <input type="radio" name="fasting" id="fasting-no" value="false" style="accent-color:var(--blue);width:15px;height:15px;">
+                  <span><strong>No</strong> — I had eaten or drunk before the test</span>
+                </label>
+                <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:var(--text-mid);">
+                  <input type="radio" name="fasting" id="fasting-unknown" value="unknown" checked style="accent-color:var(--blue);width:15px;height:15px;">
+                  <span><strong>Not sure</strong></span>
+                </label>
+              </div>
+              <div style="font-size:11px;color:var(--text-muted);margin-top:8px;">This helps give you more accurate glucose and cholesterol interpretation.</div>
+            </div>
+
+            <div class="error-msg" id="error-msg"></div>
+            <button class="btn-interpret" id="interpret-btn" onclick="interpretResults()">
+              <div class="spinner" id="spinner"></div>
+              <span id="btn-text">Interpret my results</span>
+            </button>
+
+          </div>
+        </div>
+
+        <div class="disclaimer">💡 Mythros Health System explains your results in plain language to help you have better conversations with your doctor. This is not a diagnostic tool — always consult a qualified healthcare professional.</div>
+
+        <!-- RESULTS -->
+        <div id="results-section">
+          <div class="section-label">Summary</div>
+          <div class="summary-card-result">
+            <div class="summary-eyebrow">Your Results — Plain Language Summary</div>
+            <div class="summary-text" id="summary-text"></div>
+          </div>
+          <div class="section-label">Result Breakdown</div>
+          <div class="results-grid" id="results-list"></div>
+        </div>
+
+        <!-- FOOTER DISCLAIMER -->
+        <div class="app-disclaimer">
+          <strong>Mythros Health System</strong> by Mythros Support Services Ltd (Company No. 16384279) ·
+          For informational use only · Not a medical device · Not a substitute for professional medical advice ·
+          <a href="https://mythrosltd.co.uk" target="_blank" style="color:var(--blue);text-decoration:none;">mythrosltd.co.uk</a>
+        </div>
+
+      </div><!-- /app-body -->
+    </div><!-- /app-content -->
+  </div><!-- /app-wrap -->
+
+  <!-- MOBILE BOTTOM NAV -->
+  <div class="mobile-nav" style="display:none;">
+    <div class="mobile-nav-item active"><span>🏠</span><span>Home</span></div>
+    <div class="mobile-nav-item"><span>📋</span><span>Results</span></div>
+    <div class="mobile-nav-item" onclick="handleLogout()"><span>👤</span><span>Profile</span></div>
+  </div>
+
+</div><!-- /page-app -->
+
+<script>
+  // ── WEBHOOK URL ───────────────────────────────────────────────────────────
+  // PRODUCTION webhook URL — Mythros Health System (n8n Cloud)
+  // TEST URL: https://arie08.app.n8n.cloud/webhook-test/claritylab
+  const WEBHOOK_URL = 'https://arie08.app.n8n.cloud/webhook/claritylab';
+
+  // ── STATE ─────────────────────────────────────────────────────────────────
+  let currentUser  = JSON.parse(localStorage.getItem('mythros_user') || 'null');
+  let allResults   = [];
+  let activeFilter = 'all';
+  let pendingImage = null; // { base64, mime, name, size }
+
+  // ── INIT ──────────────────────────────────────────────────────────────────
+  if (currentUser) {
+    const termsAccepted = localStorage.getItem('mythros_terms_accepted');
+    if (!termsAccepted) showTermsModal();
+    else bootApp();
+  } else {
+    showPage('page-login');
+  }
+
+  // ── TERMS MODAL ───────────────────────────────────────────────────────────
+  function showTermsModal() {
+    document.getElementById('terms-modal').style.display = 'flex';
+  }
+
+  function toggleAccept() {
+    const checked = document.getElementById('terms-check').checked;
+    const btn = document.getElementById('btn-accept');
+    btn.classList.toggle('enabled', checked);
+  }
+
+  function acceptTerms() {
+    localStorage.setItem('mythros_terms_accepted', '1');
+    document.getElementById('terms-modal').style.display = 'none';
+    bootApp();
+  }
+
+  // ── PAGES ─────────────────────────────────────────────────────────────────
+  function showPage(id) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0, 0);
+  }
+
+  // ── AUTH ──────────────────────────────────────────────────────────────────
+  function handleLogin() {
+    const email = document.getElementById('login-email').value.trim();
+    const pass  = document.getElementById('login-password').value;
+    if (!email || !pass) { showAuthErr('login-error', 'Please enter your email and password.'); return; }
+    const users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
+    const user  = users[email];
+    if (!user || user.password !== btoa(pass)) { showAuthErr('login-error', 'Incorrect email or password.'); return; }
+    document.getElementById('login-error').style.display = 'none';
+    currentUser = { name: user.name, email, lab: user.lab, country: user.country };
+    localStorage.setItem('mythros_user', JSON.stringify(currentUser));
+    const termsAccepted = localStorage.getItem('mythros_terms_accepted');
+    if (!termsAccepted) showTermsModal();
+    else bootApp();
+  }
+
+  function handleSignup() {
+    const name    = document.getElementById('signup-name').value.trim();
+    const lab     = document.getElementById('signup-lab').value.trim();
+    const email   = document.getElementById('signup-email').value.trim();
+    const dob     = document.getElementById('signup-dob').value;
+    const country = document.getElementById('signup-country').value;
+    const pass    = document.getElementById('signup-password').value;
+    if (!name || !lab || !email || !dob || !country || !pass) { showAuthErr('signup-error', 'Please fill in all fields.'); return; }
+    if (pass.length < 8) { showAuthErr('signup-error', 'Password must be at least 8 characters.'); return; }
+    if (!email.includes('@')) { showAuthErr('signup-error', 'Please enter a valid email address.'); return; }
+    const users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
+    if (users[email]) { showAuthErr('signup-error', 'An account with this email already exists.'); return; }
+    users[email] = { name, lab, dob, country, password: btoa(pass) };
+    localStorage.setItem('mythros_users', JSON.stringify(users));
+    currentUser = { name, email, lab, country };
+    localStorage.setItem('mythros_user', JSON.stringify(currentUser));
+    const termsAccepted = localStorage.getItem('mythros_terms_accepted');
+    if (!termsAccepted) showTermsModal();
+    else bootApp();
+  }
+
+  function handleLogout() {
+    if (!confirm('Sign out of Mythros Health System?')) return;
+    localStorage.removeItem('mythros_user');
+    currentUser = null;
+    showPage('page-login');
+  }
+
+  function showAuthErr(id, msg) {
+    const el = document.getElementById(id);
+    el.textContent = msg;
+    el.style.display = 'block';
+  }
+
+  // ── BOOT ──────────────────────────────────────────────────────────────────
+  function bootApp() {
+    const first   = (currentUser.name || '').split(' ')[0];
+    const initial = first.charAt(0).toUpperCase();
+    const lab     = currentUser.lab || '—';
+
+    if (document.getElementById('sb-avatar'))       document.getElementById('sb-avatar').textContent       = initial;
+    if (document.getElementById('sb-name'))         document.getElementById('sb-name').textContent         = currentUser.name;
+    if (document.getElementById('sb-lab'))          document.getElementById('sb-lab').textContent          = lab;
+    if (document.getElementById('topbar-greeting')) document.getElementById('topbar-greeting').textContent = 'Good to see you, ' + first;
+    if (document.getElementById('topbar-lab'))      document.getElementById('topbar-lab').textContent      = lab;
+    if (document.getElementById('stat-lab'))        document.getElementById('stat-lab').textContent        = lab;
+    if (document.getElementById('mob-avatar'))      document.getElementById('mob-avatar').textContent      = initial;
+    if (document.getElementById('mob-name'))        document.getElementById('mob-name').textContent        = currentUser.name;
+
+    showPage('page-app');
+    applyLayout();
+  }
+
+  function applyLayout() {
+    const desktop = window.innerWidth >= 768;
+    document.querySelectorAll('.mobile-header').forEach(el => el.style.display = desktop ? 'none' : 'block');
+    document.querySelectorAll('.mobile-nav').forEach(el => el.style.display = desktop ? 'none' : 'grid');
+    const ds = document.getElementById('desktop-stats');
+    if (ds) ds.style.display = desktop ? 'grid' : 'none';
+  }
+
+  window.addEventListener('resize', () => { if (currentUser) applyLayout(); });
+
+  // ── IMAGE UPLOAD ──────────────────────────────────────────────────────────
+  function handleImageSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const dataUrl = e.target.result;
+      const base64  = dataUrl.split(',')[1];
+      const mime    = file.type || 'image/jpeg';
+
+      pendingImage = { base64, mime, name: file.name, size: file.size };
+
+      // Show preview bar
+      document.getElementById('image-thumb').src = dataUrl;
+      document.getElementById('image-preview-name').textContent = file.name;
+      document.getElementById('image-preview-meta').textContent =
+        (file.size / 1024).toFixed(0) + ' KB · ' + mime.split('/')[1].toUpperCase() + ' · Ready to extract';
+      document.getElementById('image-preview-bar').style.display = 'flex';
+    };
+    reader.readAsDataURL(file);
+    event.target.value = '';
+  }
+
+  function removeImage() {
+    pendingImage = null;
+    document.getElementById('image-preview-bar').style.display = 'none';
+    document.getElementById('image-thumb').src = '';
+  }
+
+  async function extractImage() {
+    if (!pendingImage) return;
+    if (!WEBHOOK_URL || WEBHOOK_URL === 'PASTE_YOUR_WEBHOOK_URL_HERE') {
+      showError('Webhook URL not configured. Please contact support.'); return;
+    }
+
+    document.getElementById('extract-btn-text').textContent = 'Extracting…';
+    clearError();
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action:    'extract_image',
+          imageData: pendingImage.base64,
+          imageMime: pendingImage.mime,
+          country:   currentUser.country || 'Nigeria',
+          userId:    currentUser.email   || 'anonymous'
+        })
+      });
+
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+      const extracted = data.answer || data.text || data.output || '';
+
+      if (extracted) {
+        document.getElementById('lab-input').value = extracted;
+        document.getElementById('image-preview-meta').textContent = '✓ Text extracted — review above then click Interpret';
+        document.getElementById('extract-btn-text').textContent = '✓ Done';
+      } else {
+        showError('Could not extract text from this image. Try a clearer photo or paste results manually.');
+        document.getElementById('extract-btn-text').textContent = 'Extract Text →';
+      }
+    } catch(e) {
+      showError('Could not connect. Check your network and try again.');
+      document.getElementById('extract-btn-text').textContent = 'Extract Text →';
+    }
+  }
+
+  // ── INTERPRET ─────────────────────────────────────────────────────────────
+  async function interpretResults() {
+    const input = document.getElementById('lab-input').value.trim();
+    if (!input) { showError('Please paste your lab results first, or upload a photo and extract the text.'); return; }
+    if (!WEBHOOK_URL || WEBHOOK_URL === 'PASTE_YOUR_WEBHOOK_URL_HERE') {
+      showError('Webhook URL not configured. Please contact support.'); return;
+    }
+
+    // Read fasting toggle
+    const fastingEl = document.querySelector('input[name="fasting"]:checked');
+    const fastingVal = fastingEl ? fastingEl.value : 'unknown';
+    const fasting = fastingVal === 'true' ? true : fastingVal === 'false' ? false : null;
+
+    setLoading(true);
+    clearError();
+
+    try {
+      const res = await fetch(WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action:   'interpret',
+          results:  input,
+          country:  currentUser.country  || 'Nigeria',
+          language: navigator.language   || 'en',
+          userId:   currentUser.email    || 'anonymous',
+          fasting:  fasting
+        })
+      });
+
+      if (!res.ok) throw new Error(res.status);
+      const data = await res.json();
+
+      allResults = data.results || [];
+      document.getElementById('summary-text').textContent = data.summary || '';
+      renderList();
+      updateStats();
+      document.getElementById('results-section').style.display = 'block';
+      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    } catch(e) {
+      showError('Could not connect to the interpretation service. Please check your network and try again.');
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  // ── RENDER ────────────────────────────────────────────────────────────────
+  function renderList() {
+    const list     = document.getElementById('results-list');
+    list.innerHTML = '';
+    const filtered = activeFilter === 'all' ? allResults : allResults.filter(r => r.status === activeFilter);
+
+    if (!filtered.length) {
+      list.innerHTML = `<div style="color:var(--text-muted);font-size:13px;padding:12px 0;">No ${activeFilter} results to show.</div>`;
+      return;
+    }
+
+    filtered.forEach((item, i) => {
+      const s  = item.status || 'normal';
+      const pm = {
+        normal: ['pill-normal', '✓ Normal'],
+        watch:  ['pill-watch',  '⚠ Watch'],
+        urgent: ['pill-urgent', '! Urgent']
+      };
+      const [pc, pl] = pm[s] || pm.normal;
+      const div = document.createElement('div');
+      div.className = `result-item status-${s}`;
+      div.style.animationDelay = `${i * 0.04}s`;
+      div.innerHTML = `
+        <div>
+          <div class="result-name">${esc(item.name)}</div>
+          <div class="result-value">${esc(item.value)}${item.unit ? ' ' + esc(item.unit) : ''}</div>
+          ${item.reference ? `<div class="result-ref">Ref: ${esc(item.reference)}</div>` : ''}
+          <div class="result-explanation">${esc(item.explanation)}</div>
+        </div>
+        <span class="status-pill ${pc}"><span class="pill-dot"></span>${pl}</span>`;
+      list.appendChild(div);
+    });
+  }
+
+  function updateStats() {
+    const flagged = allResults.filter(r => r.status !== 'normal').length;
+    const total   = allResults.length;
+
+    ['stat-flagged','mob-flagged'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = flagged; });
+    ['stat-total','mob-total'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = total; });
+
+    const show = (id, v) => { const el = document.getElementById(id); if (el) el.style.display = v ? 'inline-flex' : 'none'; };
+    show('stat-flagged-tag', flagged > 0);
+    show('mob-flagged-tag',  flagged > 0);
+    show('stat-total-tag',   total > 0);
+    show('mob-total-tag',    total > 0);
+
+    const ts = document.getElementById('topbar-flagged-stat');
+    const tt = document.getElementById('topbar-total-stat');
+    if (ts) { ts.textContent = flagged + ' Flagged'; ts.style.display = flagged > 0 ? 'inline-flex' : 'none'; }
+    if (tt) { tt.textContent = total + ' Total';   tt.style.display = total > 0 ? 'inline-flex' : 'none'; }
+  }
+
+  // ── TABS ──────────────────────────────────────────────────────────────────
+  function setTab(el, filter) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    activeFilter = filter;
+    renderList();
+  }
+
+  // ── UTILS ─────────────────────────────────────────────────────────────────
+  function esc(s) {
+    if (!s) return '';
+    return String(s)
+      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/\n/g,'<br>');
+  }
+
+  function setLoading(on) {
+    document.getElementById('interpret-btn').disabled        = on;
+    document.getElementById('spinner').style.display         = on ? 'block' : 'none';
+    document.getElementById('btn-text').textContent          = on ? 'Interpreting…' : 'Interpret my results';
+  }
+
+  function showError(msg) {
+    const el = document.getElementById('error-msg');
+    el.textContent  = msg;
+    el.style.display = 'block';
+  }
+
+  function clearError() {
+    document.getElementById('error-msg').style.display = 'none';
+  }
+</script>
+</body>
+</html>
