@@ -892,16 +892,16 @@
         <div class="auth-card">
           <div class="auth-error" id="login-error"></div>
           <div class="form-group">
-            <label class="form-label">Email Address</label>
+            <label class="form-label">Email Address <span style="color:var(--red);font-size:13px;">*</span></label>
             <input class="form-input" id="login-email" type="email" autocomplete="email" autocomplete="username" placeholder="you@example.com" >
           </div>
           <div class="form-group">
-            <label class="form-label">Password</label>
+            <label class="form-label">Password <span style="color:var(--red);font-size:13px;">*</span></label>
             <input class="form-input" id="login-password" type="password" autocomplete="current-password" placeholder="••••••••"  onkeydown="if(event.key==='Enter') handleLogin()">
           </div>
           <button class="btn-auth" onclick="handleLogin()">Sign in →</button>
           <div class="auth-divider"><span>New user?</span></div>
-          <div class="auth-switch"><a onclick="showPage('page-signup')">Create a free account →</a></div>
+          <div class="auth-switch"><a onclick="showPage('page-signup'); autoDetectCountry()">Create a free account →</a></div>
         </div>
       </div>
     </div>
@@ -919,7 +919,6 @@
       <div class="auth-heading">Take control of your health.</div>
       <div class="auth-sub">Join patients across Nigeria and the world who use Mythros to read and understand their lab results clearly, instantly, in their own language.</div>
       <div class="auth-features">
-        <div class="auth-feature"><div class="feature-dot"></div> Free to use</div>
         <div class="auth-feature"><div class="feature-dot"></div> Works with any lab report format</div>
         <div class="auth-feature"><div class="feature-dot"></div> Nigeria, UK, USA & global reference ranges</div>
         <div class="auth-feature"><div class="feature-dot"></div> Upload photos of printed reports</div>
@@ -928,68 +927,167 @@
     <div class="auth-right">
       <div class="auth-form-box">
         <div class="auth-form-title">Create your account</div>
-        <div class="auth-form-sub">Fill in your details to get started, it's free</div>
+        <div class="auth-form-sub">Fill in your details to get started</div>
         <div class="auth-card">
           <div class="auth-error" id="signup-error"></div>
           <div class="form-group">
-            <label class="form-label">Full Name</label>
+            <label class="form-label">Full Name <span style="color:var(--red);font-size:13px;">*</span></label>
             <input class="form-input" id="signup-name" type="text" placeholder="e.g. Amara Okonkwo">
           </div>
           <div class="form-group">
-            <label class="form-label">Hospital or Lab (where your report is from)</label>
+            <label class="form-label">Hospital or Lab <span style="color:var(--red);font-size:13px;">*</span></label>
             <input class="form-input" id="signup-lab" type="text" placeholder="e.g. Lagos University Teaching Hospital">
           </div>
           <div class="form-group">
-            <label class="form-label">Email Address</label>
+            <label class="form-label">Email Address <span style="color:var(--red);font-size:13px;">*</span></label>
             <input class="form-input" id="signup-email" type="email" autocomplete="username" placeholder="you@example.com">
           </div>
           <div class="two-col">
             <div class="form-group">
-              <label class="form-label">Date of Birth</label>
+              <label class="form-label">Date of Birth <span style="color:var(--red);font-size:13px;">*</span></label>
               <input class="form-input" id="signup-dob" type="date">
             </div>
             <div class="form-group">
-              <label class="form-label">Country</label>
+              <label class="form-label" style="display:flex;align-items:center;justify-content:space-between;">
+                <span>Country</span>
+                <span id="location-detect-btn" onclick="detectLocation()" style="font-size:10px;font-weight:600;color:var(--blue);cursor:pointer;text-transform:none;letter-spacing:0;">📍 Detect automatically</span>
+              </label>
               <select class="form-input" id="signup-country">
-                <option value="">Select country...</option>
+                <option value="">Select your country...</option>
                 <optgroup label="Africa">
                   <option value="Nigeria" selected>Nigeria</option>
+                  <option value="Algeria">Algeria</option>
+                  <option value="Angola">Angola</option>
+                  <option value="Botswana">Botswana</option>
+                  <option value="Cameroon">Cameroon</option>
+                  <option value="Côte d'Ivoire">Côte d'Ivoire</option>
+                  <option value="Democratic Republic of Congo">DR Congo</option>
+                  <option value="Egypt">Egypt</option>
+                  <option value="Ethiopia">Ethiopia</option>
                   <option value="Ghana">Ghana</option>
                   <option value="Kenya">Kenya</option>
+                  <option value="Libya">Libya</option>
+                  <option value="Morocco">Morocco</option>
+                  <option value="Mozambique">Mozambique</option>
+                  <option value="Namibia">Namibia</option>
+                  <option value="Rwanda">Rwanda</option>
+                  <option value="Senegal">Senegal</option>
+                  <option value="Sierra Leone">Sierra Leone</option>
+                  <option value="Somalia">Somalia</option>
                   <option value="South Africa">South Africa</option>
+                  <option value="Sudan">Sudan</option>
                   <option value="Tanzania">Tanzania</option>
+                  <option value="Tunisia">Tunisia</option>
                   <option value="Uganda">Uganda</option>
-                  <option value="Cameroon">Cameroon</option>
                   <option value="Zambia">Zambia</option>
                   <option value="Zimbabwe">Zimbabwe</option>
                 </optgroup>
                 <optgroup label="Europe">
                   <option value="United Kingdom">United Kingdom</option>
-                  <option value="Germany">Germany</option>
+                  <option value="Austria">Austria</option>
+                  <option value="Belgium">Belgium</option>
+                  <option value="Croatia">Croatia</option>
+                  <option value="Czech Republic">Czech Republic</option>
+                  <option value="Denmark">Denmark</option>
+                  <option value="Finland">Finland</option>
                   <option value="France">France</option>
-                  <option value="Netherlands">Netherlands</option>
+                  <option value="Germany">Germany</option>
+                  <option value="Greece">Greece</option>
+                  <option value="Hungary">Hungary</option>
                   <option value="Ireland">Ireland</option>
+                  <option value="Italy">Italy</option>
+                  <option value="Netherlands">Netherlands</option>
+                  <option value="Norway">Norway</option>
+                  <option value="Poland">Poland</option>
+                  <option value="Portugal">Portugal</option>
+                  <option value="Romania">Romania</option>
+                  <option value="Russia">Russia</option>
+                  <option value="Spain">Spain</option>
+                  <option value="Sweden">Sweden</option>
+                  <option value="Switzerland">Switzerland</option>
+                  <option value="Turkey">Turkey</option>
+                  <option value="Ukraine">Ukraine</option>
                 </optgroup>
                 <optgroup label="Americas">
                   <option value="United States">United States</option>
-                  <option value="Canada">Canada</option>
+                  <option value="Argentina">Argentina</option>
+                  <option value="Bolivia">Bolivia</option>
                   <option value="Brazil">Brazil</option>
+                  <option value="Canada">Canada</option>
+                  <option value="Chile">Chile</option>
+                  <option value="Colombia">Colombia</option>
+                  <option value="Cuba">Cuba</option>
+                  <option value="Ecuador">Ecuador</option>
+                  <option value="Jamaica">Jamaica</option>
+                  <option value="Mexico">Mexico</option>
+                  <option value="Panama">Panama</option>
+                  <option value="Peru">Peru</option>
+                  <option value="Trinidad and Tobago">Trinidad and Tobago</option>
+                  <option value="Venezuela">Venezuela</option>
                 </optgroup>
-                <optgroup label="Asia & Middle East">
+                <optgroup label="Asia">
+                  <option value="Bangladesh">Bangladesh</option>
+                  <option value="China">China</option>
                   <option value="India">India</option>
-                  <option value="UAE">UAE</option>
+                  <option value="Indonesia">Indonesia</option>
+                  <option value="Japan">Japan</option>
+                  <option value="Malaysia">Malaysia</option>
+                  <option value="Myanmar">Myanmar</option>
+                  <option value="Nepal">Nepal</option>
+                  <option value="Pakistan">Pakistan</option>
+                  <option value="Philippines">Philippines</option>
+                  <option value="Singapore">Singapore</option>
+                  <option value="South Korea">South Korea</option>
+                  <option value="Sri Lanka">Sri Lanka</option>
+                  <option value="Thailand">Thailand</option>
+                  <option value="Vietnam">Vietnam</option>
+                </optgroup>
+                <optgroup label="Middle East">
+                  <option value="Bahrain">Bahrain</option>
+                  <option value="Iran">Iran</option>
+                  <option value="Iraq">Iraq</option>
+                  <option value="Israel">Israel</option>
+                  <option value="Jordan">Jordan</option>
+                  <option value="Kuwait">Kuwait</option>
+                  <option value="Lebanon">Lebanon</option>
+                  <option value="Oman">Oman</option>
+                  <option value="Qatar">Qatar</option>
                   <option value="Saudi Arabia">Saudi Arabia</option>
+                  <option value="UAE">UAE</option>
+                  <option value="Yemen">Yemen</option>
+                </optgroup>
+                <optgroup label="Oceania">
+                  <option value="Australia">Australia</option>
+                  <option value="Fiji">Fiji</option>
+                  <option value="New Zealand">New Zealand</option>
+                  <option value="Papua New Guinea">Papua New Guinea</option>
                 </optgroup>
                 <optgroup label="Other">
-                  <option value="Australia">Australia</option>
                   <option value="Other">Other</option>
                 </optgroup>
               </select>
             </div>
           </div>
           <div class="form-group">
-            <label class="form-label">Password</label>
-            <input class="form-input" id="signup-password" type="password" autocomplete="new-password" placeholder="At least 8 characters">
+            <label class="form-label">Password <span style="color:var(--red);font-size:13px;">*</span></label>
+            <div style="position:relative;">
+              <input class="form-input" id="signup-password" type="password" autocomplete="new-password" placeholder="Min 8 chars, 1 uppercase, 1 number, 1 symbol" oninput="checkPasswordStrength(this.value)" style="padding-right:44px;">
+              <span onclick="togglePasswordVisibility()" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;color:var(--text-muted);" id="pw-toggle">👁</span>
+            </div>
+            <!-- Password strength bar -->
+            <div style="margin-top:8px;">
+              <div style="height:4px;border-radius:4px;background:var(--card-border);overflow:hidden;">
+                <div id="pw-strength-bar" style="height:100%;width:0%;border-radius:4px;transition:width 0.3s,background 0.3s;"></div>
+              </div>
+              <div id="pw-strength-text" style="font-size:11px;margin-top:5px;font-weight:600;"></div>
+            </div>
+            <!-- Password requirements checklist -->
+            <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:3px;">
+              <div id="req-length"  style="font-size:11px;color:var(--text-muted);">✗ Min 8 characters</div>
+              <div id="req-upper"   style="font-size:11px;color:var(--text-muted);">✗ 1 uppercase letter</div>
+              <div id="req-number"  style="font-size:11px;color:var(--text-muted);">✗ 1 number</div>
+              <div id="req-symbol"  style="font-size:11px;color:var(--text-muted);">✗ 1 symbol (!@#$...)</div>
+            </div>
           </div>
           <button class="btn-auth" onclick="handleSignup()">Create account →</button>
           <div class="auth-divider"><span>Already registered?</span></div>
@@ -1328,9 +1426,24 @@
     const pass    = document.getElementById('signup-password').value;
     if (!name || !lab || !email || !dob || !country || !pass) { showAuthErr('signup-error', 'Please fill in all fields.'); return; }
     if (pass.length < 8) { showAuthErr('signup-error', 'Password must be at least 8 characters.'); return; }
+    if (!/[A-Z]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 uppercase letter.'); return; }
+    if (!/[0-9]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 number.'); return; }
+    if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(pass)) { showAuthErr('signup-error', 'Password must include at least 1 symbol (e.g. !@#$%).'); return; }
     if (!email.includes('@')) { showAuthErr('signup-error', 'Please enter a valid email address.'); return; }
     const users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
     if (users[email]) { showAuthErr('signup-error', 'An account with this email already exists.'); return; }
+    // Get IP location data for analytics (non-blocking)
+    getLocationForLogging().then(loc => {
+      users[email] = { name, lab, dob, country, password: btoa(pass),
+        registeredAt: new Date().toISOString(),
+        registrationCountry: country,
+        ipCountry: loc.ip_country || country,
+        city: loc.city || '',
+        region: loc.region || '',
+        timezone: loc.timezone || ''
+      };
+      localStorage.setItem('mythros_users', JSON.stringify(users));
+    });
     users[email] = { name, lab, dob, country, password: btoa(pass) };
     localStorage.setItem('mythros_users', JSON.stringify(users));
     currentUser = { name, email, lab, country };
@@ -1479,7 +1592,9 @@
           country:  currentUser.country  || 'Nigeria',
           language: selectedLanguage     || navigator.language || 'en',
           userId:   currentUser.email    || 'anonymous',
-          fasting:  fasting
+          fasting:  fasting,
+          city:     currentUser.city     || '',
+          timezone: currentUser.timezone || Intl.DateTimeFormat().resolvedOptions().timeZone || 
         })
       });
 
@@ -1663,6 +1778,158 @@
         if (sel) sel.value = saved;
       }
     }
+  }
+
+
+  // ── LOCATION DETECTION ────────────────────────────────────────────────────
+  // Maps country names and ISO codes to the values used in our select dropdown
+  const COUNTRY_MAP = {
+    'NG': 'Nigeria', 'GH': 'Ghana', 'KE': 'Kenya', 'ZA': 'South Africa',
+    'TZ': 'Tanzania', 'UG': 'Uganda', 'CM': 'Cameroon', 'ZM': 'Zambia',
+    'ZW': 'Zimbabwe', 'GB': 'United Kingdom', 'DE': 'Germany', 'FR': 'France',
+    'NL': 'Netherlands', 'IE': 'Ireland', 'US': 'United States', 'CA': 'Canada',
+    'BR': 'Brazil', 'IN': 'India', 'AE': 'UAE', 'SA': 'Saudi Arabia',
+    'AU': 'Australia',
+    // full names as fallback
+    'Nigeria':'Nigeria','Ghana':'Ghana','Kenya':'Kenya','United Kingdom':'United Kingdom',
+    'United States':'United States','Germany':'Germany','France':'France',
+    'South Africa':'South Africa','India':'India','Canada':'Canada','Australia':'Australia',
+    'UAE':'UAE','Brazil':'Brazil','Netherlands':'Netherlands','Ireland':'Ireland',
+    'Tanzania':'Tanzania','Uganda':'Uganda','Cameroon':'Cameroon','Zambia':'Zambia','Zimbabwe':'Zimbabwe',
+    'Saudi Arabia':'Saudi Arabia',
+  };
+
+  function setCountryInSelect(countryCode) {
+    const mapped = COUNTRY_MAP[countryCode] || '';
+    const sel = document.getElementById('signup-country');
+    if (!sel || !mapped) return false;
+    for (let i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].value === mapped) {
+        sel.selectedIndex = i;
+        // Visual feedback
+        const btn = document.getElementById('location-detect-btn');
+        if (btn) btn.textContent = '✓ ' + mapped;
+        return true;
+      }
+    }
+    return false;
+  }
+
+  // IP-based country detection (no permission needed, silent fallback)
+  async function detectCountryFromIP() {
+    try {
+      const res = await fetch('https://ipapi.co/json/');
+      const data = await res.json();
+      const code = data.country_code || '';
+      const name = data.country_name || '';
+      return setCountryInSelect(code) || setCountryInSelect(name);
+    } catch(e) {
+      return false;
+    }
+  }
+
+  // Full location detection — tries GPS first, falls back to IP
+  function detectLocation() {
+    const btn = document.getElementById('location-detect-btn');
+    if (btn) btn.textContent = '⏳ Detecting...';
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        async (pos) => {
+          // Got GPS coords — reverse geocode using free API
+          try {
+            const { latitude, longitude } = pos.coords;
+            const res  = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
+            const data = await res.json();
+            const code = data.address?.country_code?.toUpperCase() || '';
+            const name = data.address?.country || '';
+            if (!setCountryInSelect(code) && !setCountryInSelect(name)) {
+              await detectCountryFromIP(); // fallback to IP if GPS country not in our list
+            }
+          } catch(e) {
+            await detectCountryFromIP();
+          }
+        },
+        async () => {
+          // Permission denied or error — fall back to IP
+          await detectCountryFromIP();
+        },
+        { timeout: 5000 }
+      );
+    } else {
+      detectCountryFromIP();
+    }
+  }
+
+  // Auto-detect silently on signup page load (IP only, no prompt)
+  function autoDetectCountry() {
+    detectCountryFromIP();
+  }
+
+  // Also store detected location in usage data sent to webhook
+  // so we know where users are even after signup
+  async function getLocationForLogging() {
+    try {
+      const res  = await fetch('https://ipapi.co/json/');
+      const data = await res.json();
+      return {
+        country_code: data.country_code || '',
+        city:         data.city         || '',
+        region:       data.region       || '',
+        ip_country:   data.country_name || '',
+        timezone:     data.timezone     || '',
+      };
+    } catch(e) {
+      return {};
+    }
+  }
+
+
+  // ── PASSWORD STRENGTH ────────────────────────────────────────────────────
+  function checkPasswordStrength(val) {
+    const hasLength = val.length >= 8;
+    const hasUpper  = /[A-Z]/.test(val);
+    const hasNumber = /[0-9]/.test(val);
+    const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\|,.<>\/?]/.test(val);
+
+    // Update checklist
+    const setReq = (id, met) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      el.textContent = (met ? '✓ ' : '✗ ') + el.textContent.slice(2);
+      el.style.color = met ? 'var(--green)' : 'var(--text-muted)';
+      el.style.fontWeight = met ? '700' : '400';
+    };
+    setReq('req-length', hasLength);
+    setReq('req-upper',  hasUpper);
+    setReq('req-number', hasNumber);
+    setReq('req-symbol', hasSymbol);
+
+    // Strength score
+    const score = [hasLength, hasUpper, hasNumber, hasSymbol].filter(Boolean).length;
+    const bar  = document.getElementById('pw-strength-bar');
+    const text = document.getElementById('pw-strength-text');
+    if (!bar || !text) return;
+
+    const levels = [
+      { pct: '0%',   color: '',                  label: '',           labelColor: '' },
+      { pct: '25%',  color: 'var(--red)',         label: 'Weak',       labelColor: 'var(--red-text)' },
+      { pct: '50%',  color: 'var(--amber)',       label: 'Fair',       labelColor: 'var(--amber-text)' },
+      { pct: '75%',  color: '#f59e0b',            label: 'Good',       labelColor: '#92540a' },
+      { pct: '100%', color: 'var(--green)',       label: 'Strong',     labelColor: 'var(--green-text)' },
+    ];
+    bar.style.width      = levels[score].pct;
+    bar.style.background = levels[score].color;
+    text.textContent     = levels[score].label;
+    text.style.color     = levels[score].labelColor;
+  }
+
+  function togglePasswordVisibility() {
+    const input  = document.getElementById('signup-password');
+    const toggle = document.getElementById('pw-toggle');
+    if (!input) return;
+    input.type   = input.type === 'password' ? 'text' : 'password';
+    toggle.textContent = input.type === 'password' ? '👁' : '🙈';
   }
 
 </script>
