@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mythros Health System</title>
-<meta name="description" content="Understand your lab results in plain language — Mythros Health System">
+<meta name="description" content="Understand your lab results in plain language. Mythros Health System">
 <meta name="theme-color" content="#0f2247">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%230f2247'/><text y='75' x='50' text-anchor='middle' font-size='60' font-family='Arial' font-weight='bold' fill='white'>M</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -822,12 +822,12 @@
     <div class="modal-body">
 
       <div class="modal-section" style="background:#fdf0ee;border-color:rgba(192,57,43,0.15);">
-        <div class="modal-section-title red">⚠ Medical Disclaimer — Important</div>
+        <div class="modal-section-title red">⚠ Medical Disclaimer</div>
         <ul>
           <li>Mythros Health System is <strong>not a medical device</strong> and does not provide medical advice, diagnosis, or treatment.</li>
           <li>All interpretations are for <strong>informational and educational purposes only</strong> to help you understand your results.</li>
           <li>Always consult a <strong>qualified healthcare professional</strong> before making any decisions about your health.</li>
-          <li>In an emergency, call your local emergency services immediately — do not rely on this app.</li>
+          <li>In an emergency, call your local emergency services immediately. Do not rely on this app.</li>
           <li>This service is not a substitute for professional medical care, advice, or clinical judgement.</li>
         </ul>
       </div>
@@ -858,7 +858,7 @@
         <input type="checkbox" id="terms-check" onchange="toggleAccept()">
         <label for="terms-check">I have read and understand the medical disclaimer. I agree that this service does not replace professional medical advice and I will consult a healthcare professional for any medical concerns.</label>
       </div>
-      <button class="btn-accept" id="btn-accept" onclick="acceptTerms()">I Understand — Continue to Mythros Health System →</button>
+      <button class="btn-accept" id="btn-accept" onclick="acceptTerms()">I Understand, Continue to Mythros Health System →</button>
     </div>
   </div>
 </div>
@@ -872,7 +872,7 @@
         <div class="logo-name">Mythros<small>Health System</small></div>
       </div>
       <div class="auth-heading">Understand your lab results.</div>
-      <div class="auth-sub">Instant plain language explanations for every value in your medical report — so you understand your health, in your language, for your country.</div>
+      <div class="auth-sub">Instant plain language explanations for every value in your medical report. Understand your health results, in your language, for your country.</div>
       <div class="auth-features">
         <div class="auth-feature"><div class="feature-dot"></div> Instant result interpretation in 15+ languages</div>
         <div class="auth-feature"><div class="feature-dot"></div> Normal, Watch & Urgent flags</div>
@@ -893,11 +893,11 @@
           <div class="auth-error" id="login-error"></div>
           <div class="form-group">
             <label class="form-label">Email Address</label>
-            <input class="form-input" id="login-email" type="email" placeholder="you@example.com" autocomplete="email">
+            <input class="form-input" id="login-email" type="email" autocomplete="email" autocomplete="username" placeholder="you@example.com" >
           </div>
           <div class="form-group">
             <label class="form-label">Password</label>
-            <input class="form-input" id="login-password" type="password" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter') handleLogin()">
+            <input class="form-input" id="login-password" type="password" autocomplete="current-password" placeholder="••••••••"  onkeydown="if(event.key==='Enter') handleLogin()">
           </div>
           <button class="btn-auth" onclick="handleLogin()">Sign in →</button>
           <div class="auth-divider"><span>New user?</span></div>
@@ -917,7 +917,7 @@
         <div class="logo-name">Mythros<small>Health System</small></div>
       </div>
       <div class="auth-heading">Take control of your health.</div>
-      <div class="auth-sub">Join patients across Nigeria and the world who use Mythros to read and understand their lab results — clearly, instantly, in their own language.</div>
+      <div class="auth-sub">Join patients across Nigeria and the world who use Mythros to read and understand their lab results clearly, instantly, in their own language.</div>
       <div class="auth-features">
         <div class="auth-feature"><div class="feature-dot"></div> Free to use</div>
         <div class="auth-feature"><div class="feature-dot"></div> Works with any lab report format</div>
@@ -928,7 +928,7 @@
     <div class="auth-right">
       <div class="auth-form-box">
         <div class="auth-form-title">Create your account</div>
-        <div class="auth-form-sub">Fill in your details to get started — it's free</div>
+        <div class="auth-form-sub">Fill in your details to get started, it's free</div>
         <div class="auth-card">
           <div class="auth-error" id="signup-error"></div>
           <div class="form-group">
@@ -941,7 +941,7 @@
           </div>
           <div class="form-group">
             <label class="form-label">Email Address</label>
-            <input class="form-input" id="signup-email" type="email" placeholder="you@example.com">
+            <input class="form-input" id="signup-email" type="email" autocomplete="username" placeholder="you@example.com">
           </div>
           <div class="two-col">
             <div class="form-group">
@@ -989,7 +989,7 @@
           </div>
           <div class="form-group">
             <label class="form-label">Password</label>
-            <input class="form-input" id="signup-password" type="password" placeholder="At least 8 characters">
+            <input class="form-input" id="signup-password" type="password" autocomplete="new-password" placeholder="At least 8 characters">
           </div>
           <button class="btn-auth" onclick="handleSignup()">Create account →</button>
           <div class="auth-divider"><span>Already registered?</span></div>
@@ -1016,16 +1016,16 @@
       <div id="mob-avatar" onclick="handleLogout()" style="width:32px;height:32px;background:rgba(255,255,255,0.15);border:2px solid rgba(255,255,255,0.22);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:white;cursor:pointer;">?</div>
     </div>
     <div style="font-size:12px;color:#7eb8f7;font-weight:300;margin-bottom:2px;">Good to see you,</div>
-    <div style="font-size:20px;font-weight:800;color:white;letter-spacing:-0.5px;" id="mob-name">—</div>
+    <div style="font-size:20px;font-weight:800;color:white;letter-spacing:-0.5px;" id="mob-name"></div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
       <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;">
         <div style="font-size:10px;color:#7eb8f7;margin-bottom:3px;">Results Flagged</div>
-        <div style="font-size:26px;font-weight:800;color:white;letter-spacing:-1px;" id="mob-flagged">—</div>
+        <div style="font-size:26px;font-weight:800;color:white;letter-spacing:-1px;" id="mob-flagged"></div>
         <span id="mob-flagged-tag" style="display:none;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--amber-bg);color:var(--amber-text);">Needs attention</span>
       </div>
       <div style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;">
         <div style="font-size:10px;color:#7eb8f7;margin-bottom:3px;">Total Results</div>
-        <div style="font-size:26px;font-weight:800;color:white;letter-spacing:-1px;" id="mob-total">—</div>
+        <div style="font-size:26px;font-weight:800;color:white;letter-spacing:-1px;" id="mob-total"></div>
         <span id="mob-total-tag" style="display:none;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:var(--green-bg);color:var(--green-text);">Analysed</span>
       </div>
     </div>
@@ -1043,14 +1043,14 @@
       <div class="sidebar-user">
         <div class="sidebar-avatar" id="sb-avatar">?</div>
         <div>
-          <div class="sidebar-user-name" id="sb-name">—</div>
-          <div class="sidebar-user-lab"  id="sb-lab">—</div>
+          <div class="sidebar-user-name" id="sb-name"></div>
+          <div class="sidebar-user-lab"  id="sb-lab"></div>
         </div>
       </div>
       <div class="sidebar-nav">
-        <div class="sidebar-nav-item active"><span class="nav-icon">🏠</span> Home</div>
-        <div class="sidebar-nav-item"><span class="nav-icon">📋</span> My Results</div>
-        <div class="sidebar-nav-item"><span class="nav-icon">👤</span> Profile</div>
+        <div class="sidebar-nav-item active" onclick="showView('home')"><span class="nav-icon">🏠</span> Home</div>
+        <div class="sidebar-nav-item" onclick="showView('results')"><span class="nav-icon">📋</span> My Results</div>
+        <div class="sidebar-nav-item" onclick="showView('profile')"><span class="nav-icon">👤</span> Profile</div>
       </div>
       <div class="sidebar-logout" onclick="handleLogout()"><span class="nav-icon">🚪</span> Sign out</div>
     </div>
@@ -1062,11 +1062,11 @@
       <div class="topbar">
         <div class="topbar-left">
           <h1 id="topbar-greeting">My Results</h1>
-          <p id="topbar-lab">—</p>
+          <p id="topbar-lab"></p>
         </div>
         <div class="topbar-right">
-          <span class="topbar-stat" id="topbar-flagged-stat" style="display:none;background:var(--amber-bg);color:var(--amber-text);">— Flagged</span>
-          <span class="topbar-stat" id="topbar-total-stat"   style="display:none;background:var(--green-bg);color:var(--green-text);">— Total</span>
+          <span class="topbar-stat" id="topbar-flagged-stat" style="display:none;background:var(--amber-bg);color:var(--amber-text);"></span>
+          <span class="topbar-stat" id="topbar-total-stat"   style="display:none;background:var(--green-bg);color:var(--green-text);"></span>
         </div>
       </div>
 
@@ -1085,22 +1085,45 @@
         <div class="stats-row" id="desktop-stats" style="display:none;">
           <div class="stat-card">
             <div class="stat-card-label">Results Flagged</div>
-            <div class="stat-card-value" id="stat-flagged">—</div>
+            <div class="stat-card-value" id="stat-flagged"></div>
             <span class="stat-tag" id="stat-flagged-tag" style="display:none;background:var(--amber-bg);color:var(--amber-text);">Needs attention</span>
           </div>
           <div class="stat-card">
             <div class="stat-card-label">Total Results</div>
-            <div class="stat-card-value" id="stat-total">—</div>
+            <div class="stat-card-value" id="stat-total"></div>
             <span class="stat-tag" id="stat-total-tag" style="display:none;background:var(--green-bg);color:var(--green-text);">Analysed</span>
           </div>
           <div class="stat-card">
             <div class="stat-card-label">Report Source</div>
-            <div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-top:4px;line-height:1.3;" id="stat-lab">—</div>
+            <div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-top:4px;line-height:1.3;" id="stat-lab"></div>
           </div>
         </div>
 
         <!-- INPUT -->
-        <div class="section-label">Paste or Upload Your Lab Results</div>
+        <!-- LANGUAGE SELECTOR -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
+          <div class="section-label" style="margin:0;">Paste or Upload Your Lab Results</div>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">🌐 Language</span>
+            <select id="lang-select" onchange="setLanguage(this.value)" style="padding:6px 30px 6px 10px;border:1.5px solid var(--card-border);border-radius:var(--radius-xs);font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:var(--text-dark);background:white;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236878a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;outline:none;">
+              <option value="en">English</option>
+              <option value="yo">Yorùbá</option>
+              <option value="ha">Hausa</option>
+              <option value="ig">Igbo</option>
+              <option value="pcm">Pidgin</option>
+              <option value="fr">Français</option>
+              <option value="es">Español</option>
+              <option value="pt">Português</option>
+              <option value="ar">العربية</option>
+              <option value="hi">हिन्दी</option>
+              <option value="bn">বাংলা</option>
+              <option value="zh">中文</option>
+              <option value="de">Deutsch</option>
+              <option value="cy">Cymraeg</option>
+            </select>
+          </div>
+        </div>
+
         <div class="card">
           <div class="card-inner">
 
@@ -1127,7 +1150,7 @@
             </div>
 
             <textarea id="lab-input" placeholder="Glucose: 5.4 mmol/L&#10;HbA1c: 42 mmol/mol&#10;Creatinine: 78 µmol/L&#10;Total Cholesterol: 4.8 mmol/L&#10;TSH: 2.1 mIU/L&#10;Haemoglobin: 13.5 g/dL&#10;&#10;Or upload a photo of your printed report above ↑"></textarea>
-            <div class="input-hint">Accepts any format — paste directly from your patient portal, PDF, or printed report.</div>
+            <div class="input-hint">Accepts any format paste directly from your patient portal, PDF, or printed report.</div>
 
             <!-- Fasting context toggle -->
             <div style="margin-top:14px;padding:12px 16px;background:var(--blue-light);border:1.5px solid rgba(29,86,212,0.15);border-radius:var(--radius-xs);">
@@ -1135,11 +1158,11 @@
               <div style="display:flex;gap:14px;flex-wrap:wrap;">
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:var(--text-mid);">
                   <input type="radio" name="fasting" id="fasting-yes" value="true" style="accent-color:var(--blue);width:15px;height:15px;">
-                  <span><strong>Yes</strong> — no food or drink for 8+ hours</span>
+                  <span><strong>Yes</strong> no food or drink for 8+ hours</span>
                 </label>
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:var(--text-mid);">
                   <input type="radio" name="fasting" id="fasting-no" value="false" style="accent-color:var(--blue);width:15px;height:15px;">
-                  <span><strong>No</strong> — I had eaten or drunk before the test</span>
+                  <span><strong>No</strong> I had eaten or drunk before the test</span>
                 </label>
                 <label style="display:flex;align-items:center;gap:7px;cursor:pointer;font-size:13px;color:var(--text-mid);">
                   <input type="radio" name="fasting" id="fasting-unknown" value="unknown" checked style="accent-color:var(--blue);width:15px;height:15px;">
@@ -1158,23 +1181,67 @@
           </div>
         </div>
 
-        <div class="disclaimer">💡 Mythros Health System explains your results in plain language to help you have better conversations with your doctor. This is not a diagnostic tool — always consult a qualified healthcare professional.</div>
+        <div class="disclaimer">💡 Mythros Health System explains your results in plain language to help you have better conversations with your doctor. This is not a diagnostic tool always consult a qualified healthcare professional.</div>
 
         <!-- RESULTS -->
         <div id="results-section">
           <div class="section-label">Summary</div>
           <div class="summary-card-result">
-            <div class="summary-eyebrow">Your Results — Plain Language Summary</div>
+            <div class="summary-eyebrow">Your Results Plain Language Summary</div>
             <div class="summary-text" id="summary-text"></div>
           </div>
           <div class="section-label">Result Breakdown</div>
           <div class="results-grid" id="results-list"></div>
         </div>
 
+
+        <!-- MY RESULTS VIEW -->
+        <div id="view-results" style="display:none;">
+          <div class="section-label" style="margin-top:0;">My Results History</div>
+          <div class="card">
+            <div class="card-inner" style="text-align:center;padding:40px 24px;">
+              <div style="font-size:40px;margin-bottom:12px;">📋</div>
+              <div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:8px;">Results history coming soon</div>
+              <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Your past interpretations will appear here once the history feature is enabled. Go to <a onclick="showView('home')" style="color:var(--blue);cursor:pointer;font-weight:600;">Home</a> to interpret a new result.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PROFILE VIEW -->
+        <div id="view-profile" style="display:none;">
+          <div class="section-label" style="margin-top:0;">My Profile</div>
+          <div class="card" style="margin-bottom:14px;">
+            <div class="card-inner">
+              <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;">
+                <div style="width:56px;height:56px;background:var(--blue);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;font-weight:800;color:white;" id="profile-avatar-lg">?</div>
+                <div>
+                  <div style="font-size:18px;font-weight:700;color:var(--text-dark);letter-spacing:-0.3px;" id="profile-name"></div>
+                  <div style="font-size:13px;color:var(--text-muted);margin-top:2px;" id="profile-email"></div>
+                </div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+                <div style="background:var(--body-bg);border-radius:var(--radius-xs);padding:12px 14px;">
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:4px;">Hospital / Lab</div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text-dark);" id="profile-lab"></div>
+                </div>
+                <div style="background:var(--body-bg);border-radius:var(--radius-xs);padding:12px 14px;">
+                  <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin-bottom:4px;">Country</div>
+                  <div style="font-size:13px;font-weight:600;color:var(--text-dark);" id="profile-country"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-inner">
+              <div style="font-size:13px;font-weight:700;color:var(--text-dark);margin-bottom:14px;">Account</div>
+              <button onclick="handleLogout()" style="width:100%;padding:12px;background:var(--red-bg);color:var(--red-text);border:1.5px solid rgba(192,57,43,0.2);border-radius:var(--radius-xs);font-family:'Sora',sans-serif;font-size:13px;font-weight:600;cursor:pointer;">Sign out of Mythros Health System</button>
+            </div>
+          </div>
+        </div>
         <!-- FOOTER DISCLAIMER -->
         <div class="app-disclaimer">
           <strong>Mythros Health System</strong> by Mythros Support Services Ltd (Company No. 16384279) ·
-          For informational use only · Not a medical device · Not a substitute for professional medical advice ·
+          For informational use only. Not a medical device. Not a substitute for professional medical advice.
           <a href="https://mythrosltd.co.uk" target="_blank" style="color:var(--blue);text-decoration:none;">mythrosltd.co.uk</a>
         </div>
 
@@ -1184,17 +1251,16 @@
 
   <!-- MOBILE BOTTOM NAV -->
   <div class="mobile-nav" style="display:none;">
-    <div class="mobile-nav-item active"><span>🏠</span><span>Home</span></div>
-    <div class="mobile-nav-item"><span>📋</span><span>Results</span></div>
-    <div class="mobile-nav-item" onclick="handleLogout()"><span>👤</span><span>Profile</span></div>
+    <div class="mobile-nav-item active" onclick="showView('home')"><span>🏠</span><span>Home</span></div>
+    <div class="mobile-nav-item" onclick="showView('results')"><span>📋</span><span>Results</span></div>
+    <div class="mobile-nav-item" onclick="showView('profile')"><span>👤</span><span>Profile</span></div>
   </div>
 
 </div><!-- /page-app -->
 
 <script>
   // ── WEBHOOK URL ───────────────────────────────────────────────────────────
-  // PRODUCTION webhook URL — Mythros Health System (n8n Cloud)
-  // TEST URL: https://arie08.app.n8n.cloud/webhook-test/claritylab
+  // PRODUCTION webhook URL Mythros Health System (n8n Cloud)
   const WEBHOOK_URL = 'https://arie08.app.n8n.cloud/webhook/claritylab';
 
   // ── STATE ─────────────────────────────────────────────────────────────────
@@ -1202,6 +1268,7 @@
   let allResults   = [];
   let activeFilter = 'all';
   let pendingImage = null; // { base64, mime, name, size }
+  let selectedLanguage = 'en';
 
   // ── INIT ──────────────────────────────────────────────────────────────────
   if (currentUser) {
@@ -1290,7 +1357,7 @@
   function bootApp() {
     const first   = (currentUser.name || '').split(' ')[0];
     const initial = first.charAt(0).toUpperCase();
-    const lab     = currentUser.lab || '—';
+    const lab     = currentUser.lab || '';
 
     if (document.getElementById('sb-avatar'))       document.getElementById('sb-avatar').textContent       = initial;
     if (document.getElementById('sb-name'))         document.getElementById('sb-name').textContent         = currentUser.name;
@@ -1303,6 +1370,7 @@
 
     showPage('page-app');
     applyLayout();
+    loadLanguagePreference();
   }
 
   function applyLayout() {
@@ -1373,7 +1441,7 @@
 
       if (extracted) {
         document.getElementById('lab-input').value = extracted;
-        document.getElementById('image-preview-meta').textContent = '✓ Text extracted — review above then click Interpret';
+        document.getElementById('image-preview-meta').textContent = '✓ Text extracted review above then click Interpret';
         document.getElementById('extract-btn-text').textContent = '✓ Done';
       } else {
         showError('Could not extract text from this image. Try a clearer photo or paste results manually.');
@@ -1409,7 +1477,7 @@
           action:   'interpret',
           results:  input,
           country:  currentUser.country  || 'Nigeria',
-          language: navigator.language   || 'en',
+          language: selectedLanguage     || navigator.language || 'en',
           userId:   currentUser.email    || 'anonymous',
           fasting:  fasting
         })
@@ -1515,6 +1583,88 @@
   function clearError() {
     document.getElementById('error-msg').style.display = 'none';
   }
+
+  // ── VIEW NAVIGATION ───────────────────────────────────────────────────────
+  function showView(view) {
+    // Hide all views
+    const homeEls = ['desktop-stats','view-results','view-profile'];
+    // Show/hide sections
+    const inputSection  = document.querySelector('.section-label');
+    const inputCard     = document.querySelector('.card');
+    const langBar       = document.getElementById('lang-select')?.closest('div[style]');
+
+    // All app-body direct children except footer
+    const appBody = document.querySelector('.app-body');
+
+    // Toggle views
+    document.getElementById('view-results').style.display  = view === 'results'  ? 'block' : 'none';
+    document.getElementById('view-profile').style.display  = view === 'profile'  ? 'block' : 'none';
+
+    // Home content (input card + results + stats + language bar)
+    const homeContent = document.querySelectorAll('.app-body > :not(#view-results):not(#view-profile):not(.app-disclaimer)');
+    homeContent.forEach(el => {
+      if (el.id === 'view-results' || el.id === 'view-profile') return;
+      el.style.display = view === 'home' ? '' : 'none';
+    });
+
+    // Update sidebar active state
+    document.querySelectorAll('.sidebar-nav-item').forEach(el => el.classList.remove('active'));
+    const navMap = { home: 0, results: 1, profile: 2 };
+    const navItems = document.querySelectorAll('.sidebar-nav-item');
+    if (navItems[navMap[view]]) navItems[navMap[view]].classList.add('active');
+
+    // Update mobile nav active state
+    const mobItems = document.querySelectorAll('.mobile-nav-item');
+    mobItems.forEach(el => el.classList.remove('active'));
+    if (mobItems[navMap[view]]) mobItems[navMap[view]].classList.add('active');
+
+    // Update topbar heading
+    const headings = { home: 'My Results', results: 'My Results History', profile: 'My Profile' };
+    const el = document.getElementById('topbar-greeting');
+    if (el) {
+      const first = (currentUser?.name || '').split(' ')[0];
+      el.textContent = view === 'home' ? 'Good to see you, ' + first : headings[view];
+    }
+
+    // Populate profile view
+    if (view === 'profile' && currentUser) {
+      const initial = (currentUser.name || '?').charAt(0).toUpperCase();
+      const pav = document.getElementById('profile-avatar-lg');
+      const pn  = document.getElementById('profile-name');
+      const pe  = document.getElementById('profile-email');
+      const pl  = document.getElementById('profile-lab');
+      const pc  = document.getElementById('profile-country');
+      if (pav) pav.textContent = initial;
+      if (pn)  pn.textContent  = currentUser.name  || '';
+      if (pe)  pe.textContent  = currentUser.email  || '';
+      if (pl)  pl.textContent  = currentUser.lab    || '';
+      if (pc)  pc.textContent  = currentUser.country || '';
+    }
+
+    window.scrollTo(0, 0);
+  }
+
+  // ── LANGUAGE SELECTOR ─────────────────────────────────────────────────────
+  function setLanguage(lang) {
+    selectedLanguage = lang;
+    // Store preference
+    if (currentUser) {
+      localStorage.setItem('mythros_lang_' + currentUser.email, lang);
+    }
+  }
+
+  // Load saved language preference on boot
+  function loadLanguagePreference() {
+    if (currentUser) {
+      const saved = localStorage.getItem('mythros_lang_' + currentUser.email);
+      if (saved) {
+        selectedLanguage = saved;
+        const sel = document.getElementById('lang-select');
+        if (sel) sel.value = saved;
+      }
+    }
+  }
+
 </script>
 </body>
 </html>
