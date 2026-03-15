@@ -34,6 +34,9 @@
     --green:       #0d9e6a;
     --green-bg:    #eaf7f2;
     --green-text:  #065c3a;
+    --indigo:      #6366f1;
+    --indigo-bg:   #f0f4ff;
+    --indigo-text: #3730a3;
     --radius:      16px;
     --radius-sm:   12px;
     --radius-xs:   8px;
@@ -130,6 +133,7 @@
   .modal-section-title.red   { color: var(--red); }
   .modal-section-title.blue  { color: var(--blue); }
   .modal-section-title.green { color: var(--green); }
+  .modal-section-title.indigo { color: var(--indigo); }
 
   .modal-section p {
     font-size: 12px; color: var(--text-mid); line-height: 1.7;
@@ -510,6 +514,9 @@
   .tab:hover { color: var(--text-dark); }
   .tab.active { color: var(--blue); border-bottom-color: var(--blue); font-weight: 600; }
 
+  /* CHANGE 3 — Genomics tab active state uses indigo */
+  .tab.active.genomics-tab { color: var(--indigo); border-bottom-color: var(--indigo); }
+
   .app-body { padding: 28px; flex: 1; }
 
   /* STATS */
@@ -720,10 +727,27 @@
     gap: 10px; animation: fadeUp 0.3s ease both;
   }
 
-  .result-item.status-normal       { border-left-color: var(--green); }
-  .result-item.status-watch        { border-left-color: var(--amber); }
-  .result-item.status-urgent       { border-left-color: var(--red); background: #fffbfb; }
+  .result-item.status-normal        { border-left-color: var(--green); }
+  .result-item.status-watch         { border-left-color: var(--amber); }
+  .result-item.status-urgent        { border-left-color: var(--red); background: #fffbfb; }
   .result-item.status-not_performed { border-left-color: #94a3b8; background: #f8fafc; }
+
+  /* CHANGE 2 — Genomic result item styles */
+  .result-item.status-genomic             { border-left-color: var(--indigo); background: #fafafe; }
+  .result-item.status-genomic_urgent      { border-left-color: var(--red); background: #fffbfb; }
+  .result-item.status-genomic_watch       { border-left-color: var(--amber); }
+  .result-item.status-genomic_normal      { border-left-color: var(--indigo); background: #fafafe; }
+  .result-item.status-pharmacogenomics    { border-left-color: var(--indigo); background: #fafafe; }
+  .result-item.status-pathogenic          { border-left-color: var(--red); background: #fffbfb; }
+  .result-item.status-likely_pathogenic   { border-left-color: var(--red); background: #fffbfb; }
+  .result-item.status-vus                 { border-left-color: var(--amber); background: #fffdf5; }
+  .result-item.status-benign              { border-left-color: var(--green); }
+  .result-item.status-likely_benign       { border-left-color: var(--green); }
+  .result-item.status-carrier             { border-left-color: var(--amber); background: #fffdf5; }
+  .result-item.status-poor_metaboliser    { border-left-color: var(--red); background: #fffbfb; }
+  .result-item.status-ultrarapid          { border-left-color: var(--red); background: #fffbfb; }
+  .result-item.status-intermediate        { border-left-color: var(--amber); }
+  .result-item.status-normal_metaboliser  { border-left-color: var(--indigo); background: #fafafe; }
 
   .result-name  { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
   .result-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-mid); margin-bottom: 2px; }
@@ -736,10 +760,15 @@
     font-size: 10px; font-weight: 700; white-space: nowrap; flex-shrink: 0;
   }
 
-  .pill-normal       { background: var(--green-bg); color: var(--green-text); }
-  .pill-watch        { background: var(--amber-bg); color: var(--amber-text); }
-  .pill-urgent       { background: var(--red-bg);   color: var(--red-text); }
+  .pill-normal        { background: var(--green-bg); color: var(--green-text); }
+  .pill-watch         { background: var(--amber-bg); color: var(--amber-text); }
+  .pill-urgent        { background: var(--red-bg);   color: var(--red-text); }
   .pill-not_performed { background: #f1f5f9; color: #64748b; }
+
+  /* CHANGE 2 — Genomic pill colours */
+  .pill-genomic       { background: var(--indigo-bg); color: var(--indigo-text); }
+  .pill-genomic_urgent { background: var(--red-bg); color: var(--red-text); }
+
   .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
   /* APP FOOTER DISCLAIMER */
@@ -818,7 +847,7 @@
         <div class="modal-logo-mark">M</div>
         <div class="modal-logo-name">Mythros<span> Health System</span></div>
       </div>
-      <div class="modal-title">Terms of Use & Medical Disclaimer</div>
+      <div class="modal-title">Terms of Use &amp; Medical Disclaimer</div>
       <div class="modal-subtitle">Please read carefully before using this service</div>
     </div>
     <div class="modal-body">
@@ -841,11 +870,13 @@
           <li>Flags values that are normal, borderline (Watch), or significantly abnormal (Urgent).</li>
           <li>Uses country-specific reference ranges (Nigeria, UK, USA and more).</li>
           <li>Supports 15+ languages to help non-English speakers access their results.</li>
+          <!-- CHANGE 1 — Genomics bullet added -->
+          <li>Interprets genomic and pharmacogenomics results including sickle cell genotype, MODY, BRCA, Factor V Leiden, CYP2D6, and more — with population-diverse African ancestry context informed by HGSVC3 reference data.</li>
         </ul>
       </div>
 
       <div class="modal-section">
-        <div class="modal-section-title green">Your data & privacy</div>
+        <div class="modal-section-title green">Your data &amp; privacy</div>
         <ul>
           <li>Your lab results are processed to generate your interpretation and are not stored long-term.</li>
           <li>Anonymous usage data (no personal details) is collected for service improvement.</li>
@@ -854,11 +885,23 @@
         </ul>
       </div>
 
+      <!-- CHANGE 1 — New genomics section in terms modal -->
+      <div class="modal-section" style="background:var(--indigo-bg);border-color:rgba(99,102,241,0.2);">
+        <div class="modal-section-title indigo">🧬 Genomic &amp; Pharmacogenomics Results</div>
+        <ul>
+          <li>Genomic interpretations (e.g. BRCA, Lynch Syndrome, sickle cell, MODY) are for informational purposes and do not constitute a genetic counselling service.</li>
+          <li>Results classified as <strong>Pathogenic</strong> or <strong>Likely Pathogenic</strong> should be discussed with a clinical genetics specialist or your GP.</li>
+          <li>A <strong>Variant of Uncertain Significance (VUS)</strong> is not a diagnosis — it means more evidence is needed and should not be acted on alone.</li>
+          <li>Pharmacogenomics results (e.g. CYP2D6, CYP2C19, TPMT) inform medication safety — always tell your prescriber about any pharmacogenomics findings before starting a new medication.</li>
+          <li>Inherited cancer results (BRCA, Lynch Syndrome) have implications for blood relatives — discuss with a specialist about family cascade testing.</li>
+        </ul>
+      </div>
+
     </div>
     <div class="modal-footer">
       <div class="modal-checkbox-row">
         <input type="checkbox" id="terms-check" onchange="toggleAccept()">
-        <label for="terms-check">I have read and understand the medical disclaimer. I agree that this service does not replace professional medical advice and I will consult a healthcare professional for any medical concerns.</label>
+        <label for="terms-check">I have read and understand the medical disclaimer and the genomics disclaimer. I agree that this service does not replace professional medical advice or genetic counselling, and I will consult a healthcare professional for any medical concerns.</label>
       </div>
       <button class="btn-accept" id="btn-accept" onclick="acceptTerms()">I Understand, Continue to Mythros Health System →</button>
     </div>
@@ -877,9 +920,10 @@
       <div class="auth-sub">Instant plain language explanations for every value in your medical report. Understand your health results, in your language, for your country.</div>
       <div class="auth-features">
         <div class="auth-feature"><div class="feature-dot"></div> Instant result interpretation in 15+ languages</div>
-        <div class="auth-feature"><div class="feature-dot"></div> Normal, Watch & Urgent flags</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Normal, Watch &amp; Urgent flags</div>
         <div class="auth-feature"><div class="feature-dot"></div> Country-specific reference ranges</div>
         <div class="auth-feature"><div class="feature-dot"></div> Upload lab report photos</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Genomic &amp; pharmacogenomics interpretation</div>
         <div class="auth-feature"><div class="feature-dot"></div> Your data stays private</div>
       </div>
       <div class="auth-badge">
@@ -895,11 +939,11 @@
           <div class="auth-error" id="login-error"></div>
           <div class="form-group">
             <label class="form-label">Email Address <span style="color:var(--red);font-size:13px;">*</span></label>
-            <input class="form-input" id="login-email" type="email" autocomplete="email" autocomplete="username" placeholder="you@example.com" >
+            <input class="form-input" id="login-email" type="email" autocomplete="username" placeholder="you@example.com">
           </div>
           <div class="form-group">
             <label class="form-label">Password <span style="color:var(--red);font-size:13px;">*</span></label>
-            <input class="form-input" id="login-password" type="password" autocomplete="current-password" placeholder="••••••••"  onkeydown="if(event.key==='Enter') handleLogin()">
+            <input class="form-input" id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter') handleLogin()">
           </div>
           <button class="btn-auth" onclick="handleLogin()">Sign in →</button>
           <div class="auth-divider"><span>New user?</span></div>
@@ -922,8 +966,9 @@
       <div class="auth-sub">Join patients across Nigeria and the world who use Mythros to read and understand their lab results clearly, instantly, in their own language.</div>
       <div class="auth-features">
         <div class="auth-feature"><div class="feature-dot"></div> Works with any lab report format</div>
-        <div class="auth-feature"><div class="feature-dot"></div> Nigeria, UK, USA & global reference ranges</div>
+        <div class="auth-feature"><div class="feature-dot"></div> Nigeria, UK, USA &amp; global reference ranges</div>
         <div class="auth-feature"><div class="feature-dot"></div> Upload photos of printed reports</div>
+        <div class="auth-feature"><div class="feature-dot"></div> 🧬 Genomic &amp; pharmacogenomics interpretation</div>
       </div>
     </div>
     <div class="auth-right">
@@ -1076,14 +1121,12 @@
               <input class="form-input" id="signup-password" type="password" autocomplete="new-password" placeholder="Min 8 chars, 1 uppercase, 1 number, 1 symbol" oninput="checkPasswordStrength(this.value)" style="padding-right:44px;">
               <span onclick="togglePasswordVisibility()" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);cursor:pointer;font-size:16px;color:var(--text-muted);" id="pw-toggle">👁</span>
             </div>
-            <!-- Password strength bar -->
             <div style="margin-top:8px;">
               <div style="height:4px;border-radius:4px;background:var(--card-border);overflow:hidden;">
                 <div id="pw-strength-bar" style="height:100%;width:0%;border-radius:4px;transition:width 0.3s,background 0.3s;"></div>
               </div>
               <div id="pw-strength-text" style="font-size:11px;margin-top:5px;font-weight:600;"></div>
             </div>
-            <!-- Password requirements checklist -->
             <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:3px;">
               <div id="req-length"  style="font-size:11px;color:var(--text-muted);">✗ Min 8 characters</div>
               <div id="req-upper"   style="font-size:11px;color:var(--text-muted);">✗ 1 uppercase letter</div>
@@ -1091,9 +1134,7 @@
               <div id="req-symbol"  style="font-size:11px;color:var(--text-muted);">✗ 1 symbol (!@#$...)</div>
             </div>
           </div>
-          <!-- Privacy consent + not a robot -->
           <div style="margin-top:16px;display:flex;flex-direction:column;gap:10px;">
-
             <label style="display:flex;align-items:flex-start;gap:10px;cursor:pointer;padding:12px 14px;background:var(--blue-light);border:1.5px solid rgba(29,86,212,0.15);border-radius:var(--radius-xs);">
               <input type="checkbox" id="signup-privacy" style="width:17px;height:17px;min-width:17px;margin-top:1px;accent-color:var(--blue);cursor:pointer;">
               <span style="font-size:12px;color:var(--text-mid);line-height:1.6;">
@@ -1102,15 +1143,12 @@
                 My data will be used only to provide lab result interpretations and improve the service.
               </span>
             </label>
-
             <label style="display:flex;align-items:center;gap:10px;cursor:pointer;padding:12px 14px;background:var(--body-bg);border:1.5px solid var(--card-border);border-radius:var(--radius-xs);">
               <input type="checkbox" id="signup-notrobot" style="width:17px;height:17px;min-width:17px;accent-color:var(--blue);cursor:pointer;">
               <span style="font-size:12px;color:var(--text-mid);font-weight:600;">I am not a robot</span>
               <span style="margin-left:auto;font-size:20px;">🤖</span>
             </label>
-
           </div>
-
           <button class="btn-auth" id="signup-btn" onclick="handleSignup()" style="margin-top:14px;">Create account →</button>
           <div class="auth-divider"><span>Already registered?</span></div>
           <div class="auth-switch"><a onclick="showPage('page-login')">Sign in instead →</a></div>
@@ -1190,13 +1228,14 @@
         </div>
       </div>
 
-      <!-- TABS -->
+      <!-- CHANGE 3 — TABS with Genomics tab added -->
       <div class="tabs-bar">
         <div class="tab active" onclick="setTab(this,'all')">All Results</div>
         <div class="tab" onclick="setTab(this,'watch')">⚠ Watch</div>
         <div class="tab" onclick="setTab(this,'urgent')">! Urgent</div>
         <div class="tab" onclick="setTab(this,'normal')">✓ Normal</div>
         <div class="tab" onclick="setTab(this,'not_performed')">— Not Performed</div>
+        <div class="tab" onclick="setTab(this,'genomic')">🧬 Genomics</div>
       </div>
 
       <!-- BODY -->
@@ -1220,13 +1259,12 @@
           </div>
         </div>
 
-        <!-- INPUT -->
         <!-- LANGUAGE SELECTOR -->
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px;">
           <div class="section-label" style="margin:0;">Paste or Upload Your Lab Results</div>
           <div style="display:flex;align-items:center;gap:8px;">
             <span style="font-size:11px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">🌐 Language</span>
-            <select id="lang-select" onchange="setLanguage(this.value)" style="padding:6px 30px 6px 10px;border:1.5px solid var(--card-border);border-radius:var(--radius-xs);font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:var(--text-dark);background:white;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='7' viewBox='0 0 10 7'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%236878a0' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;outline:none;">
+            <select id="lang-select" onchange="setLanguage(this.value)" style="padding:6px 30px 6px 10px;border:1.5px solid var(--card-border);border-radius:var(--radius-xs);font-family:'Sora',sans-serif;font-size:12px;font-weight:600;color:var(--text-dark);background:white;cursor:pointer;appearance:none;-webkit-appearance:none;background-image:url('data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 width=%2710%27 height=%277%27 viewBox=%270 0 10 7%27%3E%3Cpath d=%27M1 1l4 4 4-4%27 stroke=%27%236878a0%27 stroke-width=%271.5%27 fill=%27none%27 stroke-linecap=%27round%27/%3E%3C/svg%3E');background-repeat:no-repeat;background-position:right 10px center;outline:none;">
               <option value="en">English</option>
               <option value="yo">Yorùbá</option>
               <option value="ha">Hausa</option>
@@ -1247,7 +1285,6 @@
 
         <div class="card">
           <div class="card-inner">
-
             <div class="input-toolbar">
               <div class="input-label">📋 Copy from your report, or upload a photo</div>
               <label class="btn-upload" for="image-file-input">
@@ -1270,8 +1307,8 @@
               <button class="btn-remove-img" onclick="removeImage()" title="Remove image">✕</button>
             </div>
 
-            <textarea id="lab-input" placeholder="Glucose: 5.4 mmol/L&#10;HbA1c: 42 mmol/mol&#10;Creatinine: 78 µmol/L&#10;Total Cholesterol: 4.8 mmol/L&#10;TSH: 2.1 mIU/L&#10;Haemoglobin: 13.5 g/dL&#10;&#10;Or upload a photo of your printed report above ↑"></textarea>
-            <div class="input-hint">Accepts any format paste directly from your patient portal, PDF, or printed report.</div>
+            <textarea id="lab-input" placeholder="Glucose: 5.4 mmol/L&#10;HbA1c: 42 mmol/mol&#10;Creatinine: 78 µmol/L&#10;Total Cholesterol: 4.8 mmol/L&#10;TSH: 2.1 mIU/L&#10;Haemoglobin: 13.5 g/dL&#10;HbAS (Sickle Cell Trait)&#10;CYP2D6 *1/*4 — Intermediate Metaboliser&#10;&#10;Or upload a photo of your printed report above ↑"></textarea>
+            <div class="input-hint">Accepts any format — paste directly from your patient portal, PDF, printed report, or genomic test result.</div>
 
             <!-- Fasting context toggle -->
             <div style="margin-top:14px;padding:12px 16px;background:var(--blue-light);border:1.5px solid rgba(29,86,212,0.15);border-radius:var(--radius-xs);">
@@ -1302,19 +1339,18 @@
           </div>
         </div>
 
-        <div class="disclaimer">💡 Mythros Health System explains your results in plain language to help you have better conversations with your doctor. This is not a diagnostic tool always consult a qualified healthcare professional.</div>
+        <div class="disclaimer">💡 Mythros Health System explains your results in plain language to help you have better conversations with your doctor. This is not a diagnostic tool — always consult a qualified healthcare professional. For genomic results, always inform your prescriber or specialist.</div>
 
         <!-- RESULTS -->
         <div id="results-section">
           <div class="section-label">Summary</div>
           <div class="summary-card-result">
-            <div class="summary-eyebrow">Your Results Plain Language Summary</div>
+            <div class="summary-eyebrow">Your Results — Plain Language Summary</div>
             <div class="summary-text" id="summary-text"></div>
           </div>
           <div class="section-label">Result Breakdown</div>
           <div class="results-grid" id="results-list"></div>
         </div>
-
 
         <!-- MY RESULTS VIEW -->
         <div id="view-results" style="display:none;">
@@ -1356,10 +1392,12 @@
             </div>
           </div>
         </div>
-        <!-- FOOTER DISCLAIMER -->
+
+        <!-- CHANGE 4 — FOOTER updated with genomics and HGSVC3 credit -->
         <div class="app-disclaimer">
           <strong>Mythros Health System</strong> by Mythros Support Services Ltd (Company No. 16384279) ·
-          For informational use only. Not a medical device. Not a substitute for professional medical advice.
+          For informational use only. Not a medical device. Not a substitute for professional medical advice or genetic counselling. ·
+          Lab interpretation informed by UHDB NHS clinical data. Genomic interpretation informed by population-diverse reference evidence including HGSVC3 (NHGRI). ·
           <a href="https://mythrosltd.co.uk" target="_blank" style="color:var(--blue);text-decoration:none;">mythrosltd.co.uk</a>
         </div>
 
@@ -1378,14 +1416,13 @@
 
 <script>
   // ── WEBHOOK URL ───────────────────────────────────────────────────────────
-  // PRODUCTION webhook URL Mythros Health System (n8n Cloud)
   const WEBHOOK_URL = 'https://arie08.app.n8n.cloud/webhook/claritylab';
 
   // ── STATE ─────────────────────────────────────────────────────────────────
   let currentUser  = JSON.parse(localStorage.getItem('mythros_user') || 'null');
   let allResults   = [];
   let activeFilter = 'all';
-  let pendingImage = null; // { base64, mime, name, size }
+  let pendingImage = null;
   let selectedLanguage = 'en';
 
   // ── INIT ──────────────────────────────────────────────────────────────────
@@ -1532,7 +1569,6 @@
 
       pendingImage = { base64, mime, name: file.name, size: file.size };
 
-      // Show preview bar
       document.getElementById('image-thumb').src = dataUrl;
       document.getElementById('image-preview-name').textContent = file.name;
       document.getElementById('image-preview-meta').textContent =
@@ -1577,7 +1613,7 @@
 
       if (extracted) {
         document.getElementById('lab-input').value = extracted;
-        document.getElementById('image-preview-meta').textContent = '✓ Text extracted review above then click Interpret';
+        document.getElementById('image-preview-meta').textContent = '✓ Text extracted — review above then click Interpret';
         document.getElementById('extract-btn-text').textContent = '✓ Done';
       } else {
         showError('Could not extract text from this image. Try a clearer photo or paste results manually.');
@@ -1597,7 +1633,6 @@
       showError('Webhook URL not configured. Please contact support.'); return;
     }
 
-    // Read fasting toggle
     const fastingEl = document.querySelector('input[name="fasting"]:checked');
     const fastingVal = fastingEl ? fastingEl.value : 'unknown';
     const fasting = fastingVal === 'true' ? true : fastingVal === 'false' ? false : null;
@@ -1631,7 +1666,7 @@
       document.getElementById('results-section').style.display = 'block';
       document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      // Save interpretation to history
+      // Save to history
       if (currentUser && allResults.length > 0) {
         var historyKey = 'mythros_history_' + currentUser.email;
         var history = JSON.parse(localStorage.getItem(historyKey) || '[]');
@@ -1640,10 +1675,9 @@
           date: new Date().toISOString(),
           summary: data.summary || '',
           results: allResults,
-          flagged: allResults.filter(r => r.status !== 'normal' && r.status !== 'not_performed').length,
+          flagged: allResults.filter(r => !['normal','not_performed','genomic','genomic_normal','benign','likely_benign','normal_metaboliser'].includes(r.status)).length,
           total: allResults.length
         });
-        // Keep last 50 interpretations only
         if (history.length > 50) history = history.slice(0, 50);
         localStorage.setItem(historyKey, JSON.stringify(history));
       }
@@ -1658,21 +1692,46 @@
   function renderList() {
     const list     = document.getElementById('results-list');
     list.innerHTML = '';
-    const filtered = activeFilter === 'all' ? allResults : allResults.filter(r => r.status === activeFilter);
+
+    // CHANGE 2 — Genomic status list for tab filtering
+    const GENOMIC_STATUSES = ['genomic','genomic_urgent','genomic_watch','genomic_normal',
+      'pharmacogenomics','pathogenic','likely_pathogenic','vus','benign','likely_benign',
+      'carrier','poor_metaboliser','ultrarapid','intermediate','normal_metaboliser'];
+
+    const filtered = activeFilter === 'all' ? allResults :
+      activeFilter === 'genomic' ? allResults.filter(r => GENOMIC_STATUSES.includes(r.status)) :
+      allResults.filter(r => r.status === activeFilter);
 
     if (!filtered.length) {
       list.innerHTML = `<div style="color:var(--text-muted);font-size:13px;padding:12px 0;">No ${activeFilter} results to show.</div>`;
       return;
     }
 
+    // CHANGE 2 — Extended pill map with all genomic statuses
+    const pm = {
+      normal:             ['pill-normal',        '✓ Normal'],
+      watch:              ['pill-watch',          '⚠ Watch'],
+      urgent:             ['pill-urgent',         '! Urgent'],
+      not_performed:      ['pill-not_performed',  '— Not Performed'],
+      genomic:            ['pill-genomic',        '🧬 Genomic'],
+      genomic_urgent:     ['pill-urgent',         '🧬 ! Urgent'],
+      genomic_watch:      ['pill-watch',          '🧬 ⚠ Watch'],
+      genomic_normal:     ['pill-genomic',        '🧬 Normal'],
+      pharmacogenomics:   ['pill-genomic',        '💊 Pharmacogenomics'],
+      pathogenic:         ['pill-urgent',         '🧬 Pathogenic'],
+      likely_pathogenic:  ['pill-urgent',         '🧬 Likely Pathogenic'],
+      vus:                ['pill-watch',          '🧬 Uncertain (VUS)'],
+      benign:             ['pill-normal',         '🧬 Benign'],
+      likely_benign:      ['pill-normal',         '🧬 Likely Benign'],
+      carrier:            ['pill-watch',          '🧬 Carrier'],
+      poor_metaboliser:   ['pill-urgent',         '💊 Poor Metaboliser'],
+      ultrarapid:         ['pill-urgent',         '💊 Ultrarapid'],
+      intermediate:       ['pill-watch',          '💊 Intermediate'],
+      normal_metaboliser: ['pill-genomic',        '💊 Normal Metaboliser'],
+    };
+
     filtered.forEach((item, i) => {
       const s  = item.status || 'normal';
-      const pm = {
-        normal:        ['pill-normal',        '✓ Normal'],
-        watch:         ['pill-watch',         '⚠ Watch'],
-        urgent:        ['pill-urgent',        '! Urgent'],
-        not_performed: ['pill-not_performed', '— Not Performed']
-      };
       const [pc, pl] = pm[s] || pm.normal;
       const div = document.createElement('div');
       div.className = `result-item status-${s}`;
@@ -1690,7 +1749,9 @@
   }
 
   function updateStats() {
-    const flagged = allResults.filter(r => r.status !== 'normal' && r.status !== 'not_performed').length;
+    // CHANGE 2 — genomic/benign statuses excluded from flagged counter
+    const NON_FLAG_STATUSES = ['normal','not_performed','genomic','genomic_normal','benign','likely_benign','normal_metaboliser'];
+    const flagged = allResults.filter(r => !NON_FLAG_STATUSES.includes(r.status)).length;
     const total   = allResults.length;
 
     ['stat-flagged','mob-flagged'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = flagged; });
@@ -1740,7 +1801,6 @@
     document.getElementById('error-msg').style.display = 'none';
   }
 
-  // ── VIEW NAVIGATION ───────────────────────────────────────────────────────
   // ── RESULTS HISTORY ───────────────────────────────────────────────────────
   function renderHistory() {
     var container = document.getElementById('history-list');
@@ -1755,17 +1815,17 @@
       container.innerHTML = '<div class="card"><div class="card-inner" style="text-align:center;padding:40px 24px;"><div style="font-size:40px;margin-bottom:12px;">📋</div><div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:8px;">No results yet</div><div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Your past interpretations will appear here. Go to <a onclick="showView(\'home\')" style="color:var(--blue);cursor:pointer;font-weight:600;">Home</a> to interpret a result.</div></div></div>';
       return;
     }
-    var statusLabel = { normal: '<span style="color:#16a34a;font-weight:600;">✓ Normal</span>', watch: '<span style="color:#d97706;font-weight:600;">⚠ Watch</span>', urgent: '<span style="color:#dc2626;font-weight:600;">! Urgent</span>' };
     var html = '';
     history.forEach(function(entry) {
       var d = new Date(entry.date);
       var dateStr = d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
       var timeStr = d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
-      var hasUrgent = entry.results.some(function(r){ return r.status === 'urgent'; });
-      var hasWatch  = entry.results.some(function(r){ return r.status === 'watch'; });
+      var hasUrgent = entry.results.some(function(r){ return r.status === 'urgent' || r.status === 'pathogenic' || r.status === 'likely_pathogenic' || r.status === 'poor_metaboliser' || r.status === 'ultrarapid'; });
+      var hasWatch  = entry.results.some(function(r){ return r.status === 'watch' || r.status === 'vus' || r.status === 'carrier' || r.status === 'intermediate'; });
       var hasTNP    = entry.results.some(function(r){ return r.status === 'not_performed'; });
-      var badgeColor = hasUrgent ? '#dc2626' : hasWatch ? '#d97706' : hasTNP ? '#64748b' : '#16a34a';
-      var badgeText  = hasUrgent ? entry.flagged + ' Flagged' : hasWatch ? entry.flagged + ' Watch' : hasTNP ? 'Not Performed' : 'All Normal';
+      var hasGenomic = entry.results.some(function(r){ return ['genomic','genomic_normal','benign','likely_benign','normal_metaboliser','pharmacogenomics'].includes(r.status); });
+      var badgeColor = hasUrgent ? '#dc2626' : hasWatch ? '#d97706' : hasTNP ? '#64748b' : hasGenomic ? '#6366f1' : '#16a34a';
+      var badgeText  = hasUrgent ? entry.flagged + ' Flagged' : hasWatch ? entry.flagged + ' Watch' : hasTNP ? 'Not Performed' : hasGenomic ? '🧬 Genomic' : 'All Normal';
       html += '<div class="card" style="margin-bottom:12px;">';
       html += '<div class="card-inner" style="padding:16px 18px;">';
       html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">';
@@ -1777,8 +1837,8 @@
       }
       html += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
       entry.results.forEach(function(r) {
-        var colors = { normal: '#16a34a', watch: '#d97706', urgent: '#dc2626', not_performed: '#64748b' };
-        var bg     = { normal: '#f0fdf4', watch: '#fffbeb', urgent: '#fef2f2', not_performed: '#f1f5f9' };
+        var colors = { normal: '#16a34a', watch: '#d97706', urgent: '#dc2626', not_performed: '#64748b', genomic: '#6366f1', pathogenic: '#dc2626', likely_pathogenic: '#dc2626', vus: '#d97706', benign: '#16a34a', likely_benign: '#16a34a', carrier: '#d97706', poor_metaboliser: '#dc2626', ultrarapid: '#dc2626', intermediate: '#d97706', normal_metaboliser: '#6366f1', pharmacogenomics: '#6366f1' };
+        var bg     = { normal: '#f0fdf4', watch: '#fffbeb', urgent: '#fef2f2', not_performed: '#f1f5f9', genomic: '#f0f4ff', pathogenic: '#fef2f2', likely_pathogenic: '#fef2f2', vus: '#fffbeb', benign: '#f0fdf4', likely_benign: '#f0fdf4', carrier: '#fffbeb', poor_metaboliser: '#fef2f2', ultrarapid: '#fef2f2', intermediate: '#fffbeb', normal_metaboliser: '#f0f4ff', pharmacogenomics: '#f0f4ff' };
         var c = colors[r.status] || '#6b7280';
         var b = bg[r.status] || '#f9fafb';
         html += '<div style="font-size:11px;padding:3px 10px;border-radius:20px;background:' + b + ';color:' + c + ';font-weight:600;">';
@@ -1799,39 +1859,24 @@
   }
 
   function showView(view) {
-    // Hide all views
-    const homeEls = ['desktop-stats','view-results','view-profile'];
-    // Show/hide sections
-    const inputSection  = document.querySelector('.section-label');
-    const inputCard     = document.querySelector('.card');
-    const langBar       = document.getElementById('lang-select')?.closest('div[style]');
-
-    // All app-body direct children except footer
-    const appBody = document.querySelector('.app-body');
-
-    // Toggle views
     document.getElementById('view-results').style.display  = view === 'results'  ? 'block' : 'none';
     document.getElementById('view-profile').style.display  = view === 'profile'  ? 'block' : 'none';
 
-    // Home content (input card + results + stats + language bar)
     const homeContent = document.querySelectorAll('.app-body > :not(#view-results):not(#view-profile):not(.app-disclaimer)');
     homeContent.forEach(el => {
       if (el.id === 'view-results' || el.id === 'view-profile') return;
       el.style.display = view === 'home' ? '' : 'none';
     });
 
-    // Update sidebar active state
     document.querySelectorAll('.sidebar-nav-item').forEach(el => el.classList.remove('active'));
     const navMap = { home: 0, results: 1, profile: 2 };
     const navItems = document.querySelectorAll('.sidebar-nav-item');
     if (navItems[navMap[view]]) navItems[navMap[view]].classList.add('active');
 
-    // Update mobile nav active state
     const mobItems = document.querySelectorAll('.mobile-nav-item');
     mobItems.forEach(el => el.classList.remove('active'));
     if (mobItems[navMap[view]]) mobItems[navMap[view]].classList.add('active');
 
-    // Update topbar heading
     const headings = { home: 'My Results', results: 'My Results History', profile: 'My Profile' };
     const el = document.getElementById('topbar-greeting');
     if (el) {
@@ -1839,10 +1884,8 @@
       el.textContent = view === 'home' ? 'Good to see you, ' + first : headings[view];
     }
 
-    // Populate history view
     if (view === 'results') renderHistory();
 
-    // Populate profile view
     if (view === 'profile' && currentUser) {
       const initial = (currentUser.name || '?').charAt(0).toUpperCase();
       const pav = document.getElementById('profile-avatar-lg');
@@ -1863,13 +1906,11 @@
   // ── LANGUAGE SELECTOR ─────────────────────────────────────────────────────
   function setLanguage(lang) {
     selectedLanguage = lang;
-    // Store preference
     if (currentUser) {
       localStorage.setItem('mythros_lang_' + currentUser.email, lang);
     }
   }
 
-  // Load saved language preference on boot
   function loadLanguagePreference() {
     if (currentUser) {
       const saved = localStorage.getItem('mythros_lang_' + currentUser.email);
@@ -1881,9 +1922,7 @@
     }
   }
 
-
   // ── LOCATION DETECTION ────────────────────────────────────────────────────
-  // Maps country names and ISO codes to the values used in our select dropdown
   const COUNTRY_MAP = {
     'NG': 'Nigeria', 'GH': 'Ghana', 'KE': 'Kenya', 'ZA': 'South Africa',
     'TZ': 'Tanzania', 'UG': 'Uganda', 'CM': 'Cameroon', 'ZM': 'Zambia',
@@ -1891,7 +1930,6 @@
     'NL': 'Netherlands', 'IE': 'Ireland', 'US': 'United States', 'CA': 'Canada',
     'BR': 'Brazil', 'IN': 'India', 'AE': 'UAE', 'SA': 'Saudi Arabia',
     'AU': 'Australia',
-    // full names as fallback
     'Nigeria':'Nigeria','Ghana':'Ghana','Kenya':'Kenya','United Kingdom':'United Kingdom',
     'United States':'United States','Germany':'Germany','France':'France',
     'South Africa':'South Africa','India':'India','Canada':'Canada','Australia':'Australia',
@@ -1907,7 +1945,6 @@
     for (let i = 0; i < sel.options.length; i++) {
       if (sel.options[i].value === mapped) {
         sel.selectedIndex = i;
-        // Visual feedback
         const btn = document.getElementById('location-detect-btn');
         if (btn) btn.textContent = '✓ ' + mapped;
         return true;
@@ -1916,7 +1953,6 @@
     return false;
   }
 
-  // IP-based country detection (no permission needed, silent fallback)
   async function detectCountryFromIP() {
     try {
       const res = await fetch('https://ipapi.co/json/');
@@ -1929,7 +1965,6 @@
     }
   }
 
-  // Full location detection — tries GPS first, falls back to IP
   function detectLocation() {
     const btn = document.getElementById('location-detect-btn');
     if (btn) btn.textContent = '⏳ Detecting...';
@@ -1937,7 +1972,6 @@
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
-          // Got GPS coords — reverse geocode using free API
           try {
             const { latitude, longitude } = pos.coords;
             const res  = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`);
@@ -1945,16 +1979,13 @@
             const code = data.address?.country_code?.toUpperCase() || '';
             const name = data.address?.country || '';
             if (!setCountryInSelect(code) && !setCountryInSelect(name)) {
-              await detectCountryFromIP(); // fallback to IP if GPS country not in our list
+              await detectCountryFromIP();
             }
           } catch(e) {
             await detectCountryFromIP();
           }
         },
-        async () => {
-          // Permission denied or error — fall back to IP
-          await detectCountryFromIP();
-        },
+        async () => { await detectCountryFromIP(); },
         { timeout: 5000 }
       );
     } else {
@@ -1962,38 +1993,17 @@
     }
   }
 
-  // Auto-detect silently on signup page load (IP only, no prompt)
   function autoDetectCountry() {
     detectCountryFromIP();
   }
 
-  // Also store detected location in usage data sent to webhook
-  // so we know where users are even after signup
-  async function getLocationForLogging() {
-    try {
-      const res  = await fetch('https://ipapi.co/json/');
-      const data = await res.json();
-      return {
-        country_code: data.country_code || '',
-        city:         data.city         || '',
-        region:       data.region       || '',
-        ip_country:   data.country_name || '',
-        timezone:     data.timezone     || '',
-      };
-    } catch(e) {
-      return {};
-    }
-  }
-
-
-  // ── PASSWORD STRENGTH ────────────────────────────────────────────────────
+  // ── PASSWORD STRENGTH ─────────────────────────────────────────────────────
   function checkPasswordStrength(val) {
     const hasLength = val.length >= 8;
     const hasUpper  = /[A-Z]/.test(val);
     const hasNumber = /[0-9]/.test(val);
     const hasSymbol = /[!@#$%^&*()_+\-=\[\]{};':"\|,.<>\/?]/.test(val);
 
-    // Update checklist
     const setReq = (id, met) => {
       const el = document.getElementById(id);
       if (!el) return;
@@ -2006,18 +2016,17 @@
     setReq('req-number', hasNumber);
     setReq('req-symbol', hasSymbol);
 
-    // Strength score
     const score = [hasLength, hasUpper, hasNumber, hasSymbol].filter(Boolean).length;
     const bar  = document.getElementById('pw-strength-bar');
     const text = document.getElementById('pw-strength-text');
     if (!bar || !text) return;
 
     const levels = [
-      { pct: '0%',   color: '',                  label: '',           labelColor: '' },
-      { pct: '25%',  color: 'var(--red)',         label: 'Weak',       labelColor: 'var(--red-text)' },
-      { pct: '50%',  color: 'var(--amber)',       label: 'Fair',       labelColor: 'var(--amber-text)' },
-      { pct: '75%',  color: '#f59e0b',            label: 'Good',       labelColor: '#92540a' },
-      { pct: '100%', color: 'var(--green)',       label: 'Strong',     labelColor: 'var(--green-text)' },
+      { pct: '0%',   color: '',              label: '',       labelColor: '' },
+      { pct: '25%',  color: 'var(--red)',    label: 'Weak',   labelColor: 'var(--red-text)' },
+      { pct: '50%',  color: 'var(--amber)',  label: 'Fair',   labelColor: 'var(--amber-text)' },
+      { pct: '75%',  color: '#f59e0b',       label: 'Good',   labelColor: '#92540a' },
+      { pct: '100%', color: 'var(--green)',  label: 'Strong', labelColor: 'var(--green-text)' },
     ];
     bar.style.width      = levels[score].pct;
     bar.style.background = levels[score].color;
@@ -2032,7 +2041,6 @@
     input.type   = input.type === 'password' ? 'text' : 'password';
     toggle.textContent = input.type === 'password' ? '👁' : '🙈';
   }
-
 </script>
 </body>
 </html>
