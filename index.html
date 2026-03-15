@@ -720,9 +720,10 @@
     gap: 10px; animation: fadeUp 0.3s ease both;
   }
 
-  .result-item.status-normal { border-left-color: var(--green); }
-  .result-item.status-watch  { border-left-color: var(--amber); }
-  .result-item.status-urgent { border-left-color: var(--red); background: #fffbfb; }
+  .result-item.status-normal       { border-left-color: var(--green); }
+  .result-item.status-watch        { border-left-color: var(--amber); }
+  .result-item.status-urgent       { border-left-color: var(--red); background: #fffbfb; }
+  .result-item.status-not_performed { border-left-color: #94a3b8; background: #f8fafc; }
 
   .result-name  { font-size: 13px; font-weight: 600; color: var(--text-dark); margin-bottom: 2px; }
   .result-value { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--text-mid); margin-bottom: 2px; }
@@ -735,9 +736,10 @@
     font-size: 10px; font-weight: 700; white-space: nowrap; flex-shrink: 0;
   }
 
-  .pill-normal { background: var(--green-bg); color: var(--green-text); }
-  .pill-watch  { background: var(--amber-bg); color: var(--amber-text); }
-  .pill-urgent { background: var(--red-bg);   color: var(--red-text); }
+  .pill-normal       { background: var(--green-bg); color: var(--green-text); }
+  .pill-watch        { background: var(--amber-bg); color: var(--amber-text); }
+  .pill-urgent       { background: var(--red-bg);   color: var(--red-text); }
+  .pill-not_performed { background: #f1f5f9; color: #64748b; }
   .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
   /* APP FOOTER DISCLAIMER */
@@ -1194,6 +1196,7 @@
         <div class="tab" onclick="setTab(this,'watch')">⚠ Watch</div>
         <div class="tab" onclick="setTab(this,'urgent')">! Urgent</div>
         <div class="tab" onclick="setTab(this,'normal')">✓ Normal</div>
+        <div class="tab" onclick="setTab(this,'not_performed')">— Not Performed</div>
       </div>
 
       <!-- BODY -->
@@ -1315,14 +1318,11 @@
 
         <!-- MY RESULTS VIEW -->
         <div id="view-results" style="display:none;">
-          <div class="section-label" style="margin-top:0;">My Results History</div>
-          <div class="card">
-            <div class="card-inner" style="text-align:center;padding:40px 24px;">
-              <div style="font-size:40px;margin-bottom:12px;">📋</div>
-              <div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:8px;">Results history coming soon</div>
-              <div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Your past interpretations will appear here once the history feature is enabled. Go to <a onclick="showView('home')" style="color:var(--blue);cursor:pointer;font-weight:600;">Home</a> to interpret a new result.</div>
-            </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
+            <div class="section-label" style="margin:0;">My Results History</div>
+            <button onclick="clearHistory()" style="background:none;border:1px solid var(--card-border);border-radius:6px;padding:5px 12px;font-size:11px;color:var(--text-muted);cursor:pointer;">Clear all</button>
           </div>
+          <div id="history-list"></div>
         </div>
 
         <!-- PROFILE VIEW -->
@@ -1630,6 +1630,23 @@
       updateStats();
       document.getElementById('results-section').style.display = 'block';
       document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // Save interpretation to history
+      if (currentUser && allResults.length > 0) {
+        var historyKey = 'mythros_history_' + currentUser.email;
+        var history = JSON.parse(localStorage.getItem(historyKey) || '[]');
+        history.unshift({
+          id: Date.now(),
+          date: new Date().toISOString(),
+          summary: data.summary || '',
+          results: allResults,
+          flagged: allResults.filter(r => r.status !== 'normal' && r.status !== 'not_performed').length,
+          total: allResults.length
+        });
+        // Keep last 50 interpretations only
+        if (history.length > 50) history = history.slice(0, 50);
+        localStorage.setItem(historyKey, JSON.stringify(history));
+      }
     } catch(e) {
       showError('Could not connect to the interpretation service. Please check your network and try again.');
     } finally {
@@ -1651,9 +1668,10 @@
     filtered.forEach((item, i) => {
       const s  = item.status || 'normal';
       const pm = {
-        normal: ['pill-normal', '✓ Normal'],
-        watch:  ['pill-watch',  '⚠ Watch'],
-        urgent: ['pill-urgent', '! Urgent']
+        normal:        ['pill-normal',        '✓ Normal'],
+        watch:         ['pill-watch',         '⚠ Watch'],
+        urgent:        ['pill-urgent',        '! Urgent'],
+        not_performed: ['pill-not_performed', '— Not Performed']
       };
       const [pc, pl] = pm[s] || pm.normal;
       const div = document.createElement('div');
@@ -1672,7 +1690,7 @@
   }
 
   function updateStats() {
-    const flagged = allResults.filter(r => r.status !== 'normal').length;
+    const flagged = allResults.filter(r => r.status !== 'normal' && r.status !== 'not_performed').length;
     const total   = allResults.length;
 
     ['stat-flagged','mob-flagged'].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = flagged; });
@@ -1723,6 +1741,63 @@
   }
 
   // ── VIEW NAVIGATION ───────────────────────────────────────────────────────
+  // ── RESULTS HISTORY ───────────────────────────────────────────────────────
+  function renderHistory() {
+    var container = document.getElementById('history-list');
+    if (!container) return;
+    if (!currentUser) {
+      container.innerHTML = '<div class="card"><div class="card-inner" style="text-align:center;padding:32px;"><div style="font-size:36px;margin-bottom:10px;">🔒</div><div style="font-size:14px;color:var(--text-muted);">Sign in to view your results history.</div></div></div>';
+      return;
+    }
+    var historyKey = 'mythros_history_' + currentUser.email;
+    var history = JSON.parse(localStorage.getItem(historyKey) || '[]');
+    if (history.length === 0) {
+      container.innerHTML = '<div class="card"><div class="card-inner" style="text-align:center;padding:40px 24px;"><div style="font-size:40px;margin-bottom:12px;">📋</div><div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:8px;">No results yet</div><div style="font-size:13px;color:var(--text-muted);line-height:1.6;">Your past interpretations will appear here. Go to <a onclick="showView(\'home\')" style="color:var(--blue);cursor:pointer;font-weight:600;">Home</a> to interpret a result.</div></div></div>';
+      return;
+    }
+    var statusLabel = { normal: '<span style="color:#16a34a;font-weight:600;">✓ Normal</span>', watch: '<span style="color:#d97706;font-weight:600;">⚠ Watch</span>', urgent: '<span style="color:#dc2626;font-weight:600;">! Urgent</span>' };
+    var html = '';
+    history.forEach(function(entry) {
+      var d = new Date(entry.date);
+      var dateStr = d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+      var timeStr = d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
+      var hasUrgent = entry.results.some(function(r){ return r.status === 'urgent'; });
+      var hasWatch  = entry.results.some(function(r){ return r.status === 'watch'; });
+      var hasTNP    = entry.results.some(function(r){ return r.status === 'not_performed'; });
+      var badgeColor = hasUrgent ? '#dc2626' : hasWatch ? '#d97706' : hasTNP ? '#64748b' : '#16a34a';
+      var badgeText  = hasUrgent ? entry.flagged + ' Flagged' : hasWatch ? entry.flagged + ' Watch' : hasTNP ? 'Not Performed' : 'All Normal';
+      html += '<div class="card" style="margin-bottom:12px;">';
+      html += '<div class="card-inner" style="padding:16px 18px;">';
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">';
+      html += '<div style="font-size:12px;color:var(--text-muted);">' + dateStr + ' · ' + timeStr + '</div>';
+      html += '<div style="font-size:11px;font-weight:700;color:' + badgeColor + ';background:' + badgeColor + '18;padding:3px 10px;border-radius:20px;">' + badgeText + ' · ' + entry.total + ' tests</div>';
+      html += '</div>';
+      if (entry.summary) {
+        html += '<div style="font-size:12px;color:var(--text-mid);line-height:1.5;margin-bottom:10px;border-left:3px solid var(--blue);padding-left:10px;">' + entry.summary.substring(0, 180) + (entry.summary.length > 180 ? '…' : '') + '</div>';
+      }
+      html += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+      entry.results.forEach(function(r) {
+        var colors = { normal: '#16a34a', watch: '#d97706', urgent: '#dc2626', not_performed: '#64748b' };
+        var bg     = { normal: '#f0fdf4', watch: '#fffbeb', urgent: '#fef2f2', not_performed: '#f1f5f9' };
+        var c = colors[r.status] || '#6b7280';
+        var b = bg[r.status] || '#f9fafb';
+        html += '<div style="font-size:11px;padding:3px 10px;border-radius:20px;background:' + b + ';color:' + c + ';font-weight:600;">';
+        html += (r.name || r.test || '') + (r.value ? ': ' + r.value : '');
+        html += '</div>';
+      });
+      html += '</div>';
+      html += '</div></div>';
+    });
+    container.innerHTML = html;
+  }
+
+  function clearHistory() {
+    if (!currentUser) return;
+    if (!confirm('Clear all your results history? This cannot be undone.')) return;
+    localStorage.removeItem('mythros_history_' + currentUser.email);
+    renderHistory();
+  }
+
   function showView(view) {
     // Hide all views
     const homeEls = ['desktop-stats','view-results','view-profile'];
@@ -1763,6 +1838,9 @@
       const first = (currentUser?.name || '').split(' ')[0];
       el.textContent = view === 'home' ? 'Good to see you, ' + first : headings[view];
     }
+
+    // Populate history view
+    if (view === 'results') renderHistory();
 
     // Populate profile view
     if (view === 'profile' && currentUser) {
