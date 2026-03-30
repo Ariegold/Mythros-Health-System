@@ -835,6 +835,662 @@
   }
 
   .modal-box { animation: modalIn 0.25s ease; }
+
+  /* ── HOW IT WORKS STEPS ─────────────────────────────────────── */
+  .how-it-works {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+  .how-label {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 12px;
+  }
+  .step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 11px;
+    margin-bottom: 11px;
+  }
+  .step-num {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--teal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .step-text { flex: 1; }
+  .step-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: rgba(255,255,255,0.92);
+    margin-bottom: 1px;
+    line-height: 1.3;
+  }
+  .step-desc {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.5);
+    line-height: 1.45;
+  }
+
+  /* ── TERMINOLOGY CHATBOT ─────────────────────────────────────── */
+  .term-chat-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 18px rgba(29,86,212,0.45);
+    z-index: 500;
+    transition: all 0.2s;
+  }
+  .term-chat-btn:hover { background: var(--blue-hover); transform: scale(1.07); }
+  .term-chat-btn svg { width: 24px; height: 24px; stroke: white; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .term-badge {
+    position: absolute;
+    top: -3px; right: -3px;
+    background: var(--teal);
+    color: white;
+    font-size: 8px;
+    font-weight: 700;
+    padding: 2px 5px;
+    border-radius: 8px;
+    white-space: nowrap;
+    letter-spacing: 0.03em;
+  }
+  .term-panel {
+    position: fixed;
+    bottom: 88px;
+    right: 24px;
+    width: 320px;
+    max-height: 460px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    box-shadow: 0 8px 40px rgba(13,31,60,0.18);
+    display: flex;
+    flex-direction: column;
+    z-index: 499;
+    overflow: hidden;
+    display: none;
+  }
+  .term-panel.open { display: flex; }
+  .term-panel-header {
+    background: var(--navy);
+    padding: 14px 16px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .term-panel-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: white;
+  }
+  .term-panel-sub {
+    font-size: 10px;
+    color: rgba(255,255,255,0.55);
+    margin-top: 1px;
+  }
+  .term-close {
+    background: none;
+    border: none;
+    color: rgba(255,255,255,0.6);
+    cursor: pointer;
+    font-size: 18px;
+    line-height: 1;
+    padding: 0 2px;
+  }
+  .term-close:hover { color: white; }
+  .term-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 14px 14px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .term-msg {
+    max-width: 86%;
+    padding: 9px 12px;
+    border-radius: 12px;
+    font-size: 12.5px;
+    line-height: 1.55;
+  }
+  .term-msg.bot {
+    background: var(--blue-light);
+    color: var(--text-dark);
+    border-radius: 4px 12px 12px 12px;
+    align-self: flex-start;
+  }
+  .term-msg.user {
+    background: var(--blue);
+    color: white;
+    border-radius: 12px 4px 12px 12px;
+    align-self: flex-end;
+  }
+  .term-msg.thinking {
+    background: var(--blue-light);
+    color: var(--text-muted);
+    font-style: italic;
+    align-self: flex-start;
+    border-radius: 4px 12px 12px 12px;
+  }
+  .term-suggestions {
+    padding: 4px 14px 8px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  .term-chip {
+    background: var(--body-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    padding: 4px 10px;
+    font-size: 11px;
+    color: var(--blue);
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.15s;
+  }
+  .term-chip:hover { background: var(--blue-light); border-color: var(--blue); }
+  .term-input-row {
+    display: flex;
+    gap: 8px;
+    padding: 10px 14px 14px;
+    border-top: 1px solid var(--card-border);
+    flex-shrink: 0;
+  }
+  .term-input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 1.5px solid var(--card-border);
+    border-radius: 20px;
+    font-family: inherit;
+    font-size: 12.5px;
+    color: var(--text-dark);
+    outline: none;
+    background: var(--body-bg);
+  }
+  .term-input:focus { border-color: var(--blue); }
+  .term-send {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--blue);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s;
+  }
+  .term-send:hover { background: var(--blue-hover); }
+  .term-send svg { width: 15px; height: 15px; stroke: white; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  @media (max-width: 600px) {
+    .term-panel { right: 12px; width: calc(100vw - 24px); bottom: 80px; }
+    .term-chat-btn { right: 12px; bottom: 16px; }
+  }
+
+
+  /* ── LONGITUDINAL TREND TRACKING ─────────────────────────────── */
+  .trend-banner {
+    display: none;
+    background: linear-gradient(135deg, #0f2247 0%, #1a3a6b 100%);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin-bottom: 16px;
+    border-left: 4px solid var(--teal);
+  }
+  .trend-banner.show { display: block; }
+  .trend-banner-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: #5dd9c9;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-bottom: 8px;
+  }
+  .trend-banner-items {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  .trend-banner-item {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.88);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .trend-icon {
+    font-size: 13px;
+    flex-shrink: 0;
+    width: 18px;
+    text-align: center;
+  }
+  .trend-icon.up   { color: #f87171; }
+  .trend-icon.down { color: #34d399; }
+  .trend-icon.same { color: #94a3b8; }
+  .trend-icon.new  { color: #a78bfa; }
+  .trend-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 20px;
+    margin-left: auto;
+    flex-shrink: 0;
+  }
+  .trend-badge.up   { background: rgba(248,113,113,0.18); color: #f87171; }
+  .trend-badge.down { background: rgba(52,211,153,0.18);  color: #34d399; }
+  .trend-badge.same { background: rgba(148,163,184,0.15); color: #94a3b8; }
+  /* Trend indicator on result cards */
+  .result-trend {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 5px;
+    padding: 2px 8px;
+    border-radius: 20px;
+    width: fit-content;
+  }
+  .result-trend.up   { background: var(--red-bg);   color: var(--red);   }
+  .result-trend.down { background: var(--green-bg); color: var(--green); }
+  .result-trend.same { background: var(--body-bg);  color: var(--text-muted); }
+  .result-trend.new  { background: var(--indigo-bg);color: var(--indigo-text); }
+  /* History trend mini-chart */
+  .history-trend-row {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--card-border);
+  }
+  .history-trend-title {
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+    color: var(--text-muted);
+    margin-bottom: 7px;
+  }
+  .history-trend-tests {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .history-trend-chip {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 20px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .history-trend-chip.improved { background: var(--green-bg); color: var(--green); }
+  .history-trend-chip.worsened { background: var(--red-bg);   color: var(--red);   }
+  .history-trend-chip.stable   { background: var(--body-bg);  color: var(--text-muted); }
+
+
+  /* ══ LAB PORTAL ══════════════════════════════════════════════════════════ */
+
+  /* Lab login left panel accent */
+  .lab-auth-left {
+    background: linear-gradient(160deg, #0a1628 0%, #0d3320 100%);
+  }
+  .lab-auth-left .auth-heading { color: #5dd9c9; }
+  .lab-auth-left .auth-sub { color: rgba(255,255,255,0.6); }
+  .lab-auth-left .feature-dot { background: var(--teal) !important; }
+  .lab-auth-left .auth-feature { color: rgba(255,255,255,0.75); }
+  .lab-auth-left .auth-badge { border-color: rgba(13,158,138,0.3); color: rgba(255,255,255,0.45); }
+
+  /* Lab app wrapper — teal sidebar accent */
+  #page-lab-app .sidebar { border-right: 1px solid rgba(13,158,138,0.2); }
+  #page-lab-app .sidebar-logo-mark { background: var(--teal); }
+  #page-lab-app .sidebar-nav-item.active { background: rgba(13,158,138,0.15); color: var(--teal); }
+  #page-lab-app .sidebar-nav-item.active::before { background: var(--teal); }
+
+  /* Lab badge */
+  .lab-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(13,158,138,0.12);
+    border: 1px solid rgba(13,158,138,0.3);
+    border-radius: 20px;
+    padding: 4px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--teal);
+    margin-bottom: 14px;
+  }
+
+  /* Send panel */
+  .send-panel {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 24px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+  }
+  .send-panel-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 4px;
+  }
+  .send-panel-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+  }
+  .send-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+  @media (max-width:700px) { .send-row { grid-template-columns: 1fr; } }
+
+  .form-label-sm {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--text-mid);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 5px;
+    display: block;
+  }
+  .form-input-sm {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--card-border);
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    color: var(--text-dark);
+    background: var(--body-bg);
+    outline: none;
+    transition: border 0.15s;
+  }
+  .form-input-sm:focus { border-color: var(--teal); }
+  .form-select-sm {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1.5px solid var(--card-border);
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 13px;
+    color: var(--text-dark);
+    background: var(--body-bg);
+    outline: none;
+    cursor: pointer;
+  }
+  .form-select-sm:focus { border-color: var(--teal); }
+
+  .btn-send-lab {
+    width: 100%;
+    padding: 14px;
+    background: var(--teal);
+    color: white;
+    border: none;
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 6px;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .btn-send-lab:hover { background: #0b8a79; transform: translateY(-1px); }
+  .btn-send-lab:disabled { background: #b0bcc9; cursor: not-allowed; transform: none; }
+
+  /* Sent links history */
+  .sent-link-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .sent-link-info { flex: 1; min-width: 0; }
+  .sent-link-patient {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+  .sent-link-meta {
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  .sent-link-status {
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    flex-shrink: 0;
+  }
+  .sent-link-status.active   { background: var(--green-bg);  color: var(--green-text); }
+  .sent-link-status.viewed   { background: var(--blue-light); color: var(--blue); }
+  .sent-link-status.expired  { background: var(--body-bg);    color: var(--text-muted); }
+  .sent-link-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .btn-link-action {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 1.5px solid;
+    font-family: 'Sora', sans-serif;
+    transition: all 0.15s;
+  }
+  .btn-link-copy  { border-color: var(--teal);  color: var(--teal);  background: var(--teal-light); }
+  .btn-link-qr    { border-color: var(--blue);  color: var(--blue);  background: var(--blue-light); }
+  .btn-link-copy:hover { background: var(--teal); color: white; }
+  .btn-link-qr:hover   { background: var(--blue); color: white; }
+
+  /* ══ SMART HEALTH LINK VIEWER ═══════════════════════════════════════════ */
+  #page-viewer {
+    min-height: 100vh;
+    background: var(--body-bg);
+    padding: 0;
+  }
+  .viewer-header {
+    background: linear-gradient(135deg, #0f2247 0%, #0d3320 100%);
+    padding: 20px 24px 18px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .viewer-logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .viewer-logo-mark {
+    width: 32px; height: 32px;
+    background: var(--teal);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 800; color: white;
+  }
+  .viewer-logo-name {
+    font-size: 15px; font-weight: 700; color: white;
+  }
+  .viewer-logo-name small {
+    display: block;
+    font-size: 9px; font-weight: 400;
+    color: rgba(255,255,255,0.5);
+    text-transform: uppercase; letter-spacing: 0.08em;
+  }
+  .viewer-secure-badge {
+    font-size: 11px; font-weight: 700;
+    color: #5dd9c9;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .viewer-body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+  }
+  .viewer-patient-card {
+    background: white;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius);
+    padding: 18px 20px;
+    margin-bottom: 18px;
+    box-shadow: var(--shadow);
+  }
+  .viewer-patient-name {
+    font-size: 18px; font-weight: 800; color: var(--text-dark);
+    margin-bottom: 2px;
+  }
+  .viewer-patient-meta {
+    font-size: 12px; color: var(--text-muted);
+    margin-bottom: 10px;
+  }
+  .viewer-lab-tag {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: var(--teal-light);
+    border: 1px solid rgba(13,158,138,0.25);
+    border-radius: 20px;
+    padding: 3px 10px;
+    font-size: 11px; font-weight: 700; color: var(--teal);
+  }
+  .viewer-expiry {
+    font-size: 11px; color: var(--text-muted);
+    margin-top: 8px;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .viewer-summary-card {
+    background: var(--navy);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    color: white;
+  }
+  .viewer-summary-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: #5dd9c9; margin-bottom: 8px;
+  }
+  .viewer-summary-text {
+    font-size: 13.5px; line-height: 1.65; color: rgba(255,255,255,0.9);
+  }
+  .viewer-result-card {
+    background: white;
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-sm);
+    padding: 14px 16px;
+    margin-bottom: 10px;
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .viewer-result-left { flex: 1; }
+  .viewer-result-name { font-size: 13px; font-weight: 700; color: var(--text-dark); margin-bottom: 2px; }
+  .viewer-result-value { font-size: 19px; font-weight: 800; margin-bottom: 3px; }
+  .viewer-result-ref { font-size: 11px; color: var(--text-muted); margin-bottom: 6px; }
+  .viewer-result-explanation { font-size: 12.5px; color: var(--text-mid); line-height: 1.55; }
+  .viewer-save-btn {
+    width: 100%;
+    padding: 14px;
+    background: var(--blue);
+    color: white;
+    border: none;
+    border-radius: var(--radius-xs);
+    font-family: 'Sora', sans-serif;
+    font-size: 14px; font-weight: 700;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: all 0.2s;
+  }
+  .viewer-save-btn:hover { background: var(--blue-hover); }
+  .viewer-disclaimer {
+    font-size: 11px; color: var(--text-muted);
+    text-align: center; margin-top: 18px;
+    line-height: 1.6;
+  }
+
+  /* QR Modal */
+  .qr-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(13,31,60,0.75);
+    backdrop-filter: blur(4px);
+    z-index: 900;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .qr-modal-overlay.show { display: flex; }
+  .qr-modal-box {
+    background: white;
+    border-radius: 20px;
+    padding: 28px 24px 24px;
+    max-width: 360px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(13,31,60,0.25);
+  }
+  .qr-modal-title { font-size: 16px; font-weight: 700; color: var(--text-dark); margin-bottom: 4px; }
+  .qr-modal-sub { font-size: 12px; color: var(--text-muted); margin-bottom: 18px; }
+  #qr-canvas { border-radius: 12px; margin: 0 auto 16px; display: block; }
+  .qr-modal-link {
+    background: var(--body-bg); border: 1px solid var(--card-border);
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 11px; color: var(--text-mid);
+    word-break: break-all; margin-bottom: 14px;
+    text-align: left;
+  }
+  .qr-modal-actions { display: flex; gap: 8px; }
+  .qr-btn {
+    flex: 1; padding: 10px; border-radius: 8px;
+    font-size: 12px; font-weight: 700; cursor: pointer;
+    font-family: 'Sora', sans-serif; border: none;
+    transition: all 0.15s;
+  }
+  .qr-btn-copy { background: var(--teal-light); color: var(--teal); }
+  .qr-btn-close { background: var(--body-bg); color: var(--text-muted); }
+  .qr-btn-copy:hover { background: var(--teal); color: white; }
+  .qr-btn-whatsapp { background: #25D366; color: white; flex: 1.2; }
+
 </style>
 </head>
 <body>
@@ -925,6 +1581,45 @@
         <div class="auth-feature"><div class="feature-dot"></div> Upload lab report photos</div>
         <div class="auth-feature"><div class="feature-dot"></div> Genomic &amp; pharmacogenomics interpretation</div>
         <div class="auth-feature"><div class="feature-dot"></div> Your data stays private</div>
+      </div>
+
+      <div class="how-it-works">
+        <div class="how-label">How it works</div>
+        <div class="step-row">
+          <div class="step-num">1</div>
+          <div class="step-text">
+            <div class="step-title">Create a free account</div>
+            <div class="step-desc">Select your country — Nigeria or UK. Sets correct reference ranges.</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">2</div>
+          <div class="step-text">
+            <div class="step-title">Paste, type, or upload a photo</div>
+            <div class="step-desc">Any lab report format. Printed results, patient portal, SMS — all accepted.</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">3</div>
+          <div class="step-text">
+            <div class="step-title">Choose your language</div>
+            <div class="step-desc">English, Yoruba, Hausa, Igbo, Pidgin, French, Arabic and more.</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">4</div>
+          <div class="step-text">
+            <div class="step-title">Get your plain language results</div>
+            <div class="step-desc">Each test flagged Normal ✓, Watch ⚠, or Urgent ! — with a clear explanation.</div>
+          </div>
+        </div>
+        <div class="step-row">
+          <div class="step-num">5</div>
+          <div class="step-text">
+            <div class="step-title">Share with your doctor</div>
+            <div class="step-desc">Screenshot and send via WhatsApp. Your results stay private.</div>
+          </div>
+        </div>
       </div>
       <div class="auth-badge">
         <span style="width:7px;height:7px;background:#5dd9c9;border-radius:50%;display:inline-block;"></span>
@@ -1343,6 +2038,12 @@
 
         <!-- RESULTS -->
         <div id="results-section">
+
+          <!-- TREND BANNER — shows when patient has prior results -->
+          <div class="trend-banner" id="trend-banner">
+            <div class="trend-banner-title">📈 Since your last results</div>
+            <div class="trend-banner-items" id="trend-banner-items"></div>
+          </div>
           <div class="section-label">Summary</div>
           <div class="summary-card-result">
             <div class="summary-eyebrow">Your Results — Plain Language Summary</div>
@@ -1661,12 +2362,9 @@
 
       allResults = data.results || [];
       document.getElementById('summary-text').textContent = data.summary || '';
-      renderList();
-      updateStats();
-      document.getElementById('results-section').style.display = 'block';
-      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
 
-      // Save to history
+      // ── TREND ENGINE: save first, then compare ──────────────────────────
+      // Save current session to history before comparing
       if (currentUser && allResults.length > 0) {
         var historyKey = 'mythros_history_' + currentUser.email;
         var history = JSON.parse(localStorage.getItem(historyKey) || '[]');
@@ -1680,7 +2378,19 @@
         });
         if (history.length > 50) history = history.slice(0, 50);
         localStorage.setItem(historyKey, JSON.stringify(history));
+
+        // Now apply trend comparison (compares [0]=current against [1]=prior)
+        allResults = applyTrendToResults(allResults);
+        const priorSession = history[1];
+        if (priorSession) showTrendBanner(allResults, priorSession.date);
       }
+
+      renderListWithTrend();
+      updateStats();
+      document.getElementById('results-section').style.display = 'block';
+      document.getElementById('results-section').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+      // History saved above in trend engine block
     } catch(e) {
       showError('Could not connect to the interpretation service. Please check your network and try again.');
     } finally {
@@ -1689,6 +2399,243 @@
   }
 
   // ── RENDER ────────────────────────────────────────────────────────────────
+
+  // ── LONGITUDINAL TREND ENGINE ────────────────────────────────────────────
+  // Compares current results against most recent prior session
+  // Detects meaningful changes and surfaces them as alerts
+
+  // Tests where numeric comparison makes clinical sense
+  const NUMERIC_TESTS = [
+    'haemoglobin','hb','hemoglobin',
+    'glucose','fasting glucose','random glucose','blood glucose',
+    'hba1c','glycated haemoglobin',
+    'creatinine','serum creatinine',
+    'egfr','estimated gfr',
+    'potassium','sodium','urea',
+    'tsh','ft4','free t4',
+    'alp','alkaline phosphatase','alt','ast','ggt',
+    'total cholesterol','ldl','hdl','triglycerides',
+    'vitamin d','ferritin','iron','tibc',
+    'calcium','phosphate','albumin','total protein',
+    'platelets','wbc','white blood cell','white blood count',
+    'crp','c-reactive protein','esr',
+    'psa','uric acid',
+    'inr','pt','aptt',
+    'bilirubin','total bilirubin',
+    'urine protein','pcr',
+    'prolactin','fsh','lh','testosterone','oestradiol',
+    'b12','vitamin b12','folate','serum folate'
+  ];
+
+  // Clinical significance thresholds — minimum change to report
+  // keyed by normalised test name
+  const DELTA_THRESHOLDS = {
+    'haemoglobin':         0.8,   // g/dL
+    'hb':                  0.8,
+    'glucose':             0.5,   // mmol/L
+    'fasting glucose':     0.5,
+    'hba1c':               3,     // mmol/mol
+    'creatinine':          15,    // µmol/L
+    'egfr':                5,     // mL/min
+    'potassium':           0.3,   // mmol/L
+    'sodium':              3,     // mmol/L
+    'tsh':                 0.5,   // mIU/L
+    'total cholesterol':   0.4,   // mmol/L
+    'alt':                 10,    // IU/L
+    'ast':                 10,
+    'alp':                 20,
+    'crp':                 5,     // mg/L
+    'vitamin d':           10,    // nmol/L
+    'ferritin':            10,    // µg/L
+    'psa':                 0.3,   // ng/mL
+    'platelets':           30,    // x10^9/L
+    'wbc':                 1.0,   // x10^9/L
+    'default':             0      // report any change
+  };
+
+  function normaliseName(name) {
+    return (name || '').toLowerCase().trim()
+      .replace(/[^a-z0-9 ]/g, '')
+      .replace(/\s+/g, ' ');
+  }
+
+  function parseValue(valStr) {
+    if (!valStr) return null;
+    const match = String(valStr).match(/^([\d.]+)/);
+    return match ? parseFloat(match[1]) : null;
+  }
+
+  function isNumericTest(name) {
+    const n = normaliseName(name);
+    return NUMERIC_TESTS.some(t => n.includes(t) || t.includes(n));
+  }
+
+  function getThreshold(name) {
+    const n = normaliseName(name);
+    for (const [key, val] of Object.entries(DELTA_THRESHOLDS)) {
+      if (n.includes(key) || key.includes(n)) return val;
+    }
+    return DELTA_THRESHOLDS.default;
+  }
+
+  function compareTrend(current, previous) {
+    // Returns { direction, delta, deltaStr, meaningful } or null
+    if (!isNumericTest(current.name)) return null;
+    const curVal  = parseValue(current.value);
+    const prevVal = parseValue(previous.value);
+    if (curVal === null || prevVal === null) return null;
+    const delta     = curVal - prevVal;
+    const absDelta  = Math.abs(delta);
+    const threshold = getThreshold(current.name);
+    if (absDelta < threshold) return { direction: 'same', delta, deltaStr: '→ Stable', meaningful: false };
+    const direction = delta > 0 ? 'up' : 'down';
+    const sign      = delta > 0 ? '+' : '';
+    const unit      = current.unit || '';
+    return {
+      direction,
+      delta,
+      deltaStr: sign + delta.toFixed(1) + (unit ? ' ' + unit : ''),
+      meaningful: true,
+      prevVal,
+      curVal
+    };
+  }
+
+  function buildTrendContext() {
+    // Get most recent prior session
+    if (!currentUser) return null;
+    const historyKey = 'mythros_history_' + currentUser.email;
+    const history    = JSON.parse(localStorage.getItem(historyKey) || '[]');
+    // history[0] is the current session (just saved), so compare against [1]
+    if (history.length < 2) return null;
+    return history[1]; // most recent prior session
+  }
+
+  function applyTrendToResults(currentResults) {
+    const prior = buildTrendContext();
+    if (!prior || !prior.results) return currentResults;
+
+    // Build lookup map from prior session
+    const priorMap = {};
+    prior.results.forEach(r => {
+      priorMap[normaliseName(r.name)] = r;
+    });
+
+    // Annotate current results with trend data
+    return currentResults.map(item => {
+      const key       = normaliseName(item.name);
+      const priorItem = priorMap[key];
+      if (!priorItem) {
+        return { ...item, _trend: { direction: 'new', deltaStr: '🆕 First test', meaningful: false } };
+      }
+      const trend = compareTrend(item, priorItem);
+      return { ...item, _trend: trend, _priorValue: priorItem.value };
+    });
+  }
+
+  function showTrendBanner(results, priorDate) {
+    const banner      = document.getElementById('trend-banner');
+    const bannerItems = document.getElementById('trend-banner-items');
+    if (!banner || !bannerItems) return;
+
+    const meaningful = results.filter(r => r._trend && r._trend.meaningful);
+    if (meaningful.length === 0) { banner.classList.remove('show'); return; }
+
+    const d = new Date(priorDate);
+    const dateStr = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    banner.querySelector('.trend-banner-title').textContent =
+      '📈 Changes since ' + dateStr;
+
+    bannerItems.innerHTML = meaningful.map(r => {
+      const t      = r._trend;
+      const icon   = t.direction === 'up' ? '↑' : '↓';
+      const cls    = t.direction;
+      const prev   = r._priorValue || '?';
+      return `<div class="trend-banner-item">
+        <span class="trend-icon ${cls}">${icon}</span>
+        <span><strong>${esc(r.name)}</strong> — was ${esc(prev)}, now ${esc(r.value)}${r.unit ? ' ' + esc(r.unit) : ''}</span>
+        <span class="trend-badge ${cls}">${t.deltaStr}</span>
+      </div>`;
+    }).join('');
+
+    banner.classList.add('show');
+  }
+
+  function renderListWithTrend() {
+    const list = document.getElementById('results-list');
+    list.innerHTML = '';
+
+    const GENOMIC_STATUSES = ['genomic','genomic_urgent','genomic_watch','genomic_normal',
+      'pharmacogenomics','pathogenic','likely_pathogenic','vus','benign','likely_benign',
+      'carrier','poor_metaboliser','ultrarapid','intermediate','normal_metaboliser'];
+
+    const filtered = activeFilter === 'all' ? allResults :
+      activeFilter === 'genomic' ? allResults.filter(r => GENOMIC_STATUSES.includes(r.status)) :
+      allResults.filter(r => r.status === activeFilter);
+
+    if (!filtered.length) {
+      list.innerHTML = `<div style="color:var(--text-muted);font-size:13px;padding:12px 0;">No ${activeFilter} results to show.</div>`;
+      return;
+    }
+
+    const pm = {
+      normal:             ['pill-normal',        '✓ Normal'],
+      watch:              ['pill-watch',          '⚠ Watch'],
+      urgent:             ['pill-urgent',         '! Urgent'],
+      not_performed:      ['pill-not_performed',  '— Not Performed'],
+      genomic:            ['pill-genomic',        '🧬 Genomic'],
+      genomic_urgent:     ['pill-urgent',         '🧬 ! Urgent'],
+      genomic_watch:      ['pill-watch',          '🧬 ⚠ Watch'],
+      genomic_normal:     ['pill-genomic',        '🧬 Normal'],
+      pharmacogenomics:   ['pill-genomic',        '💊 Pharmacogenomics'],
+      pathogenic:         ['pill-urgent',         '🧬 Pathogenic'],
+      likely_pathogenic:  ['pill-urgent',         '🧬 Likely Pathogenic'],
+      vus:                ['pill-watch',          '🧬 Uncertain (VUS)'],
+      benign:             ['pill-normal',         '🧬 Benign'],
+      likely_benign:      ['pill-normal',         '🧬 Likely Benign'],
+      carrier:            ['pill-watch',          '🧬 Carrier'],
+      poor_metaboliser:   ['pill-urgent',         '💊 Poor Metaboliser'],
+      ultrarapid:         ['pill-urgent',         '💊 Ultrarapid'],
+      intermediate:       ['pill-watch',          '💊 Intermediate'],
+      normal_metaboliser: ['pill-genomic',        '💊 Normal Metaboliser'],
+    };
+
+    filtered.forEach((item, i) => {
+      const s           = item.status || 'normal';
+      const [pc, pl]    = pm[s] || pm.normal;
+      const trend       = item._trend;
+      const div         = document.createElement('div');
+      div.className     = `result-item status-${s}`;
+      div.style.animationDelay = `${i * 0.04}s`;
+
+      // Build trend indicator HTML
+      let trendHtml = '';
+      if (trend) {
+        if (trend.direction === 'new') {
+          trendHtml = `<div class="result-trend new">🆕 First recorded result</div>`;
+        } else if (trend.meaningful) {
+          const arrow = trend.direction === 'up' ? '↑' : '↓';
+          const word  = trend.direction === 'up' ? 'Risen' : 'Fallen';
+          trendHtml = `<div class="result-trend ${trend.direction}">${arrow} ${word} ${trend.deltaStr} since last test (was ${esc(item._priorValue)})</div>`;
+        } else if (trend.direction === 'same') {
+          trendHtml = `<div class="result-trend same">→ Stable since last test</div>`;
+        }
+      }
+
+      div.innerHTML = `
+        <div>
+          <div class="result-name">${esc(item.name)}</div>
+          <div class="result-value">${esc(item.value)}${item.unit ? ' ' + esc(item.unit) : ''}</div>
+          ${item.reference ? `<div class="result-ref">Ref: ${esc(item.reference)}</div>` : ''}
+          ${trendHtml}
+          <div class="result-explanation">${esc(item.explanation)}</div>
+        </div>
+        <span class="status-pill ${pc}"><span class="pill-dot"></span>${pl}</span>`;
+      list.appendChild(div);
+    });
+  }
+
   function renderList() {
     const list     = document.getElementById('results-list');
     list.innerHTML = '';
@@ -1816,7 +2763,7 @@
       return;
     }
     var html = '';
-    history.forEach(function(entry) {
+    history.forEach(function(entry, idx) {
       var d = new Date(entry.date);
       var dateStr = d.toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
       var timeStr = d.toLocaleTimeString('en-GB', { hour:'2-digit', minute:'2-digit' });
@@ -1836,13 +2783,40 @@
         html += '<div style="font-size:12px;color:var(--text-mid);line-height:1.5;margin-bottom:10px;border-left:3px solid var(--blue);padding-left:10px;">' + entry.summary.substring(0, 180) + (entry.summary.length > 180 ? '…' : '') + '</div>';
       }
       html += '<div style="display:flex;flex-wrap:wrap;gap:6px;">';
+      // Build prior session map for trend comparison in history
+      var priorEntry = history[idx + 1] || null;
+      var priorMap2 = {};
+      if (priorEntry && priorEntry.results) {
+        priorEntry.results.forEach(function(pr) {
+          priorMap2[normaliseName(pr.name)] = pr;
+        });
+      }
+
       entry.results.forEach(function(r) {
         var colors = { normal: '#16a34a', watch: '#d97706', urgent: '#dc2626', not_performed: '#64748b', genomic: '#6366f1', pathogenic: '#dc2626', likely_pathogenic: '#dc2626', vus: '#d97706', benign: '#16a34a', likely_benign: '#16a34a', carrier: '#d97706', poor_metaboliser: '#dc2626', ultrarapid: '#dc2626', intermediate: '#d97706', normal_metaboliser: '#6366f1', pharmacogenomics: '#6366f1' };
         var bg     = { normal: '#f0fdf4', watch: '#fffbeb', urgent: '#fef2f2', not_performed: '#f1f5f9', genomic: '#f0f4ff', pathogenic: '#fef2f2', likely_pathogenic: '#fef2f2', vus: '#fffbeb', benign: '#f0fdf4', likely_benign: '#f0fdf4', carrier: '#fffbeb', poor_metaboliser: '#fef2f2', ultrarapid: '#fef2f2', intermediate: '#fffbeb', normal_metaboliser: '#f0f4ff', pharmacogenomics: '#f0f4ff' };
         var c = colors[r.status] || '#6b7280';
         var b = bg[r.status] || '#f9fafb';
+
+        // Trend arrow for this test vs prior session
+        var trendArrow = '';
+        var priorR = priorMap2[normaliseName(r.name)];
+        if (priorR && isNumericTest(r.name)) {
+          var curV  = parseValue(r.value);
+          var prevV = parseValue(priorR.value);
+          if (curV !== null && prevV !== null) {
+            var thresh = getThreshold(r.name);
+            var d = curV - prevV;
+            if (Math.abs(d) >= thresh) {
+              trendArrow = d > 0 ? ' ↑' : ' ↓';
+              c = d > 0 ? '#dc2626' : '#16a34a';
+              b = d > 0 ? '#fef2f2' : '#f0fdf4';
+            }
+          }
+        }
+
         html += '<div style="font-size:11px;padding:3px 10px;border-radius:20px;background:' + b + ';color:' + c + ';font-weight:600;">';
-        html += (r.name || r.test || '') + (r.value ? ': ' + r.value : '');
+        html += (r.name || r.test || '') + (r.value ? ': ' + r.value : '') + trendArrow;
         html += '</div>';
       });
       html += '</div>';
@@ -2042,5 +3016,975 @@
     toggle.textContent = input.type === 'password' ? '👁' : '🙈';
   }
 </script>
+
+<!-- ══ TERMINOLOGY CHATBOT ═══════════════════════════════════════ -->
+<button class="term-chat-btn" onclick="toggleTermChat()" title="Ask what a medical term means">
+  <svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+  <span class="term-badge">Ask me</span>
+</button>
+
+<div class="term-panel" id="term-panel">
+  <div class="term-panel-header">
+    <div>
+      <div class="term-panel-title">Medical Terms Explained</div>
+      <div class="term-panel-sub">Ask what any term on your results means</div>
+    </div>
+    <button class="term-close" onclick="toggleTermChat()">×</button>
+  </div>
+  <div class="term-messages" id="term-messages">
+    <div class="term-msg bot">Hi! I can explain any medical term or abbreviation on your lab report in plain language. Try asking about a term like <strong>HbA1c</strong>, <strong>CYP2D6</strong>, <strong>eGFR</strong>, or <strong>TSH</strong>.</div>
+  </div>
+  <div class="term-suggestions" id="term-chips">
+    <span class="term-chip" onclick="askTerm('CYP2D6')">CYP2D6</span>
+    <span class="term-chip" onclick="askTerm('HbA1c')">HbA1c</span>
+    <span class="term-chip" onclick="askTerm('eGFR')">eGFR</span>
+    <span class="term-chip" onclick="askTerm('ALP')">ALP</span>
+    <span class="term-chip" onclick="askTerm('G6PD')">G6PD</span>
+    <span class="term-chip" onclick="askTerm('TSH')">TSH</span>
+    <span class="term-chip" onclick="askTerm('INR')">INR</span>
+    <span class="term-chip" onclick="askTerm('BRCA1')">BRCA1</span>
+  </div>
+  <div class="term-input-row">
+    <input class="term-input" id="term-input" type="text" placeholder="Ask e.g. What is CYP2D6?" onkeydown="if(event.key==='Enter') sendTermQuery()" maxlength="120">
+    <button class="term-send" onclick="sendTermQuery()">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<script>
+// ── TERMINOLOGY CHATBOT ───────────────────────────────────────────────────────
+// ── TERMINOLOGY CHATBOT CONFIG ───────────────────────────────────────────────
+// Routes through n8n /terminology webhook → GPT-4.1
+// n8n node: HTTP Request → OpenAI GPT-4.1 with system prompt below
+// System prompt to use in n8n OpenAI node:
+const TERM_SYSTEM = `You are a plain language medical glossary assistant for Mythros Health System.
+Your ONLY job is to explain what a medical term, abbreviation, or lab test means in clear, everyday language that a patient with no medical background can understand.
+
+Rules:
+- Keep explanations to 2-4 sentences maximum
+- No jargon unless you immediately explain it
+- Do NOT diagnose, prescribe, or give medical advice
+- Do NOT interpret specific result values — only explain what the test/term measures
+- End every response with: "Ask your doctor if you have concerns about your result."
+- If the question is not about a medical term, politely redirect: "I can only explain medical terms and abbreviations. Please ask your doctor about specific advice."
+- Be warm and reassuring in tone`;
+
+function toggleTermChat() {
+  const panel = document.getElementById('term-panel');
+  panel.classList.toggle('open');
+  if (panel.classList.contains('open')) {
+    document.getElementById('term-input').focus();
+  }
+}
+
+function askTerm(term) {
+  document.getElementById('term-input').value = 'What is ' + term + '?';
+  sendTermQuery();
+}
+
+async function sendTermQuery() {
+  const input = document.getElementById('term-input');
+  const query = input.value.trim();
+  if (!query) return;
+  input.value = '';
+
+  const msgs = document.getElementById('term-messages');
+
+  // User message
+  const userDiv = document.createElement('div');
+  userDiv.className = 'term-msg user';
+  userDiv.textContent = query;
+  msgs.appendChild(userDiv);
+
+  // Thinking indicator
+  const thinkDiv = document.createElement('div');
+  thinkDiv.className = 'term-msg thinking';
+  thinkDiv.textContent = 'Looking that up...';
+  msgs.appendChild(thinkDiv);
+  msgs.scrollTop = msgs.scrollHeight;
+
+  // Hide chips after first query
+  document.getElementById('term-chips').style.display = 'none';
+
+  try {
+    // Use same n8n webhook as main interpretation but with a terminology flag
+    // This keeps the API key server-side and avoids CORS issues
+    const response = await fetch(WEBHOOK_URL.replace('claritylab', 'terminology'), {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ query: query, type: 'terminology' })
+    });
+
+    let reply = 'Sorry, I could not look that up right now. Please try again.';
+    try {
+      const data = await response.json();
+      if (data && data.reply) reply = data.reply;
+      else if (data && data.output) reply = data.output;
+      else if (data && data.text) reply = data.text;
+    } catch(e) {}
+
+    thinkDiv.className = 'term-msg bot';
+    thinkDiv.innerHTML = reply.replace(/[*][*](.*?)[*][*]/g, '<strong>$1</strong>');
+  } catch(e) {
+    thinkDiv.className = 'term-msg bot';
+    thinkDiv.textContent = 'Sorry, I could not connect right now. Please try again in a moment.';
+  }
+
+  msgs.scrollTop = msgs.scrollHeight;
+}
+</script>
+
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     LAB PORTAL LOGIN
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-lab-login">
+  <div class="auth-wrap">
+    <div class="auth-left lab-auth-left">
+      <div class="auth-logo">
+        <div class="logo-mark" style="background:var(--teal);">M</div>
+        <div class="logo-name">Mythros<small>Lab Portal</small></div>
+      </div>
+      <div class="auth-heading">Send results your patients will actually understand.</div>
+      <div class="auth-sub">Plain language. Their language. Delivered as a secure link the moment results are ready.</div>
+      <div class="auth-features">
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> Paste raw results — Mythros interprets instantly</div>
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> Send via WhatsApp, SMS, or QR code</div>
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> Patient opens on any device — no app needed</div>
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> Links expire automatically — fully encrypted</div>
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> Nigeria, UK, and global reference ranges</div>
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> 15+ languages including Yoruba, Hausa, Pidgin</div>
+      </div>
+      <div class="auth-badge">
+        <span style="width:7px;height:7px;background:var(--teal);border-radius:50%;display:inline-block;"></span>
+        For labs, hospitals, and diagnostic centres
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <div class="auth-form-title">Lab Portal Sign In</div>
+        <div class="auth-form-sub">Sign in to your Mythros Lab account</div>
+        <div class="auth-card">
+          <div class="auth-error" id="lab-login-error"></div>
+          <div class="form-group">
+            <label class="form-label">Lab / Hospital Email <span style="color:var(--red)">*</span></label>
+            <input class="form-input" id="lab-login-email" type="email" placeholder="lab@hospital.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password <span style="color:var(--red)">*</span></label>
+            <input class="form-input" id="lab-login-password" type="password" placeholder="••••••••" onkeydown="if(event.key==='Enter') handleLabLogin()">
+          </div>
+          <button class="btn-auth" style="background:var(--teal);" onclick="handleLabLogin()">Sign in to Lab Portal →</button>
+          <div class="auth-divider"><span>New lab account?</span></div>
+          <div class="auth-switch"><a onclick="showPage('page-lab-signup')" style="color:var(--teal)">Register your lab →</a></div>
+          <div style="margin-top:12px;text-align:center;">
+            <a onclick="showPage('page-login')" style="font-size:12px;color:var(--text-muted);cursor:pointer;">← Patient login</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     LAB PORTAL SIGNUP
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-lab-signup">
+  <div class="auth-wrap">
+    <div class="auth-left lab-auth-left">
+      <div class="auth-logo">
+        <div class="logo-mark" style="background:var(--teal);">M</div>
+        <div class="logo-name">Mythros<small>Lab Portal</small></div>
+      </div>
+      <div class="auth-heading">Your patients deserve to understand their results.</div>
+      <div class="auth-sub">Join labs and diagnostic centres across Nigeria and the UK using Mythros to close the gap between results and understanding.</div>
+      <div class="auth-features">
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> No integration required — paste and send</div>
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> White-label with your lab name and branding</div>
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> Track which patients have viewed their results</div>
+        <div class="auth-feature"><div class="feature-dot" style="background:var(--teal)"></div> GDPR and Nigeria NDPA compliant</div>
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <div class="auth-form-title">Register Your Lab</div>
+        <div class="auth-form-sub">Create a Mythros Lab Portal account</div>
+        <div class="auth-card">
+          <div class="auth-error" id="lab-signup-error"></div>
+          <div class="form-group">
+            <label class="form-label">Lab / Hospital Name <span style="color:var(--red)">*</span></label>
+            <input class="form-input" id="lab-reg-name" type="text" placeholder="e.g. Equity Health Diagnostics">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Contact Name <span style="color:var(--red)">*</span></label>
+            <input class="form-input" id="lab-reg-contact" type="text" placeholder="Your full name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address <span style="color:var(--red)">*</span></label>
+            <input class="form-input" id="lab-reg-email" type="email" placeholder="lab@hospital.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Country <span style="color:var(--red)">*</span></label>
+            <select class="form-input" id="lab-reg-country">
+              <option value="Nigeria">Nigeria</option>
+              <option value="UK">United Kingdom</option>
+              <option value="USA">United States</option>
+              <option value="Global">Other / Global</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Password <span style="color:var(--red)">*</span></label>
+            <input class="form-input" id="lab-reg-password" type="password" placeholder="Min 8 characters">
+          </div>
+          <button class="btn-auth" style="background:var(--teal);margin-top:14px;" onclick="handleLabSignup()">Register Lab →</button>
+          <div class="auth-divider"><span>Already registered?</span></div>
+          <div class="auth-switch"><a onclick="showPage('page-lab-login')" style="color:var(--teal)">Sign in to Lab Portal →</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     LAB PORTAL APP
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-lab-app">
+  <div class="app-wrap">
+    <!-- SIDEBAR -->
+    <div class="sidebar">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-mark" style="background:var(--teal);">M</div>
+        <div class="sidebar-logo-name">Mythros<small>Lab Portal</small></div>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-user">
+        <div class="sidebar-avatar" id="lab-sb-avatar" style="background:var(--teal);">L</div>
+        <div>
+          <div class="sidebar-user-name" id="lab-sb-name"></div>
+          <div class="sidebar-user-lab"  id="lab-sb-org"></div>
+        </div>
+      </div>
+      <div class="sidebar-nav">
+        <div class="sidebar-nav-item active" onclick="showLabView('send')"><span class="nav-icon">📤</span> Send Results</div>
+        <div class="sidebar-nav-item" onclick="showLabView('sent')"><span class="nav-icon">🔗</span> Sent Links</div>
+        <div class="sidebar-nav-item" onclick="showLabView('settings')"><span class="nav-icon">⚙️</span> Settings</div>
+      </div>
+      <div class="sidebar-logout" onclick="handleLabLogout()"><span class="nav-icon">🚪</span> Sign out</div>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="app-content">
+
+      <!-- TOP BAR -->
+      <div class="topbar">
+        <div class="topbar-left">
+          <h1 id="lab-topbar-title">Send Results to Patient</h1>
+          <p id="lab-topbar-sub">Interpret results and generate a secure patient link</p>
+        </div>
+        <div class="topbar-right">
+          <span class="topbar-stat" id="lab-links-sent-stat" style="display:none;background:var(--teal-light);color:var(--teal);"></span>
+        </div>
+      </div>
+
+      <!-- SEND VIEW -->
+      <div id="lab-view-send" class="app-body">
+        <div class="lab-badge">🏥 Lab Portal — Sending to patient</div>
+
+        <div class="send-panel">
+          <div class="send-panel-title">Patient Details</div>
+          <div class="send-panel-sub">This information appears on the patient's result link</div>
+          <div class="send-row">
+            <div>
+              <label class="form-label-sm">Patient Name <span style="color:var(--red)">*</span></label>
+              <input class="form-input-sm" id="lab-patient-name" type="text" placeholder="e.g. Idowu Akinyemi">
+            </div>
+            <div>
+              <label class="form-label-sm">Patient Phone / WhatsApp</label>
+              <input class="form-input-sm" id="lab-patient-phone" type="tel" placeholder="+234 800 000 0000">
+            </div>
+          </div>
+          <div class="send-row">
+            <div>
+              <label class="form-label-sm">Country <span style="color:var(--red)">*</span></label>
+              <select class="form-select-sm" id="lab-patient-country">
+                <option value="Nigeria">Nigeria</option>
+                <option value="UK">United Kingdom</option>
+                <option value="USA">United States</option>
+                <option value="Global">Other / Global</option>
+              </select>
+            </div>
+            <div>
+              <label class="form-label-sm">Language for patient</label>
+              <select class="form-select-sm" id="lab-patient-lang">
+                <option value="en">English</option>
+                <option value="yo">Yorùbá</option>
+                <option value="ha">Hausa</option>
+                <option value="ig">Igbo</option>
+                <option value="pcm">Pidgin</option>
+                <option value="fr">Français</option>
+                <option value="ar">العربية</option>
+                <option value="pt">Português</option>
+              </select>
+            </div>
+          </div>
+          <div class="send-row" style="grid-template-columns:1fr 1fr;">
+            <div>
+              <label class="form-label-sm">Test date</label>
+              <input class="form-input-sm" id="lab-test-date" type="date">
+            </div>
+            <div>
+              <label class="form-label-sm">Link expiry</label>
+              <select class="form-select-sm" id="lab-link-expiry">
+                <option value="7">7 days</option>
+                <option value="14">14 days</option>
+                <option value="30">30 days</option>
+                <option value="90">90 days</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="send-panel">
+          <div class="send-panel-title">Lab Results</div>
+          <div class="send-panel-sub">Paste the raw results exactly as they appear. Any format accepted — typed values, copy-paste from your LIS, or scanned report text.</div>
+          <textarea id="lab-results-input"
+            style="width:100%;min-height:200px;padding:12px;border:1.5px solid var(--card-border);border-radius:var(--radius-xs);font-family:'Sora',sans-serif;font-size:13px;color:var(--text-dark);background:var(--body-bg);outline:none;resize:vertical;line-height:1.6;transition:border 0.15s;"
+            onfocus="this.style.borderColor='var(--teal)'" onblur="this.style.borderColor='var(--card-border)'"
+            placeholder="Haemoglobin: 11.2 g/dL&#10;Fasting Glucose: 8.4 mmol/L&#10;TSH: 2.4 mIU/L&#10;Creatinine: 78 µmol/L&#10;Malaria RDT: Negative&#10;G6PD: Deficient&#10;&#10;Or paste from your LIS system, or type values directly..."></textarea>
+          <div class="error-msg" id="lab-send-error" style="display:none;margin-top:8px;"></div>
+          <button class="btn-send-lab" id="lab-send-btn" onclick="sendLabResults()">
+            <div class="spinner" id="lab-spinner" style="display:none;width:16px;height:16px;border-width:2px;border-color:rgba(255,255,255,0.3);border-top-color:white;"></div>
+            <span id="lab-send-btn-text">🔗 Interpret & Generate Patient Link</span>
+          </button>
+        </div>
+
+        <!-- RESULT: Generated link -->
+        <div id="lab-link-result" style="display:none;">
+          <div style="background:linear-gradient(135deg,#0f2247,#0d3320);border-radius:var(--radius);padding:24px;margin-bottom:16px;text-align:center;">
+            <div style="font-size:36px;margin-bottom:10px;">✅</div>
+            <div style="font-size:16px;font-weight:700;color:white;margin-bottom:4px;">Patient link ready</div>
+            <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:18px;" id="lab-link-expiry-notice">Link expires in 7 days</div>
+            <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;margin-bottom:16px;word-break:break-all;font-size:12px;color:rgba(255,255,255,0.8);" id="lab-generated-link-display"></div>
+            <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
+              <button onclick="copyLabLink()" style="padding:10px 18px;background:var(--teal);color:white;border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">📋 Copy Link</button>
+              <button onclick="shareLabEmail()" style="padding:10px 18px;background:var(--blue);color:white;border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">📧 Send via Email</button>
+              <button onclick="shareLabWhatsApp()" style="padding:10px 18px;background:#25D366;color:white;border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">💬 Send via WhatsApp</button>
+              <button onclick="resetLabSend()" style="padding:10px 18px;background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:12px;font-weight:600;cursor:pointer;">New result →</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SENT LINKS VIEW -->
+      <div id="lab-view-sent" class="app-body" style="display:none;">
+        <div class="lab-badge">🔗 All sent patient links</div>
+        <div id="lab-sent-list"></div>
+      </div>
+
+      <!-- SETTINGS VIEW -->
+      <div id="lab-view-settings" class="app-body" style="display:none;">
+        <div class="lab-badge">⚙️ Lab settings</div>
+        <div class="send-panel">
+          <div class="send-panel-title">Lab Profile</div>
+          <div class="send-panel-sub">This name appears on every patient link you send</div>
+          <div class="form-group">
+            <label class="form-label-sm">Lab / Hospital display name</label>
+            <input class="form-input-sm" id="lab-settings-name" type="text">
+          </div>
+          <div class="form-group" style="margin-top:12px;">
+            <label class="form-label-sm">Default patient language</label>
+            <select class="form-select-sm" id="lab-settings-lang">
+              <option value="en">English</option>
+              <option value="yo">Yorùbá</option>
+              <option value="ha">Hausa</option>
+              <option value="pcm">Pidgin</option>
+            </select>
+          </div>
+          <button onclick="saveLabSettings()" style="margin-top:14px;padding:10px 20px;background:var(--teal);color:white;border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:13px;font-weight:700;cursor:pointer;">Save settings</button>
+        </div>
+      </div>
+
+    </div><!-- /app-content -->
+  </div><!-- /app-wrap -->
+</div><!-- /page-lab-app -->
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     SMART HEALTH LINK — PATIENT VIEWER
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="page" id="page-viewer">
+  <div class="viewer-header">
+    <div class="viewer-logo">
+      <div class="viewer-logo-mark">M</div>
+      <div class="viewer-logo-name">Mythros<small>Health System</small></div>
+    </div>
+    <div class="viewer-secure-badge">🔒 Secure link</div>
+  </div>
+  <div class="viewer-body">
+    <!-- Passcode screen -->
+    <div id="viewer-passcode-screen">
+      <div style="text-align:center;padding:40px 0 20px;">
+        <div style="font-size:48px;margin-bottom:12px;">🔐</div>
+        <div style="font-size:18px;font-weight:700;color:var(--text-dark);margin-bottom:6px;">Enter passcode</div>
+        <div style="font-size:13px;color:var(--text-muted);margin-bottom:24px;">This link is protected. Enter the passcode sent to you by your lab or doctor.</div>
+        <input id="viewer-passcode-input" type="text" maxlength="6"
+          style="width:180px;padding:12px;text-align:center;font-size:22px;font-weight:700;letter-spacing:0.2em;border:2px solid var(--card-border);border-radius:12px;font-family:'Sora',sans-serif;outline:none;"
+          placeholder="000000" onkeydown="if(event.key==='Enter') checkPasscode()">
+        <div id="viewer-passcode-error" style="color:var(--red);font-size:12px;margin-top:8px;display:none;">Incorrect passcode. Please try again.</div>
+        <button onclick="checkPasscode()" style="display:block;width:180px;margin:14px auto 0;padding:12px;background:var(--blue);color:white;border:none;border-radius:10px;font-family:'Sora',sans-serif;font-size:14px;font-weight:700;cursor:pointer;">Open results</button>
+      </div>
+    </div>
+
+    <!-- Results screen -->
+    <div id="viewer-results-screen" style="display:none;">
+      <div class="viewer-patient-card">
+        <div class="viewer-patient-name" id="viewer-patient-name">Loading…</div>
+        <div class="viewer-patient-meta" id="viewer-patient-meta"></div>
+        <div class="viewer-lab-tag" id="viewer-lab-tag">🏥 Lab</div>
+        <div class="viewer-expiry" id="viewer-expiry"></div>
+      </div>
+      <div class="viewer-summary-card" id="viewer-summary-card" style="display:none;">
+        <div class="viewer-summary-label">Your results — plain language summary</div>
+        <div class="viewer-summary-text" id="viewer-summary-text"></div>
+      </div>
+      <div id="viewer-results-list"></div>
+      <button class="viewer-save-btn" onclick="saveToMyAccount()">
+        💾 Save to my Mythros account
+      </button>
+      <div class="viewer-disclaimer">
+        This interpretation is provided for informational purposes only and does not constitute medical advice or diagnosis. Always consult a qualified healthcare professional about your results. · Mythros Support Services Ltd · mythrosltd.co.uk
+      </div>
+    </div>
+
+    <!-- Expired screen -->
+    <div id="viewer-expired-screen" style="display:none;text-align:center;padding:60px 20px;">
+      <div style="font-size:48px;margin-bottom:12px;">⏱</div>
+      <div style="font-size:18px;font-weight:700;color:var(--text-dark);margin-bottom:8px;">This link has expired</div>
+      <div style="font-size:13px;color:var(--text-muted);">Please contact your lab or doctor and ask them to resend your results.</div>
+    </div>
+  </div>
+</div>
+
+<!-- QR Modal -->
+<div class="qr-modal-overlay" id="qr-modal">
+  <div class="qr-modal-box">
+    <div class="qr-modal-title">Share Patient Link</div>
+    <div class="qr-modal-sub">Choose how to send this link to the patient</div>
+    <div class="qr-modal-link" id="qr-link-text" style="word-break:break-all;font-size:11px;background:var(--body-bg);padding:10px 14px;border-radius:8px;color:var(--text-muted);margin-bottom:16px;"></div>
+    <div class="qr-modal-actions" style="flex-wrap:wrap;gap:8px;">
+      <button class="qr-btn qr-btn-copy" onclick="copyQRLink()">📋 Copy link</button>
+      <button class="qr-btn qr-btn-whatsapp" onclick="shareQRWhatsApp()">💬 WhatsApp</button>
+      <button class="qr-btn" style="background:var(--blue);color:white;" onclick="shareQREmail()">📧 Email</button>
+      <button class="qr-btn" style="background:var(--teal);color:white;" onclick="shareQRSMS()">💬 SMS</button>
+      <button class="qr-btn qr-btn-close" onclick="closeQR()">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Add Lab Portal button to existing login page -->
+<script>
+// Inject "Lab Portal" link into existing login page after DOM ready
+document.addEventListener('DOMContentLoaded', function() {
+  var loginSwitch = document.querySelector('#page-login .auth-switch');
+  if (loginSwitch) {
+    var labLink = document.createElement('div');
+    labLink.style.cssText = 'text-align:center;margin-top:10px;';
+    labLink.innerHTML = '<a onclick="showPage(\'page-lab-login\')" style="font-size:12px;color:var(--teal);cursor:pointer;font-weight:600;">🏥 Lab / Hospital portal →</a>';
+    loginSwitch.parentNode.insertBefore(labLink, loginSwitch.nextSibling);
+  }
+});
+</script>
+
+
+<script>
+// ══════════════════════════════════════════════════════════════════════════
+// LAB PORTAL STATE
+// ══════════════════════════════════════════════════════════════════════════
+let currentLabUser   = JSON.parse(localStorage.getItem('mythros_lab_user') || 'null');
+let labActiveView    = 'send';
+let lastGeneratedLink = null;
+let lastGeneratedData = null;
+
+// ── Auto-route if lab user is already logged in ────────────────────────────
+if (currentLabUser && window.location.hash === '#lab') {
+  showPage('page-lab-app');
+  bootLabApp();
+}
+
+// Check URL for viewer hash
+if (window.location.hash.startsWith('#view/')) {
+  showPage('page-viewer');
+  loadViewerFromHash();
+}
+
+// ── LAB AUTH ──────────────────────────────────────────────────────────────
+function handleLabLogin() {
+  const email    = document.getElementById('lab-login-email').value.trim().toLowerCase();
+  const password = document.getElementById('lab-login-password').value;
+  const errEl    = document.getElementById('lab-login-error');
+  errEl.textContent = '';
+
+  if (!email || !password) { errEl.textContent = 'Please enter your email and password.'; return; }
+
+  const labs = JSON.parse(localStorage.getItem('mythros_labs') || '{}');
+  const lab  = labs[email];
+  if (!lab || lab.password !== btoa(password)) {
+    errEl.textContent = 'Email or password not recognised. Please try again.';
+    return;
+  }
+
+  currentLabUser = { name: lab.contact, org: lab.name, email: email, country: lab.country };
+  localStorage.setItem('mythros_lab_user', JSON.stringify(currentLabUser));
+  showPage('page-lab-app');
+  bootLabApp();
+}
+
+function handleLabSignup() {
+  const name     = document.getElementById('lab-reg-name').value.trim();
+  const contact  = document.getElementById('lab-reg-contact').value.trim();
+  const email    = document.getElementById('lab-reg-email').value.trim().toLowerCase();
+  const country  = document.getElementById('lab-reg-country').value;
+  const password = document.getElementById('lab-reg-password').value;
+  const errEl    = document.getElementById('lab-signup-error');
+  errEl.textContent = '';
+
+  if (!name || !contact || !email || !password) { errEl.textContent = 'Please complete all required fields.'; return; }
+  if (password.length < 8) { errEl.textContent = 'Password must be at least 8 characters.'; return; }
+
+  const labs = JSON.parse(localStorage.getItem('mythros_labs') || '{}');
+  if (labs[email]) { errEl.textContent = 'An account with this email already exists. Please sign in.'; return; }
+
+  labs[email] = { name, contact, country, password: btoa(password) };
+  localStorage.setItem('mythros_labs', JSON.stringify(labs));
+  currentLabUser = { name: contact, org: name, email: email, country: country };
+  localStorage.setItem('mythros_lab_user', JSON.stringify(currentLabUser));
+  showPage('page-lab-app');
+  bootLabApp();
+}
+
+function handleLabLogout() {
+  currentLabUser = null;
+  localStorage.removeItem('mythros_lab_user');
+  showPage('page-lab-login');
+}
+
+function bootLabApp() {
+  if (!currentLabUser) return;
+  const av = document.getElementById('lab-sb-avatar');
+  const nm = document.getElementById('lab-sb-name');
+  const og = document.getElementById('lab-sb-org');
+  if (av) av.textContent = (currentLabUser.org || currentLabUser.name || 'L')[0].toUpperCase();
+  if (nm) nm.textContent = currentLabUser.name;
+  if (og) og.textContent = currentLabUser.org;
+
+  // Set today's date as default
+  const dateEl = document.getElementById('lab-test-date');
+  if (dateEl) dateEl.value = new Date().toISOString().split('T')[0];
+
+  // Update sent links counter
+  updateLabStats();
+  showLabView('send');
+}
+
+function showLabView(view) {
+  labActiveView = view;
+  ['send','sent','settings'].forEach(v => {
+    const el = document.getElementById('lab-view-' + v);
+    if (el) el.style.display = v === view ? 'block' : 'none';
+  });
+  document.querySelectorAll('#page-lab-app .sidebar-nav-item').forEach((item, i) => {
+    item.classList.toggle('active', i === ['send','sent','settings'].indexOf(view));
+  });
+  const titles = { send: 'Send Results to Patient', sent: 'Sent Links', settings: 'Lab Settings' };
+  const subs   = { send: 'Interpret results and generate a secure patient link', sent: 'Track all links you have sent to patients', settings: 'Manage your lab profile and preferences' };
+  const tEl = document.getElementById('lab-topbar-title');
+  const sEl = document.getElementById('lab-topbar-sub');
+  if (tEl) tEl.textContent = titles[view] || '';
+  if (sEl) sEl.textContent = subs[view]  || '';
+
+  if (view === 'sent') renderSentLinks();
+  if (view === 'settings') loadLabSettings();
+}
+
+// ── SEND RESULTS ──────────────────────────────────────────────────────────
+async function sendLabResults() {
+  const patientName  = (document.getElementById('lab-patient-name').value || '').trim();
+  const resultsText  = (document.getElementById('lab-results-input').value || '').trim();
+  const country      = document.getElementById('lab-patient-country').value;
+  const language     = document.getElementById('lab-patient-lang').value;
+  const phone        = (document.getElementById('lab-patient-phone').value || '').trim();
+  const testDate     = document.getElementById('lab-test-date').value;
+  const expiryDays   = parseInt(document.getElementById('lab-link-expiry').value) || 7;
+  const errEl        = document.getElementById('lab-send-error');
+
+  errEl.style.display = 'none';
+
+  if (!patientName) { errEl.textContent = 'Please enter the patient name.'; errEl.style.display = 'block'; return; }
+  if (!resultsText) { errEl.textContent = 'Please paste the lab results.'; errEl.style.display = 'block'; return; }
+
+  // Set loading state
+  document.getElementById('lab-send-btn').disabled = true;
+  document.getElementById('lab-spinner').style.display = 'block';
+  document.getElementById('lab-send-btn-text').textContent = 'Interpreting results…';
+
+  try {
+    // Call the same n8n interpretation endpoint
+    const res = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action:   'interpret',
+        results:  resultsText,
+        country:  country,
+        language: language,
+        userId:   currentLabUser ? currentLabUser.email : 'lab-anonymous',
+        fasting:  null
+      })
+    });
+
+    if (!res.ok) throw new Error(res.status);
+    const data = await res.json();
+
+    // Generate secure link token
+    const token   = generateToken();
+    const passcode = Math.floor(100000 + Math.random() * 900000).toString();
+    const expiry  = new Date(Date.now() + expiryDays * 24 * 60 * 60 * 1000).toISOString();
+
+    const linkData = {
+      token,
+      passcode,
+      expiry,
+      patient: patientName,
+      phone,
+      lab: currentLabUser ? currentLabUser.org : 'Lab',
+      labEmail: currentLabUser ? currentLabUser.email : '',
+      country,
+      language,
+      testDate,
+      summary:  data.summary || '',
+      results:  data.results || [],
+      created:  new Date().toISOString(),
+      viewed:   false
+    };
+
+    // Store in localStorage (in production: store in Neon via n8n)
+    const linksKey = 'mythros_lab_links_' + (currentLabUser ? currentLabUser.email : 'anon');
+    const links    = JSON.parse(localStorage.getItem(linksKey) || '[]');
+    links.unshift(linkData);
+    if (links.length > 200) links.pop();
+    localStorage.setItem(linksKey, JSON.stringify(links));
+
+    // Also store globally by token for viewer access
+    localStorage.setItem('mythros_link_' + token, JSON.stringify(linkData));
+
+    // Build the viewer URL
+    const viewerUrl = window.location.origin + window.location.pathname + '#view/' + token;
+    lastGeneratedLink = viewerUrl;
+    lastGeneratedData = linkData;
+
+    // Show result
+    document.getElementById('lab-link-result').style.display = 'block';
+    document.getElementById('lab-generated-link-display').textContent = viewerUrl;
+    document.getElementById('lab-link-expiry-notice').textContent =
+      'Link expires ' + new Date(expiry).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) +
+      ' · Passcode: ' + passcode + ' (send this to the patient separately)';
+
+    updateLabStats();
+    document.getElementById('lab-link-result').scrollIntoView({ behavior: 'smooth' });
+
+  } catch(e) {
+    errEl.textContent = 'Could not connect to the interpretation service. Please check your network and try again.';
+    errEl.style.display = 'block';
+  } finally {
+    document.getElementById('lab-send-btn').disabled = false;
+    document.getElementById('lab-spinner').style.display = 'none';
+    document.getElementById('lab-send-btn-text').textContent = '🔗 Interpret & Generate Patient Link';
+  }
+}
+
+function generateToken() {
+  return 'mhl-' + Date.now().toString(36) + '-' + Math.random().toString(36).substr(2, 9);
+}
+
+function resetLabSend() {
+  document.getElementById('lab-patient-name').value  = '';
+  document.getElementById('lab-patient-phone').value = '';
+  document.getElementById('lab-results-input').value = '';
+  document.getElementById('lab-link-result').style.display = 'none';
+  document.getElementById('lab-send-error').style.display  = 'none';
+  lastGeneratedLink = null;
+  lastGeneratedData = null;
+}
+
+function copyLabLink() {
+  if (!lastGeneratedLink) return;
+  navigator.clipboard.writeText(lastGeneratedLink).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+function shareLabWhatsApp() {
+  if (!lastGeneratedLink || !lastGeneratedData) return;
+  var expiryDays = document.getElementById('lab-link-expiry') ? document.getElementById('lab-link-expiry').value : '7';
+  var msg = encodeURIComponent(
+    'Hello ' + lastGeneratedData.patient + ',\n\n' +
+    'Your lab results from ' + lastGeneratedData.lab + ' are ready.\n\n' +
+    'Open this link to see your results explained in plain language:\n' +
+    lastGeneratedLink + '\n\n' +
+    'Passcode: ' + lastGeneratedData.passcode + '\n\n' +
+    'This link expires in ' + expiryDays + ' days.\n\n' +
+    '\u2014 ' + lastGeneratedData.lab
+  );
+  var phone = (lastGeneratedData.phone || '').replace(/[^0-9]/g, '');
+  window.open('https://wa.me/' + phone + '?text=' + msg, '_blank');
+}
+
+function shareLabEmail() {
+  if (!lastGeneratedLink || !lastGeneratedData) return;
+  var expiryDays = document.getElementById('lab-link-expiry') ? document.getElementById('lab-link-expiry').value : '7';
+  var subject = encodeURIComponent('Your lab results from ' + lastGeneratedData.lab + ' are ready');
+  var body = encodeURIComponent(
+    'Hello ' + lastGeneratedData.patient + ',\n\n' +
+    'Your lab results from ' + lastGeneratedData.lab + ' are ready.\n\n' +
+    'Open this link to see your results explained in plain language:\n' +
+    lastGeneratedLink + '\n\n' +
+    'Passcode: ' + lastGeneratedData.passcode + '\n\n' +
+    'This link expires in ' + expiryDays + ' days.\n\n' +
+    '\u2014 ' + lastGeneratedData.lab
+  );
+  window.open('mailto:?subject=' + subject + '&body=' + body, '_blank');
+}
+
+function shareQREmail() {
+  if (!currentQRLink) return;
+  var subject = encodeURIComponent('Your Mythros Health results link');
+  var body = encodeURIComponent('Open this link to view your results:\n' + currentQRLink);
+  window.open('mailto:?subject=' + subject + '&body=' + body, '_blank');
+}
+
+function shareQRSMS() {
+  if (!currentQRLink) return;
+  var msg = encodeURIComponent('Your Mythros Health results: ' + currentQRLink);
+  window.open('sms:?body=' + msg, '_blank');
+}
+
+// ── SENT LINKS VIEW ───────────────────────────────────────────────────────
+function renderSentLinks() {
+  const container = document.getElementById('lab-sent-list');
+  if (!container) return;
+  const linksKey = 'mythros_lab_links_' + (currentLabUser ? currentLabUser.email : 'anon');
+  const links    = JSON.parse(localStorage.getItem(linksKey) || '[]');
+
+  if (links.length === 0) {
+    container.innerHTML = '<div class="card"><div class="card-inner" style="text-align:center;padding:40px;"><div style="font-size:40px;margin-bottom:12px;">🔗</div><div style="font-size:15px;font-weight:700;color:var(--text-dark);margin-bottom:8px;">No links sent yet</div><div style="font-size:13px;color:var(--text-muted);">Go to Send Results to generate your first patient link.</div></div></div>';
+    return;
+  }
+
+  container.innerHTML = links.map((link, i) => {
+    const now     = Date.now();
+    const expiry  = new Date(link.expiry).getTime();
+    const expired = expiry < now;
+    const status  = expired ? 'expired' : link.viewed ? 'viewed' : 'active';
+    const statusLabel = expired ? 'Expired' : link.viewed ? '👁 Viewed' : '🟢 Active';
+    const dateStr = new Date(link.created).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+    const viewerUrl = window.location.origin + window.location.pathname + '#view/' + link.token;
+
+    return `<div class="sent-link-card">
+      <div class="sent-link-info">
+        <div class="sent-link-patient">${esc(link.patient)}</div>
+        <div class="sent-link-meta">${esc(link.lab)} · ${dateStr} · ${link.results.length} results · Passcode: ${link.passcode}</div>
+      </div>
+      <span class="sent-link-status ${status}">${statusLabel}</span>
+      <div class="sent-link-actions">
+        <button class="btn-link-action btn-link-copy" onclick="navigator.clipboard.writeText('${viewerUrl}').then(()=>{this.textContent='✓';setTimeout(()=>this.textContent='Copy',1500)})">Copy</button>
+        <button class="btn-link-action btn-link-qr" onclick="openQRForLink('${viewerUrl}')">Share</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateLabStats() {
+  const linksKey = 'mythros_lab_links_' + (currentLabUser ? currentLabUser.email : 'anon');
+  const links    = JSON.parse(localStorage.getItem(linksKey) || '[]');
+  const stat     = document.getElementById('lab-links-sent-stat');
+  if (stat) {
+    stat.textContent = links.length + ' links sent';
+    stat.style.display = links.length > 0 ? 'inline-flex' : 'none';
+  }
+}
+
+// ── SETTINGS ──────────────────────────────────────────────────────────────
+function loadLabSettings() {
+  const nm = document.getElementById('lab-settings-name');
+  if (nm && currentLabUser) nm.value = currentLabUser.org || '';
+}
+
+function saveLabSettings() {
+  const nm = document.getElementById('lab-settings-name').value.trim();
+  if (nm && currentLabUser) {
+    currentLabUser.org = nm;
+    localStorage.setItem('mythros_lab_user', JSON.stringify(currentLabUser));
+    document.getElementById('lab-sb-org').textContent = nm;
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Saved';
+    setTimeout(() => btn.textContent = orig, 2000);
+  }
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// QR CODE GENERATOR (pure canvas — no external library needed)
+// ══════════════════════════════════════════════════════════════════════════
+let currentQRLink = '';
+
+function showLabQR() {
+  if (!lastGeneratedLink) return;
+  openQRForLink(lastGeneratedLink);
+}
+
+function openQRForLink(url) {
+  currentQRLink = url;
+  document.getElementById('qr-link-text').textContent = url;
+  drawQR(url);
+  document.getElementById('qr-modal').classList.add('show');
+}
+
+function closeQR() {
+  document.getElementById('qr-modal').classList.remove('show');
+}
+
+function copyQRLink() {
+  navigator.clipboard.writeText(currentQRLink).then(() => {
+    const btn = event.target;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = '📋 Copy link', 2000);
+  });
+}
+
+function shareQRWhatsApp() {
+  window.open('https://wa.me/?text=' + encodeURIComponent(currentQRLink), '_blank');
+}
+
+function drawQR(url) { /* QR display disabled for security */ }
+
+// ══════════════════════════════════════════════════════════════════════════
+// PATIENT VIEWER
+// ══════════════════════════════════════════════════════════════════════════
+let viewerData    = null;
+let viewerPasscode = null;
+
+function loadViewerFromHash() {
+  const hash  = window.location.hash;
+  const token = hash.replace('#view/', '');
+  if (!token) return;
+
+  const stored = localStorage.getItem('mythros_link_' + token);
+  if (!stored) {
+    document.getElementById('viewer-passcode-screen').style.display = 'none';
+    document.getElementById('viewer-expired-screen').style.display  = 'block';
+    return;
+  }
+
+  const data = JSON.parse(stored);
+
+  // Check expiry
+  if (new Date(data.expiry).getTime() < Date.now()) {
+    document.getElementById('viewer-passcode-screen').style.display = 'none';
+    document.getElementById('viewer-expired-screen').style.display  = 'block';
+    return;
+  }
+
+  viewerData     = data;
+  viewerPasscode = data.passcode;
+
+  // If no passcode set, show results directly
+  if (!data.passcode) {
+    showViewerResults();
+  }
+  // else: passcode screen is already shown
+}
+
+function checkPasscode() {
+  const input = document.getElementById('viewer-passcode-input').value.trim();
+  const errEl = document.getElementById('viewer-passcode-error');
+  if (input === viewerPasscode) {
+    errEl.style.display = 'none';
+    showViewerResults();
+  } else {
+    errEl.style.display = 'block';
+  }
+}
+
+function showViewerResults() {
+  if (!viewerData) return;
+
+  document.getElementById('viewer-passcode-screen').style.display = 'none';
+  document.getElementById('viewer-results-screen').style.display  = 'block';
+
+  // Mark as viewed
+  if (viewerData.token) {
+    const stored = localStorage.getItem('mythros_link_' + viewerData.token);
+    if (stored) {
+      const d = JSON.parse(stored);
+      d.viewed = true;
+      localStorage.setItem('mythros_link_' + viewerData.token, JSON.stringify(d));
+    }
+  }
+
+  // Populate patient card
+  document.getElementById('viewer-patient-name').textContent = viewerData.patient || 'Patient';
+  document.getElementById('viewer-patient-meta').textContent =
+    (viewerData.testDate ? 'Test date: ' + viewerData.testDate + ' · ' : '') +
+    viewerData.country + ' · ' + (viewerData.language || 'en').toUpperCase();
+  document.getElementById('viewer-lab-tag').textContent = '🏥 ' + (viewerData.lab || 'Lab');
+  document.getElementById('viewer-expiry').textContent =
+    '⏱ Link expires ' + new Date(viewerData.expiry).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' });
+
+  // Summary
+  if (viewerData.summary) {
+    document.getElementById('viewer-summary-text').textContent = viewerData.summary;
+    document.getElementById('viewer-summary-card').style.display = 'block';
+  }
+
+  // Result cards
+  const list   = document.getElementById('viewer-results-list');
+  const pm     = {
+    normal: ['#0A6E3A','#EDFAF4'], watch: ['#D4860A','#FFF3DC'],
+    urgent: ['#C0392B','#FEF0F2'], not_performed: ['#7A90A8','#F4F7FA'],
+    genomic: ['#6366f1','#f0f4ff'], pathogenic: ['#C0392B','#FEF0F2'],
+    poor_metaboliser: ['#C0392B','#FEF0F2'], carrier: ['#D4860A','#FFF3DC']
+  };
+
+  list.innerHTML = (viewerData.results || []).map(r => {
+    const [fc, bg] = pm[r.status] || pm.normal;
+    const label    = r.status === 'urgent' ? '! Urgent' : r.status === 'watch' ? '⚠ Watch' :
+                     r.status === 'not_performed' ? '— Not Performed' : '✓ Normal';
+    return `<div class="viewer-result-card">
+      <div class="viewer-result-left">
+        <div class="viewer-result-name">${esc(r.name || '')}</div>
+        <div class="viewer-result-value" style="color:${fc}">${esc(r.value || '')}${r.unit ? ' ' + esc(r.unit) : ''}</div>
+        ${r.reference ? `<div class="viewer-result-ref">Ref: ${esc(r.reference)}</div>` : ''}
+        <div class="viewer-result-explanation">${esc(r.explanation || '')}</div>
+      </div>
+      <span class="status-pill" style="background:${bg};color:${fc};border:1px solid ${fc}33;white-space:nowrap;flex-shrink:0;">${label}</span>
+    </div>`;
+  }).join('');
+}
+
+function saveToMyAccount() {
+  if (!viewerData) return;
+  // Pre-populate signup with patient name and direct to patient app
+  showPage('page-signup');
+  const nameEl = document.getElementById('signup-name');
+  if (nameEl) nameEl.value = viewerData.patient || '';
+  // Store pending data to import after signup
+  localStorage.setItem('mythros_pending_import', JSON.stringify(viewerData));
+}
+</script>
+
 </body>
 </html>
