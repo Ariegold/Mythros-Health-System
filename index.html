@@ -1491,6 +1491,85 @@
   .qr-btn-copy:hover { background: var(--teal); color: white; }
   .qr-btn-whatsapp { background: #25D366; color: white; flex: 1.2; }
 
+
+  /* ── FORGOT / RESET PASSWORD ─────────────────────────────────── */
+  .pw-strength-bar {
+    height: 4px;
+    border-radius: 4px;
+    background: var(--card-border);
+    margin-top: 6px;
+    overflow: hidden;
+  }
+  .pw-strength-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 0.3s, background 0.3s;
+    width: 0%;
+  }
+  .pw-strength-label {
+    font-size: 11px;
+    margin-top: 4px;
+    font-weight: 600;
+  }
+  .pw-req-list {
+    margin-top: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+  }
+  .pw-req {
+    font-size: 11px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--text-muted);
+    transition: color 0.2s;
+  }
+  .pw-req.met { color: var(--green); }
+  .pw-req .req-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid var(--card-border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 8px; flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .pw-req.met .req-dot {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+  }
+  .show-pw-wrap {
+    position: relative;
+  }
+  .show-pw-wrap .form-input {
+    padding-right: 42px;
+  }
+  .toggle-pw {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-muted);
+    font-size: 16px;
+    padding: 4px;
+    line-height: 1;
+  }
+  .toggle-pw:hover { color: var(--blue); }
+  .lockout-banner {
+    background: var(--red-bg);
+    border: 1px solid rgba(192,57,43,0.2);
+    border-radius: var(--radius-xs);
+    padding: 12px 14px;
+    font-size: 12px;
+    color: var(--red-text);
+    margin-bottom: 14px;
+    display: none;
+  }
+
 </style>
 </head>
 <body>
@@ -1638,9 +1717,10 @@
           </div>
           <div class="form-group">
             <label class="form-label">Password <span style="color:var(--red);font-size:13px;">*</span></label>
-            <input class="form-input" id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter') handleLogin()">
+            <div class="show-pw-wrap"><input class="form-input" id="login-password" type="password" autocomplete="current-password" placeholder="••••••••" onkeydown="if(event.key==='Enter') handleLogin()"><button class="toggle-pw" type="button" onclick="togglePwVisibility('login-password', this)" title="Show/hide password">👁</button></div>
           </div>
           <button class="btn-auth" onclick="handleLogin()">Sign in →</button>
+          <div style="text-align:right;margin-top:6px;"><a onclick="showPage('page-forgot')" style="font-size:12px;color:var(--text-muted);cursor:pointer;">Forgot password?</a></div>
           <div class="auth-divider"><span>New user?</span></div>
           <div class="auth-switch"><a onclick="showPage('page-signup'); autoDetectCountry()">Create a free account →</a></div>
         </div>
@@ -1854,6 +1934,104 @@
 </div>
 
 <!-- ══ MAIN APP PAGE ══════════════════════════════════════════════ -->
+
+<!-- ══ FORGOT PASSWORD PAGE ══════════════════════════════════════ -->
+<div class="page" id="page-forgot">
+  <div class="auth-wrap">
+    <div class="auth-left">
+      <div class="auth-logo">
+        <div class="logo-mark">M</div>
+        <div class="logo-name">Mythros<small>Health System</small></div>
+      </div>
+      <div class="auth-heading">Reset your password.</div>
+      <div class="auth-sub">We'll verify your identity using the date of birth you registered with. No email required.</div>
+      <div class="auth-badge">
+        <span style="width:7px;height:7px;background:#5dd9c9;border-radius:50%;display:inline-block;"></span>
+        Secure identity verification
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <div class="auth-form-title">Reset password</div>
+        <div class="auth-form-sub">Enter your email and date of birth to verify your identity</div>
+        <div class="auth-card">
+          <div class="lockout-banner" id="forgot-lockout">
+            🔒 Too many failed attempts. Please wait <span id="forgot-lockout-timer">15 minutes</span> before trying again.
+          </div>
+          <div class="auth-error" id="forgot-error"></div>
+          <div class="form-group">
+            <label class="form-label">Email Address <span style="color:var(--red);font-size:13px;">*</span></label>
+            <input class="form-input" id="forgot-email" type="email" placeholder="you@example.com" autocomplete="email">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Date of Birth <span style="color:var(--red);font-size:13px;">*</span></label>
+            <input class="form-input" id="forgot-dob" type="date" onkeydown="if(event.key==='Enter') handleForgotVerify()">
+          </div>
+          <button class="btn-auth" onclick="handleForgotVerify()">Verify identity →</button>
+          <div class="auth-divider"><span>Remembered it?</span></div>
+          <div class="auth-switch"><a onclick="showPage('page-login')">← Back to sign in</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ RESET PASSWORD PAGE ════════════════════════════════════════ -->
+<div class="page" id="page-reset">
+  <div class="auth-wrap">
+    <div class="auth-left">
+      <div class="auth-logo">
+        <div class="logo-mark">M</div>
+        <div class="logo-name">Mythros<small>Health System</small></div>
+      </div>
+      <div class="auth-heading">Choose a new password.</div>
+      <div class="auth-sub">Make it strong. Make it something you have not used before.</div>
+      <div class="auth-badge">
+        <span style="width:7px;height:7px;background:#5dd9c9;border-radius:50%;display:inline-block;"></span>
+        Identity verified ✓
+      </div>
+    </div>
+    <div class="auth-right">
+      <div class="auth-form-box">
+        <div class="auth-form-title">New password</div>
+        <div class="auth-form-sub" id="reset-email-display">Setting new password for your account</div>
+        <div class="auth-card">
+          <div class="auth-error" id="reset-error"></div>
+          <div class="form-group">
+            <label class="form-label">New Password <span style="color:var(--red);font-size:13px;">*</span></label>
+            <div class="show-pw-wrap">
+              <input class="form-input" id="reset-password" type="password"
+                placeholder="Min 8 chars, 1 uppercase, 1 number, 1 symbol"
+                oninput="checkResetStrength()" autocomplete="new-password">
+              <button class="toggle-pw" type="button" onclick="togglePwVisibility('reset-password', this)" title="Show/hide password">👁</button>
+            </div>
+            <div class="pw-strength-bar"><div class="pw-strength-fill" id="reset-strength-fill"></div></div>
+            <div class="pw-strength-label" id="reset-strength-label" style="color:var(--text-muted);"></div>
+            <div class="pw-req-list">
+              <div class="pw-req" id="req-len"><div class="req-dot">✓</div>At least 8 characters</div>
+              <div class="pw-req" id="req-upper"><div class="req-dot">✓</div>1 uppercase letter</div>
+              <div class="pw-req" id="req-num"><div class="req-dot">✓</div>1 number</div>
+              <div class="pw-req" id="req-sym"><div class="req-dot">✓</div>1 symbol (!@#$%...)</div>
+            </div>
+          </div>
+          <div class="form-group" style="margin-top:14px;">
+            <label class="form-label">Confirm New Password <span style="color:var(--red);font-size:13px;">*</span></label>
+            <div class="show-pw-wrap">
+              <input class="form-input" id="reset-confirm" type="password"
+                placeholder="Re-enter your new password"
+                onkeydown="if(event.key==='Enter') handleResetPassword()"
+                autocomplete="new-password">
+              <button class="toggle-pw" type="button" onclick="togglePwVisibility('reset-confirm', this)" title="Show/hide password">👁</button>
+            </div>
+            <div id="reset-match-msg" style="font-size:11px;margin-top:4px;"></div>
+          </div>
+          <button class="btn-auth" onclick="handleResetPassword()" style="margin-top:6px;">Set new password →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="page" id="page-app">
 
   <!-- MOBILE HEADER -->
@@ -3983,6 +4161,156 @@ function saveToMyAccount() {
   if (nameEl) nameEl.value = viewerData.patient || '';
   // Store pending data to import after signup
   localStorage.setItem('mythros_pending_import', JSON.stringify(viewerData));
+}
+
+// ══════════════════════════════════════════════════════════════════════════
+// FORGOT / RESET PASSWORD
+// ══════════════════════════════════════════════════════════════════════════
+
+var resetTargetEmail = null;
+
+function togglePwVisibility(inputId, btn) {
+  var inp = document.getElementById(inputId);
+  if (!inp) return;
+  if (inp.type === 'password') {
+    inp.type = 'text'; btn.textContent = '🙈'; btn.title = 'Hide password';
+  } else {
+    inp.type = 'password'; btn.textContent = '👁'; btn.title = 'Show password';
+  }
+}
+
+var LOCKOUT_KEY = 'mythros_reset_lockout';
+var ATTEMPTS_KEY = 'mythros_reset_attempts';
+var MAX_ATTEMPTS = 3;
+var LOCKOUT_DURATION = 15 * 60 * 1000;
+
+function isLockedOut() {
+  var lockout = localStorage.getItem(LOCKOUT_KEY);
+  if (!lockout) return false;
+  if (Date.now() - parseInt(lockout) < LOCKOUT_DURATION) return true;
+  localStorage.removeItem(LOCKOUT_KEY);
+  localStorage.removeItem(ATTEMPTS_KEY);
+  return false;
+}
+
+function recordFailedAttempt() {
+  var attempts = parseInt(localStorage.getItem(ATTEMPTS_KEY) || '0') + 1;
+  localStorage.setItem(ATTEMPTS_KEY, attempts);
+  if (attempts >= MAX_ATTEMPTS) {
+    localStorage.setItem(LOCKOUT_KEY, Date.now().toString());
+    localStorage.removeItem(ATTEMPTS_KEY);
+  }
+  return attempts;
+}
+
+function clearAttempts() {
+  localStorage.removeItem(ATTEMPTS_KEY);
+  localStorage.removeItem(LOCKOUT_KEY);
+}
+
+function showLockoutBanner() {
+  var banner = document.getElementById('forgot-lockout');
+  var timerEl = document.getElementById('forgot-lockout-timer');
+  if (!banner) return;
+  banner.style.display = 'block';
+  var interval = setInterval(function() {
+    var lockout = localStorage.getItem(LOCKOUT_KEY);
+    if (!lockout) { clearInterval(interval); banner.style.display = 'none'; return; }
+    var remaining = LOCKOUT_DURATION - (Date.now() - parseInt(lockout));
+    if (remaining <= 0) {
+      clearInterval(interval); banner.style.display = 'none';
+      localStorage.removeItem(LOCKOUT_KEY); localStorage.removeItem(ATTEMPTS_KEY);
+    } else {
+      var mins = Math.floor(remaining / 60000);
+      var secs = Math.floor((remaining % 60000) / 1000);
+      if (timerEl) timerEl.textContent = mins + ':' + (secs < 10 ? '0' : '') + secs;
+    }
+  }, 1000);
+}
+
+function handleForgotVerify() {
+  var email = (document.getElementById('forgot-email').value || '').trim().toLowerCase();
+  var dob   = (document.getElementById('forgot-dob').value || '').trim();
+  var errEl = document.getElementById('forgot-error');
+  errEl.style.display = 'none';
+  if (!email || !dob) {
+    errEl.textContent = 'Please enter your email address and date of birth.';
+    errEl.style.display = 'block'; return;
+  }
+  if (isLockedOut()) { showLockoutBanner(); return; }
+  var users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
+  var user  = users[email];
+  if (!user || user.dob !== dob) {
+    var attempts  = recordFailedAttempt();
+    var remaining = MAX_ATTEMPTS - attempts;
+    if (isLockedOut()) {
+      showLockoutBanner();
+      errEl.textContent = 'Too many failed attempts. Account temporarily locked.';
+    } else {
+      errEl.textContent = 'We could not verify your identity. ' +
+        (remaining > 0 ? remaining + ' attempt' + (remaining === 1 ? '' : 's') + ' remaining.' : '');
+    }
+    errEl.style.display = 'block'; return;
+  }
+  clearAttempts();
+  resetTargetEmail = email;
+  var displayEl = document.getElementById('reset-email-display');
+  if (displayEl) displayEl.textContent = 'Setting new password for ' + email;
+  var rp = document.getElementById('reset-password');
+  var rc = document.getElementById('reset-confirm');
+  if (rp) { rp.value = ''; rp.type = 'password'; }
+  if (rc) { rc.value = ''; rc.type = 'password'; }
+  checkResetStrength();
+  showPage('page-reset');
+}
+
+function checkResetStrength() {
+  var pw    = (document.getElementById('reset-password') || {}).value || '';
+  var fill  = document.getElementById('reset-strength-fill');
+  var label = document.getElementById('reset-strength-label');
+  var checks = { len: pw.length >= 8, upper: /[A-Z]/.test(pw), num: /[0-9]/.test(pw), sym: /[^A-Za-z0-9]/.test(pw) };
+  ['len','upper','num','sym'].forEach(function(k) {
+    var el = document.getElementById('req-' + k);
+    if (el) el.classList.toggle('met', checks[k]);
+  });
+  var score = Object.values(checks).filter(Boolean).length;
+  var colors = ['','#ef4444','#f97316','#eab308','#22c55e'];
+  var labels = ['','Too weak','Weak','Good','Strong'];
+  if (fill)  { fill.style.width = (score * 25) + '%'; fill.style.background = colors[score] || ''; }
+  if (label) { label.textContent = pw.length > 0 ? labels[score] : ''; label.style.color = colors[score] || ''; }
+  var confirm = (document.getElementById('reset-confirm') || {}).value || '';
+  var matchEl = document.getElementById('reset-match-msg');
+  if (matchEl && confirm.length > 0) {
+    matchEl.textContent = confirm === pw ? '✓ Passwords match' : 'Passwords do not match';
+    matchEl.style.color = confirm === pw ? 'var(--green)' : 'var(--red)';
+  }
+}
+
+function handleResetPassword() {
+  var pw      = (document.getElementById('reset-password') || {}).value || '';
+  var confirm = (document.getElementById('reset-confirm') || {}).value || '';
+  var errEl   = document.getElementById('reset-error');
+  errEl.style.display = 'none';
+  if (!resetTargetEmail) { showPage('page-forgot'); return; }
+  if (pw.length < 8)            { errEl.textContent = 'Password must be at least 8 characters.'; errEl.style.display = 'block'; return; }
+  if (!/[A-Z]/.test(pw))        { errEl.textContent = 'Password must include at least 1 uppercase letter.'; errEl.style.display = 'block'; return; }
+  if (!/[0-9]/.test(pw))        { errEl.textContent = 'Password must include at least 1 number.'; errEl.style.display = 'block'; return; }
+  if (!/[^A-Za-z0-9]/.test(pw)) { errEl.textContent = 'Password must include at least 1 symbol (!@#$%).'; errEl.style.display = 'block'; return; }
+  if (pw !== confirm)            { errEl.textContent = 'Passwords do not match.'; errEl.style.display = 'block'; return; }
+  var users = JSON.parse(localStorage.getItem('mythros_users') || '{}');
+  var user  = users[resetTargetEmail];
+  if (!user) { showPage('page-login'); return; }
+  if (user.password === btoa(pw)) {
+    errEl.textContent = 'Your new password cannot be the same as your current password.';
+    errEl.style.display = 'block'; return;
+  }
+  user.password = btoa(pw);
+  user.passwordChangedAt = new Date().toISOString();
+  users[resetTargetEmail] = user;
+  localStorage.setItem('mythros_users', JSON.stringify(users));
+  resetTargetEmail = null;
+  alert('\u2713 Password updated successfully. Please sign in with your new password.');
+  showPage('page-login');
 }
 </script>
 
