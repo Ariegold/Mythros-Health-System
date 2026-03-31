@@ -772,15 +772,15 @@
   .pill-dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
 
   /* APP FOOTER DISCLAIMER */
-  .app-disclaimer {
-    margin-top: 32px; padding: 14px 18px;
-    background: white; border: 1px solid var(--card-border);
+  .app-disclaimer { display:block!important; visibility:visible!important;
+    margin-top: 32px; padding: 16px 18px;
+    background: var(--navy); border: none;
     border-radius: var(--radius-sm);
-    font-size: 11px; color: var(--text-muted); line-height: 1.7;
+    font-size: 11px; color: rgba(255,255,255,0.55); line-height: 1.8;
     text-align: center;
   }
 
-  .app-disclaimer strong { color: var(--text-mid); }
+  .app-disclaimer strong { color: rgba(255,255,255,0.85); }
 
   /* MOBILE */
   @media (max-width: 767px) {
@@ -1570,6 +1570,46 @@
     display: none;
   }
 
+
+  /* ── DIGITAL VERIFICATION ───────────────────────────────────── */
+  .verify-page { min-height:100vh; background:var(--body-bg); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:32px 16px; }
+  .verify-box { width:100%; max-width:520px; }
+  .verify-header { text-align:center; margin-bottom:32px; }
+  .verify-logo-wrap { display:flex; align-items:center; justify-content:center; gap:10px; margin-bottom:16px; }
+  .verify-logo-mark { width:40px; height:40px; background:var(--blue); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:18px; font-weight:800; color:white; }
+  .verify-logo-name { font-size:18px; font-weight:700; color:var(--navy); }
+  .verify-logo-name small { display:block; font-size:10px; font-weight:600; color:var(--text-muted); letter-spacing:0.05em; text-transform:uppercase; }
+  .verify-title { font-size:22px; font-weight:700; color:var(--navy); margin-bottom:6px; }
+  .verify-sub { font-size:13px; color:var(--text-muted); }
+  .verify-card { background:var(--card-bg); border:1px solid var(--card-border); border-radius:var(--radius); padding:28px; margin-bottom:16px; box-shadow:0 2px 16px rgba(13,31,60,0.07); }
+  .verify-input-wrap { display:flex; gap:10px; margin-bottom:16px; }
+  .verify-input { flex:1; padding:12px 16px; border:1.5px solid var(--card-border); border-radius:var(--radius-xs); font-family:inherit; font-size:15px; font-weight:700; letter-spacing:0.08em; color:var(--navy); text-transform:uppercase; outline:none; background:var(--body-bg); }
+  .verify-input:focus { border-color:var(--blue); }
+  .verify-input::placeholder { font-weight:400; letter-spacing:0; text-transform:none; color:var(--text-muted); }
+  .verify-btn { padding:12px 20px; background:var(--blue); color:white; border:none; border-radius:var(--radius-xs); font-family:inherit; font-size:14px; font-weight:700; cursor:pointer; white-space:nowrap; }
+  .verify-btn:hover { background:var(--blue-hover); }
+  .verify-result { border-radius:var(--radius-xs); padding:20px; margin-top:4px; display:none; }
+  .verify-result.show { display:block; }
+  .verify-result.success { background:var(--green-bg); border:1.5px solid rgba(10,110,58,0.2); }
+  .verify-result.fail { background:var(--red-bg); border:1.5px solid rgba(192,57,43,0.2); }
+  .verify-result.expired { background:var(--amber-bg,#FFF8EC); border:1.5px solid rgba(232,148,10,0.2); }
+  .verify-icon { font-size:32px; margin-bottom:10px; }
+  .verify-verdict { font-size:16px; font-weight:700; margin-bottom:8px; }
+  .verify-verdict.ok { color:var(--green); }
+  .verify-verdict.bad { color:var(--red); }
+  .verify-verdict.warn { color:var(--amber); }
+  .verify-detail { font-size:12px; color:var(--text-muted); margin-bottom:4px; }
+  .verify-detail strong { color:var(--text-dark); }
+  .verify-badge { display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 14px; border-radius:20px; font-size:11px; font-weight:700; }
+  .verify-badge.ok { background:var(--green-bg); color:var(--green); }
+  .verify-badge.bad { background:var(--red-bg); color:var(--red); }
+  .verify-footer { text-align:center; font-size:11px; color:var(--text-muted); margin-top:16px; }
+  /* Verification code display on lab result */
+  .verify-code-box { background:linear-gradient(135deg,#0F2247,#1a3565); border-radius:10px; padding:14px 18px; margin-top:14px; }
+  .verify-code-label { font-size:9px; font-weight:700; color:rgba(255,255,255,0.5); letter-spacing:0.12em; text-transform:uppercase; margin-bottom:6px; }
+  .verify-code-value { font-size:18px; font-weight:800; color:#5dd9c9; letter-spacing:0.12em; font-family:monospace; }
+  .verify-code-sub { font-size:10px; color:rgba(255,255,255,0.45); margin-top:4px; }
+
 </style>
 </head>
 <body>
@@ -1703,6 +1743,10 @@
       <div class="auth-badge">
         <span style="width:7px;height:7px;background:#5dd9c9;border-radius:50%;display:inline-block;"></span>
         A service by Mythros Support Services Ltd · UK Registered
+      </div>
+      <div style="margin-top:14px;padding:10px 14px;background:rgba(255,255,255,0.06);border-radius:8px;border:1px solid rgba(255,255,255,0.1);">
+        <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,0.5);letter-spacing:0.08em;text-transform:uppercase;margin-bottom:4px;">⚠ Medical disclaimer</div>
+        <div style="font-size:10.5px;color:rgba(255,255,255,0.45);line-height:1.5;">Not a medical device. Not a substitute for professional medical advice. Always consult a qualified healthcare professional. For informational and educational use only.</div>
       </div>
     </div>
     <div class="auth-right">
@@ -2212,7 +2256,9 @@
           </div>
         </div>
 
-        <div class="disclaimer">💡 Mythros Health System explains your results in plain language to help you have better conversations with your doctor. This is not a diagnostic tool — always consult a qualified healthcare professional. For genomic results, always inform your prescriber or specialist.</div>
+        <div class="disclaimer app-disclaimer" style="display:block!important;margin-bottom:18px;">
+          ⚠️ <strong>Important:</strong> Mythros Health System explains your results in plain language to help you have better conversations with your doctor. <strong>This is not a diagnostic tool and does not replace professional medical advice.</strong> Always consult a qualified healthcare professional about your results. For genomic results, always inform your prescriber or specialist before making any decisions.
+        </div>
 
         <!-- RESULTS -->
         <div id="results-section">
@@ -2277,7 +2323,7 @@
           <strong>Mythros Health System</strong> by Mythros Support Services Ltd (Company No. 16384279) ·
           For informational use only. Not a medical device. Not a substitute for professional medical advice or genetic counselling. ·
           Lab interpretation informed by UHDB NHS clinical data. Genomic interpretation informed by population-diverse reference evidence including HGSVC3 (NHGRI). ·
-          <a href="https://mythrosltd.co.uk" target="_blank" style="color:var(--blue);text-decoration:none;">mythrosltd.co.uk</a>
+          <a href="https://mythrosltd.co.uk" target="_blank" style="color:#5dd9c9;text-decoration:none;">mythrosltd.co.uk</a>
         </div>
 
       </div><!-- /app-body -->
@@ -3545,6 +3591,11 @@ async function sendTermQuery() {
             <div style="font-size:16px;font-weight:700;color:white;margin-bottom:4px;">Patient link ready</div>
             <div style="font-size:12px;color:rgba(255,255,255,0.6);margin-bottom:18px;" id="lab-link-expiry-notice">Link expires in 7 days</div>
             <div style="background:rgba(255,255,255,0.08);border-radius:10px;padding:12px 16px;margin-bottom:16px;word-break:break-all;font-size:12px;color:rgba(255,255,255,0.8);" id="lab-generated-link-display"></div>
+            <div id="lab-verify-code-box" class="verify-code-box" style="display:none;">
+              <div class="verify-code-label">🔐 Digital Verification Code</div>
+              <div class="verify-code-value" id="lab-verify-code-value"></div>
+              <div class="verify-code-sub">This code proves this report is genuine. Recipients can verify at mythrosltd.co.uk/verify</div>
+            </div>
             <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;">
               <button onclick="copyLabLink()" style="padding:10px 18px;background:var(--teal);color:white;border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">📋 Copy Link</button>
               <button onclick="shareLabEmail()" style="padding:10px 18px;background:var(--blue);color:white;border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:12px;font-weight:700;cursor:pointer;">📧 Send via Email</button>
@@ -3864,6 +3915,17 @@ async function sendLabResults() {
     // Show result
     document.getElementById('lab-link-result').style.display = 'block';
     document.getElementById('lab-generated-link-display').textContent = viewerUrl;
+
+    // Show verification code if returned
+    if (data.verificationCode) {
+      var codeBox = document.getElementById('lab-verify-code-box');
+      var codeVal = document.getElementById('lab-verify-code-value');
+      if (codeBox && codeVal) {
+        codeVal.textContent = data.verificationCode;
+        codeBox.style.display = 'block';
+        lastGeneratedData._verificationCode = data.verificationCode;
+      }
+    }
     document.getElementById('lab-link-expiry-notice').textContent =
       'Link expires ' + new Date(expiry).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) +
       ' · Passcode: ' + passcode + ' (send this to the patient separately)';
@@ -4057,6 +4119,18 @@ let viewerPasscode = null;
 
 function loadViewerFromHash() {
   const hash  = window.location.hash;
+
+  // Handle public verification page
+  if (hash.startsWith('#verify')) {
+    showPage('page-verify');
+    const codeFromHash = hash.replace('#verify/', '').replace('#verify', '').trim();
+    if (codeFromHash) {
+      var inp = document.getElementById('verify-code-input');
+      if (inp) { inp.value = codeFromHash.toUpperCase(); runVerification(); }
+    }
+    return;
+  }
+
   const token = hash.replace('#view/', '');
   if (!token) return;
 
@@ -4151,6 +4225,103 @@ function showViewerResults() {
       <span class="status-pill" style="background:${bg};color:${fc};border:1px solid ${fc}33;white-space:nowrap;flex-shrink:0;">${label}</span>
     </div>`;
   }).join('');
+}
+
+
+// ══════════════════════════════════════════════════════════════════════════
+// DIGITAL REPORT VERIFICATION
+// Calls n8n /claritylab with action=verify
+// Returns: verified / not_found / expired / revoked
+// ══════════════════════════════════════════════════════════════════════════
+
+async function runVerification() {
+  var code = (document.getElementById('verify-code-input').value || '').trim().toUpperCase();
+  var resultEl  = document.getElementById('verify-result');
+  var iconEl    = document.getElementById('verify-icon');
+  var verdictEl = document.getElementById('verify-verdict');
+  var detailsEl = document.getElementById('verify-details');
+  var badgeEl   = document.getElementById('verify-badge-wrap');
+
+  if (!code) return;
+
+  // Reset state
+  resultEl.className = 'verify-result';
+  resultEl.style.display = 'block';
+  iconEl.textContent = '⏳';
+  verdictEl.textContent = 'Checking…';
+  verdictEl.style.color = 'var(--text-muted)';
+  detailsEl.innerHTML = '';
+  badgeEl.innerHTML = '';
+
+  try {
+    var res = await fetch(WEBHOOK_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'verify', code: code })
+    });
+
+    if (!res.ok) throw new Error(res.status);
+    var data = await res.json();
+
+    if (data.status === 'verified') {
+      resultEl.classList.add('show','success');
+      iconEl.textContent = '✅';
+      verdictEl.textContent = 'Report Verified';
+      verdictEl.style.color = 'var(--green)';
+      detailsEl.innerHTML =
+        '<div style="margin-top:10px;font-size:12px;line-height:1.8;color:var(--text-dark);">' +
+        '<strong>Issued by:</strong> ' + escHtml(data.lab_name || 'Registered Mythros Lab') + '<br>' +
+        '<strong>Issued on:</strong> ' + escHtml(data.issued_at || '') + '<br>' +
+        '<strong>Patient:</strong> ' + escHtml(data.patient_name || '') + '<br>' +
+        '<strong>Country:</strong> ' + escHtml(data.country || '') + '<br>' +
+        '<strong>Results:</strong> ' + (data.result_count || '—') + ' tests<br>' +
+        '<strong>Status:</strong> <span style="color:var(--green);font-weight:700;">Active · Unaltered</span>' +
+        '</div>';
+      badgeEl.innerHTML =
+        '<div style="margin-top:14px;background:var(--green);color:white;border-radius:8px;padding:10px 14px;font-size:11px;font-weight:700;text-align:center;letter-spacing:0.05em;">' +
+        '🔒 MYTHROS VERIFIED DIGITAL REPORT · mythrosltd.co.uk</div>';
+
+    } else if (data.status === 'expired') {
+      resultEl.classList.add('show','expired');
+      iconEl.textContent = '⏱';
+      verdictEl.textContent = 'Report Expired';
+      verdictEl.style.color = 'var(--amber)';
+      detailsEl.innerHTML = '<div style="margin-top:8px;font-size:12px;color:var(--text-muted);">This report was valid but has now expired. Please ask the lab to issue a new verified report if required.</div>';
+
+    } else if (data.status === 'revoked') {
+      resultEl.classList.add('show','fail');
+      iconEl.textContent = '🚫';
+      verdictEl.textContent = 'Report Revoked';
+      verdictEl.style.color = 'var(--red)';
+      detailsEl.innerHTML = '<div style="margin-top:8px;font-size:12px;color:var(--text-muted);">This report has been revoked by the issuing lab. It is no longer valid.</div>';
+
+    } else {
+      // not_found or any other status
+      resultEl.classList.add('show','fail');
+      iconEl.textContent = '❌';
+      verdictEl.textContent = 'Cannot Be Verified';
+      verdictEl.style.color = 'var(--red)';
+      detailsEl.innerHTML =
+        '<div style="margin-top:10px;font-size:12px;line-height:1.7;color:var(--text-muted);">' +
+        'No Mythros record matches this verification code.<br><br>' +
+        '<strong style="color:var(--red);">This may mean:</strong><br>' +
+        '• The report was not issued through Mythros<br>' +
+        '• The code was entered incorrectly<br>' +
+        '• The report may have been altered or forged<br><br>' +
+        'If you believe this result has been tampered with, please report it to the relevant authority.' +
+        '</div>';
+    }
+  } catch(e) {
+    resultEl.classList.add('show','fail');
+    iconEl.textContent = '⚠️';
+    verdictEl.textContent = 'Verification service unavailable';
+    verdictEl.style.color = 'var(--amber)';
+    detailsEl.innerHTML = '<div style="margin-top:8px;font-size:12px;color:var(--text-muted);">Could not connect to the verification service. Please try again in a moment.</div>';
+  }
+}
+
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
 }
 
 function saveToMyAccount() {
@@ -4313,6 +4484,56 @@ function handleResetPassword() {
   showPage('page-login');
 }
 </script>
+
+
+<!-- ══ PUBLIC VERIFICATION PAGE ═══════════════════════════════════ -->
+<div class="page" id="page-verify">
+  <div class="verify-page">
+    <div class="verify-box">
+      <div class="verify-header">
+        <div class="verify-logo-wrap">
+          <div class="verify-logo-mark">M</div>
+          <div class="verify-logo-name">Mythros<small>Health System</small></div>
+        </div>
+        <div class="verify-title">Verify a Digital Lab Report</div>
+        <div class="verify-sub">Check whether a Mythros-issued lab report is genuine and unaltered</div>
+      </div>
+      <div class="verify-card">
+        <label style="font-size:12px;font-weight:700;color:var(--navy);display:block;margin-bottom:8px;">VERIFICATION CODE</label>
+        <div class="verify-input-wrap">
+          <input class="verify-input" id="verify-code-input" type="text"
+            placeholder="e.g. MHS-2026-K7P3NX" maxlength="16"
+            oninput="this.value=this.value.toUpperCase()"
+            onkeydown="if(event.key==='Enter') runVerification()">
+          <button class="verify-btn" onclick="runVerification()">Verify →</button>
+        </div>
+        <div style="font-size:11px;color:var(--text-muted);">The verification code appears on every Mythros Digital Lab Report. Enter it exactly as printed.</div>
+
+        <div class="verify-result" id="verify-result">
+          <div class="verify-icon" id="verify-icon"></div>
+          <div class="verify-verdict" id="verify-verdict"></div>
+          <div id="verify-details"></div>
+          <div id="verify-badge-wrap"></div>
+        </div>
+      </div>
+
+      <div style="background:var(--blue-light);border-radius:10px;padding:14px 16px;margin-bottom:16px;">
+        <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:4px;">WHAT THIS CHECKS</div>
+        <div style="font-size:11px;color:var(--text-muted);line-height:1.6;">
+          ✓ The report was issued by a registered Mythros lab or hospital<br>
+          ✓ The result has not been altered since it was issued<br>
+          ✓ The verification code matches a genuine Mythros record<br>
+          ✓ The report has not expired or been revoked
+        </div>
+      </div>
+
+      <div class="verify-footer">
+        <a onclick="showPage('page-login')" style="color:var(--blue);cursor:pointer;font-weight:600;">← Back to Mythros</a>
+        &nbsp;·&nbsp; Mythros Support Services Ltd · Co. No. 16384279 · mythrosltd.co.uk
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 </html>
